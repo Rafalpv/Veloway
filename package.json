@@ -1,0 +1,38 @@
+{
+  "name": "veloway",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Rafa Luque Pérez-Vico",
+  "license": "MIT",
+  "description": "A fullstack project focused on the management and planning of cycling routes, integrating map-based features and accessibility options.",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "keywords": [
+    "cycling",
+    "routes",
+    "management",
+    "biking",
+    "fullstack",
+    "maps",
+    "route-planning",
+    "accessibility"
+  ],
+  "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix"
+  }, 
+  "devDependencies": {
+    "standard": "17.1.2",
+    "vitest": "2.1.7"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "rules": {
+      "no-unused-vars": "off"
+    }
+  }
+}
