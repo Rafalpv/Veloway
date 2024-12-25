@@ -24,7 +24,7 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix"
-  }, 
+  },
   "devDependencies": {
     "standard": "17.1.2",
     "vitest": "2.1.7"
@@ -32,7 +32,11 @@
   "eslintConfig": {
     "extends": "standard",
     "rules": {
-      "no-unused-vars": "off"
+      "no-unused-vars": "off",
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ]
     }
   }
 }
