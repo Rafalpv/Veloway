@@ -12,3 +12,27 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Cambiar el fondo de la ventana */
+.leaflet-routing-container {
+  background-color: #f9f9f9; /* Color claro */
+  border: 1px solid #ccc; /* Borde gris */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Estilo de las rutas alternativas */
+.leaflet-routing-alt {
+  background-color: #061f22; /* Fondo azul claro */
+  padding: 10px; /* Espaciado interno */
+  margin: 5px 0; /* Separación entre alternativas */
+  border-radius: 6px; /* Bordes redondeados */
+}
+
+/* Texto dentro de las rutas */
+.leaflet-routing-alt h3,
+.leaflet-routing-alt p {
+  color: #00796b; /* Color de texto */
+  font-family: 'Arial', sans-serif; /* Fuente personalizada */
+  font-size: 14px; /* Tamaño de texto */
+}
