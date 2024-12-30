@@ -26,6 +26,7 @@
     "lint:fix": "standard --fix"
   },
   "devDependencies": {
+    "dotenv": "^16.4.7",
     "standard": "17.1.2",
     "vitest": "2.1.7"
   },

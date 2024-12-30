@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
 const Login = () => {
@@ -11,7 +11,6 @@ const Login = () => {
     console.log('Email:', email)
     console.log('Password:', password)
   }
-
   return (
     <div className="login-container">
       <h2>Login</h2>
