@@ -2,10 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
 export default defineConfig({
-  cacheDir: 'node_modules/.vite',
+  cacheDir: '../node_modules/.vite',
   plugins: [react()],
   resolve: {
     preserveSymlinks: true
   },
-  root: process.cwd()
+  root: __dirname
 })
