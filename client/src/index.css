@@ -80,8 +80,8 @@ form {
   margin-bottom: 15px;
   width: 100%;
   text-align: left;
+  color: black;
 }
-
 /* Label styling */
 .form-group label {
   display: block;
