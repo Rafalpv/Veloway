@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { NavLink } from 'react-router'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -37,7 +37,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <Link to='/map'>Registro</Link>
+      <NavLink to='/signup'>Registro</NavLink>
     </div>
   )
 }
