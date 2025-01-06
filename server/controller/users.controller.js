@@ -1,4 +1,4 @@
-import User from '../models/User.js'
+import User from '../models/Users.js'
 
 // POST
 // http://localhost:3000/users/new
@@ -23,6 +23,7 @@ const newUser = async(req, res) => {
       })
     })
   } catch (error) {
+    console.error(error)
     res.status(500).json({ message: 'Error creating user' })
   }
 }

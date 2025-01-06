@@ -1,11 +1,11 @@
 import express from 'express'
-import userController from '../controller/user.controller.js'
+import usersController from '../controller/users.controller.js'
 
 const router = express.Router()
 
 /**
  * @swagger
- * /users:
+ * /users/new:
  *   post:
  *     summary: Crea un nuevo usuario.
  *     description: Endpoint para registrar un nuevo usuario en el sistema Veloway.
@@ -38,7 +38,7 @@ const router = express.Router()
  *               photo:
  *                 type: string
  *                 description: URL de la foto de perfil.
- *                 example: https://example.com/profile.jpg
+ *                 example: ''
  *               password:
  *                 type: string
  *                 description: Contraseña del usuario.
@@ -88,7 +88,7 @@ const router = express.Router()
  *                       example: john.doe@example.com
  *                     photo:
  *                       type: string
- *                       example: https://example.com/profile.jpg
+ *                       example: 'https://example.com/profile.jpg'
  *                     privacy:
  *                       type: string
  *                       example: private
@@ -114,6 +114,6 @@ const router = express.Router()
  *                   type: string
  *                   example: Error creating user
  */
-router.post('/new', userController.newUser)
+router.post('/new', usersController.newUser)
 
 export default router
