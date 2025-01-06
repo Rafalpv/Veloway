@@ -73,15 +73,6 @@ const SignUp = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className='form-group'>
-          <label htmlFor='fotoPerfil'>Foto de Perfil</label>
-          <input
-            type="text"
-            id="fotoPerfil"
-            required
-            onChange={(e) => setFotoPerfil(e.target.value)}
-          />
-        </div>
         <div className="form-group">
           <label htmlFor="privacidad">Privacidad</label>
           <input type="radio" name="privacidad" value="publica" required onChange={(e) => setPrivacidad(e.target.value)} />
