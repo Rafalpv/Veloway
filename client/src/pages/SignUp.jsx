@@ -19,7 +19,7 @@ const SignUp = () => {
     try {
       axiosInstance.post('/users/new', formValues)
     } catch (error) {
-      console.log(error)
+      console.log('Error al crear un nuevo usuario')
     }
   }
 
