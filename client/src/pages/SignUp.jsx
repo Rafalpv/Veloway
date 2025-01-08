@@ -1,58 +1,61 @@
-import React, { useState } from 'react'
+import React from 'react'
+import useForm from '../components/useForm'
+import axiosInstance from '../utils/axiosInstance'
 
 const SignUp = () => {
-  const [nombreUsuario, setNombreUsuario] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [apellido, setApellido] = useState('')
-  const [fotoPerfil, setFotoPerfil] = useState('')
-  const [privacidad, setPrivacidad] = useState('')
-  const [dificultad, setDificultad] = useState('')
+  const [formValues, handleInputChange] = useForm({
+    nickname: '',
+    name: '',
+    lastname: '',
+    email: '',
+    photo: '',
+    password: '',
+    privacy: '',
+    level: ''
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle form submission logic here
-    console.log({
-      nombreUsuario,
-      email,
-      password,
-      apellido,
-      fotoPerfil,
-      privacidad,
-      dificultad
-    })
+    try {
+      axiosInstance.post('/users/new', formValues)
+    } catch (error) {
+      console.log('Error al crear un nuevo usuario')
+    }
   }
 
   return (
     <div className="signup-container">
-      <h2>Creacion de usuario</h2>
+      <h2>Creación de usuario</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nombreUsuario">Nombre de usuario</label>
+          <label htmlFor="nickname">Nombre de usuario</label>
           <input
             type="text"
-            id="nombreUsuario"
+            id="nickname"
+            name="nickname"
             required
             autoFocus
-            onChange={(e) => setNombreUsuario(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="name">Nombre</label>
           <input
             type="text"
-            id="nombre"
+            id="name"
+            name="name"
             required
-            onChange={(e) => setNombreUsuario(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="apellido">Apellido</label>
+          <label htmlFor="lastname">Apellido</label>
           <input
             type="text"
-            id="apellido"
+            id="lastname"
+            name="lastname"
             required
-            onChange={(e) => setApellido(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
@@ -60,8 +63,9 @@ const SignUp = () => {
           <input
             type="email"
             id="email"
+            name="email"
             required
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
@@ -69,35 +73,63 @@ const SignUp = () => {
           <input
             type="password"
             id="password"
+            name="password"
             required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='fotoPerfil'>Foto de Perfil</label>
-          <input
-            type="text"
-            id="fotoPerfil"
-            required
-            onChange={(e) => setFotoPerfil(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="privacidad">Privacidad</label>
-          <input type="radio" name="privacidad" value="publica" required onChange={(e) => setPrivacidad(e.target.value)} />
+          <input
+            type="radio"
+            name="privacy"
+            value="public"
+            required
+            onChange={handleInputChange}
+          />
           Tu perfil será visible para todos los usuarios
-          <input type="radio" name="privacidad" value="amigos" required onChange={(e) => setPrivacidad(e.target.value)} />
+          <input
+            type="radio"
+            name="privacy"
+            value="friends"
+            required
+            onChange={handleInputChange}
+          />
           Tu perfil será visible para todos los amigos
-          <input type="radio" name="privacidad" value="privada" required onChange={(e) => setPrivacidad(e.target.value)} />
+          <input
+            type="radio"
+            name="privacy"
+            value="private"
+            required
+            onChange={handleInputChange}
+          />
           Tu perfil no será visible para nadie
         </div>
         <div className="form-group">
-          <label htmlFor="dificultad">Dificultad</label>
-          <input type="radio" name="dificultad" value="baja" required onChange={(e) => setDificultad(e.target.value)} />
+          <label htmlFor="level">Dificultad</label>
+          <input
+            type="radio"
+            name="level"
+            value="beginner"
+            required
+            onChange={handleInputChange}
+          />
           Dificultad baja
-          <input type="radio" name="dificultad" value="media" required onChange={(e) => setDificultad(e.target.value)} />
-          Dicultada media
-          <input type="radio" name="dificultad" value="alta" required onChange={(e) => setDificultad(e.target.value)} />
+          <input
+            type="radio"
+            name="level"
+            value="intermediate"
+            required
+            onChange={handleInputChange}
+          />
+          Dificultad media
+          <input
+            type="radio"
+            name="level"
+            value="advanced"
+            required
+            onChange={handleInputChange}
+          />
           Dificultad alta
         </div>
         <button type="submit">Signup</button>
