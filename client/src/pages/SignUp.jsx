@@ -16,7 +16,6 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formValues)
     try {
       axiosInstance.post('/users/new', formValues)
     } catch (error) {
