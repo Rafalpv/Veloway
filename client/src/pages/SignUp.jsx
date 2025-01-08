@@ -1,20 +1,27 @@
 import React from 'react'
 import useForm from '../components/useForm'
+import axiosInstance from '../utils/axiosInstance'
 
 const SignUp = () => {
   const [formValues, handleInputChange] = useForm({
-    nombreUsuario: '',
+    nickname: '',
+    name: '',
+    lastname: '',
     email: '',
+    photo: '',
     password: '',
-    apellido: '',
-    privacidad: '',
-    dificultad: ''
+    privacy: '',
+    level: ''
   })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle form submission logic here
     console.log(formValues)
+    try {
+      axiosInstance.post('/users/new', formValues)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -22,32 +29,32 @@ const SignUp = () => {
       <h2>Creación de usuario</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nombreUsuario">Nombre de usuario</label>
+          <label htmlFor="nickname">Nombre de usuario</label>
           <input
             type="text"
-            id="nombreUsuario"
-            name="nombreUsuario"
+            id="nickname"
+            name="nickname"
             required
             autoFocus
             onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="name">Nombre</label>
           <input
             type="text"
-            id="nombre"
-            name="nombre"
+            id="name"
+            name="name"
             required
             onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="apellido">Apellido</label>
+          <label htmlFor="lastname">Apellido</label>
           <input
             type="text"
-            id="apellido"
-            name="apellido"
+            id="lastname"
+            name="lastname"
             required
             onChange={handleInputChange}
           />
@@ -76,51 +83,51 @@ const SignUp = () => {
           <label htmlFor="privacidad">Privacidad</label>
           <input
             type="radio"
-            name="privacidad"
-            value="publica"
+            name="privacy"
+            value="public"
             required
             onChange={handleInputChange}
           />
           Tu perfil será visible para todos los usuarios
           <input
             type="radio"
-            name="privacidad"
-            value="amigos"
+            name="privacy"
+            value="friends"
             required
             onChange={handleInputChange}
           />
           Tu perfil será visible para todos los amigos
           <input
             type="radio"
-            name="privacidad"
-            value="privada"
+            name="privacy"
+            value="private"
             required
             onChange={handleInputChange}
           />
           Tu perfil no será visible para nadie
         </div>
         <div className="form-group">
-          <label htmlFor="dificultad">Dificultad</label>
+          <label htmlFor="level">Dificultad</label>
           <input
             type="radio"
-            name="dificultad"
-            value="baja"
+            name="level"
+            value="beginner"
             required
             onChange={handleInputChange}
           />
           Dificultad baja
           <input
             type="radio"
-            name="dificultad"
-            value="media"
+            name="level"
+            value="intermediate"
             required
             onChange={handleInputChange}
           />
           Dificultad media
           <input
             type="radio"
-            name="dificultad"
-            value="alta"
+            name="level"
+            value="advanced"
             required
             onChange={handleInputChange}
           />
