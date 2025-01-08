@@ -1,16 +1,17 @@
-import User from '../models/Users.js'
+import { where } from 'sequelize'
+import Users from '../models/Users.js'
 import bycrypt from 'bcrypt'
 
 // POST
 // http://localhost:3000/users/new
-const newUser = async(req, res) => {
+const newUser = async (req, res) => {
   const { nickname, name, lastname, email, photo, password, privacy, level } = req.body
 
   try {
     const saltRounds = 10
     const hashesPassword = await bycrypt.hash(password, saltRounds)
 
-    await User.create({
+    await Users.create({
       nickname,
       name,
       lastname,
@@ -32,6 +33,38 @@ const newUser = async(req, res) => {
   }
 }
 
+// GET
+// http://localhost:3000/users
+const listUsers = async (req, res) => {
+  try {
+    const users = await Users.findAll()
+    res.status(200).json(users)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error listing users' })
+  }
+}
+
+// GET
+// http://localhost:3000/users/nickname
+const getUserByNickname = async (req, res) => {
+  try {
+    const { nickname } = req.params
+    const user = await Users.findOne({
+      where: { nickname }
+    })
+    if (!user) {
+      return res.status(404).json({ error: 'User not find' })
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error listing users' })
+  }
+}
+
 export default {
-  newUser
+  newUser,
+  listUsers,
+  getUserByNickname
 }

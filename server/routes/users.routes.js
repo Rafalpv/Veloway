@@ -116,4 +116,144 @@ const router = express.Router()
  */
 router.post('/new', usersController.newUser)
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Obtener todos los usuarios
+ *     description: Devuelve una lista de todos los usuarios registrados en la aplicación.
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios recuperada con éxito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: ID del usuario
+ *                     example: 1
+ *                   nickname:
+ *                     type: string
+ *                     description: Nombre de usuario
+ *                     example: velo_master
+ *                   name:
+ *                     type: string
+ *                     description: Nombre del usuario
+ *                     example: John
+ *                   lastname:
+ *                     type: string
+ *                     description: Apellido del usuario
+ *                     example: Doe
+ *                   email:
+ *                     type: string
+ *                     description: Correo electrónico del usuario
+ *                     example: john.doe@example.com
+ *                   photo:
+ *                     type: string
+ *                     description: URL de la foto de perfil del usuario
+ *                     example: "https://example.com/photo.jpg"
+ *                   privacy:
+ *                     type: string
+ *                     description: Configuración de privacidad del usuario
+ *                     example: private
+ *                   level:
+ *                     type: string
+ *                     description: Nivel del usuario (beginner, intermediate, advanced)
+ *                     example: beginner
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Error interno del servidor"
+ */
+router.get('/', usersController.listUsers)
+
+/**
+ * @swagger
+ * /users/{nickname}:
+ *   get:
+ *     summary: Obtener un usuario por su nickname
+ *     description: Devuelve los detalles de un usuario que coincida con el nickname proporcionado.
+ *     tags: [Users]
+ *     parameters:
+ *       - name: nickname
+ *         in: path
+ *         required: true
+ *         description: El nickname del usuario a buscar.
+ *         schema:
+ *           type: string
+ *           example: velo_master
+ *     responses:
+ *       200:
+ *         description: Usuario encontrado con éxito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID del usuario
+ *                   example: 1
+ *                 nickname:
+ *                   type: string
+ *                   description: Nombre de usuario
+ *                   example: velo_master
+ *                 name:
+ *                   type: string
+ *                   description: Nombre del usuario
+ *                   example: John
+ *                 lastname:
+ *                   type: string
+ *                   description: Apellido del usuario
+ *                   example: Doe
+ *                 email:
+ *                   type: string
+ *                   description: Correo electrónico del usuario
+ *                   example: john.doe@example.com
+ *                 photo:
+ *                   type: string
+ *                   description: URL de la foto de perfil del usuario
+ *                   example: "https://example.com/photo.jpg"
+ *                 privacy:
+ *                   type: string
+ *                   description: Configuración de privacidad del usuario
+ *                   example: private
+ *                 level:
+ *                   type: string
+ *                   description: Nivel del usuario (beginner, intermediate, advanced)
+ *                   example: beginner
+ *       404:
+ *         description: Usuario no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Usuario no encontrado"
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Error interno del servidor"
+ */
+router.get('/:nickname', usersController.getUserByNickname)
+
 export default router

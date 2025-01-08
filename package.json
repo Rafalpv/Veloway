@@ -38,10 +38,7 @@
     "extends": "standard",
     "rules": {
       "no-unused-vars": "off",
-      "space-before-function-paren": [
-        "error",
-        "never"
-      ]
+      "space-before-function-paren": "off"
     }
   },
   "dependencies": {
