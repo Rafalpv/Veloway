@@ -1,23 +1,21 @@
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocs from './config/swagger.js'
+import swaggerDocs from './shared/config/swagger.js'
 import cors from 'cors'
-import sequelize from './config/database.js'
-import { PORT } from './utils/const.js'
+import { PORT } from './shared/utils/const.js'
 
-import usersRoutes from './routes/users.routes.js'
+import usersRoutes from './users-service/routes/users.routes.js'
 
+// CONFIGURACION DE EXPRESS
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-// Ruta de Swagger
+// GESTION DE RUTAS
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/users', usersRoutes)
 
 try {
-  await sequelize.sync()
-  console.log('Connection has been established successfully.')
   app.listen(PORT, () => {
     console.log(`Servidor running en http://localhost:${PORT}`)
   })
