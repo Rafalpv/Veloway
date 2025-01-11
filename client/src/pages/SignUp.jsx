@@ -27,7 +27,7 @@ const SignUp = () => {
     <div className='signup-page'>
       <div className='signup-container'>
         <h2>Creación de usuario</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} >
           <div className="form-group">
             <label htmlFor="nickname">Nombre de usuario</label>
             <input
@@ -37,6 +37,7 @@ const SignUp = () => {
               required
               autoFocus
               onChange={handleInputChange}
+              pattern='^[a-zA-Z0-9]{5,20}$'
             />
           </div>
           <div className="form-group">
@@ -46,6 +47,7 @@ const SignUp = () => {
               id="name"
               name="name"
               required
+              pattern='^[A-Z][a-zA-Z]{1,29}$'
               onChange={handleInputChange}
             />
           </div>
@@ -56,6 +58,7 @@ const SignUp = () => {
               id="lastname"
               name="lastname"
               required
+              pattern='^[A-Z][a-zA-Z]{1,29}$'
               onChange={handleInputChange}
             />
           </div>
@@ -66,6 +69,7 @@ const SignUp = () => {
               id="email"
               name="email"
               required
+              pattern='/^.{10,}$/'
               onChange={handleInputChange}
             />
           </div>
@@ -76,6 +80,7 @@ const SignUp = () => {
               id="password"
               name="password"
               required
+              pattern='/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/'
               onChange={handleInputChange}
             />
           </div>
