@@ -41,35 +41,13 @@ const SignUp = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Nombre</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              pattern='^[A-Z][a-zA-Z]{1,29}$'
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="lastname">Apellido</label>
-            <input
-              type="text"
-              id="lastname"
-              name="lastname"
-              required
-              pattern='^[A-Z][a-zA-Z]{1,29}$'
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               required
-              pattern='/^.{10,}$/'
+              pattern='^.{10,}$'
               onChange={handleInputChange}
             />
           </div>
@@ -80,7 +58,7 @@ const SignUp = () => {
               id="password"
               name="password"
               required
-              pattern='/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/'
+              pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
               onChange={handleInputChange}
             />
           </div>

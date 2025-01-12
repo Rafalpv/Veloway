@@ -5,7 +5,7 @@ import bycrypt from 'bcrypt'
 // POST
 // http://localhost:3000/users/new
 const newUser = async (req, res) => {
-  const { nickname, name, lastname, email, photo, password, privacy, level } = req.body
+  const { nickname, email, photo, password, privacy, level } = req.body
 
   try {
     const saltRounds = 10
@@ -13,8 +13,6 @@ const newUser = async (req, res) => {
 
     await Users.create({
       nickname,
-      name,
-      lastname,
       email,
       password: hashesPassword,
       photo,
