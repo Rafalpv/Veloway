@@ -5,12 +5,9 @@ import axiosInstance from '../utils/axiosInstance'
 const SignUp = () => {
   const [formValues, handleInputChange] = useForm({
     nickname: '',
-    name: '',
-    lastname: '',
     email: '',
     photo: '',
     password: '',
-    privacy: '',
     level: ''
   })
 
@@ -61,33 +58,6 @@ const SignUp = () => {
               pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
               onChange={handleInputChange}
             />
-          </div>
-          <div className="form-group">
-            <label htmlFor="privacidad">Privacidad</label>
-            <input
-              type="radio"
-              name="privacy"
-              value="public"
-              required
-              onChange={handleInputChange}
-            />
-            Tu perfil será visible para todos los usuarios
-            <input
-              type="radio"
-              name="privacy"
-              value="friends"
-              required
-              onChange={handleInputChange}
-            />
-            Tu perfil será visible para todos los amigos
-            <input
-              type="radio"
-              name="privacy"
-              value="private"
-              required
-              onChange={handleInputChange}
-            />
-            Tu perfil no será visible para nadie
           </div>
           <div className="form-group">
             <label htmlFor="level">Dificultad</label>

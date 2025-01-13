@@ -28,10 +28,6 @@ const Users = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true
     },
-    privacy: {
-      type: DataTypes.ENUM('public', 'friends', 'private'),
-      allowNull: false
-    },
     level: {
       type: DataTypes.ENUM('beginner', 'intermediate', 'advanced'),
       allowNull: false

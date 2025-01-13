@@ -25,21 +25,20 @@
 }
 
 .signup-page {
-  background-image: url('../img/ciclista-fondo.jpg');
-  background-size: cover;
-  background-position: center;
+  background-image: url('../img/ciclismo-fondo.jpg');
+  background-size: 100%;
+  background-position: right;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start
 }
 
 .signup-container {
-  background-color: rgba(33, 33, 33, 0.9); 
+  background-color: rgb(51, 51, 51, 0.95); 
   color: white;
-  padding: 30vh;
-  border-radius: 10px; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  max-width: 115vh;
+  padding: 10vh;
+  max-width: 45%;
+  height: 100%;
 }
