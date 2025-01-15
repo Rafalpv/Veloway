@@ -1,4 +1,8 @@
-*, ::before, ::after {
+@import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -52,7 +56,7 @@
   --tw-contain-style:  ;
 }
 
-::backdrop {
+::backdrop{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -554,160 +558,320 @@ video {
   display: none;
 }
 
-.visible {
-  visibility: visible;
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
+.bottom-7{
+  bottom: 1.75rem;
+}
+
+.right-48{
+  right: 12rem;
+}
+
+.right-2{
+  right: 0.5rem;
+}
+
+.top-2{
+  top: 0.5rem;
+}
+
+.top-3{
+  top: 0.75rem;
+}
+
+.right-3{
+  right: 0.75rem;
+}
+
+.col-span-2{
+  grid-column: span 2 / span 2;
+}
+
+.col-span-3{
+  grid-column: span 3 / span 3;
+}
+
+.flex{
+  display: flex;
+}
+
+.grid{
+  display: grid;
+}
+
+.h-\[90\%\]{
+  height: 90%;
+}
+
+.h-auto{
+  height: auto;
+}
+
+.h-screen{
+  height: 100vh;
+}
+
+.w-1\/2{
+  width: 50%;
+}
+
+.w-\[80\%\]{
+  width: 80%;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.select-none{
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.grid-cols-5{
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+.place-items-center{
+  place-items: center;
+}
+
+.items-center{
+  align-items: center;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.space-y-14 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(3.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(3.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
+.rounded-2xl{
+  border-radius: 1rem;
+}
+
+.bg-background-light{
+  --tw-bg-opacity: 1;
+  background-color: rgb(236 232 232 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gold-dark{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 160 0 / var(--tw-bg-opacity, 1));
+}
+
+.bg-green{
+  --tw-bg-opacity: 1;
+  background-color: rgb(32 84 53 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{
+  background-image: url('/img/ciclista-fondo.jpg');
+}
+
+.bg-cover{
+  background-size: cover;
+}
+
+.bg-center{
+  background-position: center;
+}
+
+.p-3{
+  padding: 0.75rem;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.font-montserrat{
+  font-family: Montserrat, mono;
+}
+
+.font-sixcaps{
+  font-family: Six Caps, mono;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-\[20vw\]{
+  font-size: 20vw;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.font-bold{
+  font-weight: 700;
+}
+
+.leading-none{
+  line-height: 1;
+}
+
+.tracking-widest{
+  letter-spacing: 0.1em;
+}
+
+.text-gold{
+  --tw-text-opacity: 1;
+  color: rgb(255 193 7 / var(--tw-text-opacity, 1));
+}
+
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.opacity-90{
+  opacity: 0.9;
+}
+
+.shadow-3xl{
+  --tw-shadow: 10px 10px 7px 3px rgba(51,51,51,0.92);
+  --tw-shadow-colored: 10px 10px 7px 3px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #BFC2AE;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cambiar el fondo de la ventana */
-
-.leaflet-routing-container {
-  background-color: #f9f9f9;
-  /* Color claro */
-  border: 1px solid #ccc;
-  /* Borde gris */
-  border-radius: 8px;
-  /* Esquinas redondeadas */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  /* Sombra */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
-/* Estilo de las rutas alternativas */
-
-.leaflet-routing-alt {
-  background-color: #061f22;
-  /* Fondo azul claro */
-  padding: 10px;
-  /* Espaciado interno */
-  margin: 5px 0;
-  /* Separación entre alternativas */
-  border-radius: 6px;
-  /* Bordes redondeados */
-}
-
-/* Texto dentro de las rutas */
-
-.leaflet-routing-alt h3,
-.leaflet-routing-alt p {
-  color: #00796b;
-  /* Color de texto */
-  font-family: 'Arial', sans-serif;
-  /* Fuente personalizada */
-  font-size: 14px;
-  /* Tamaño de texto */
-}
-
-/* General container for the login page */
-
-.login-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-/* Heading style */
-
-.login-container h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
-}
-
-/* Form styling */
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Form group for label and input */
-
-.form-group {
-  margin-bottom: 15px;
+.form__group {
+  position: relative;
+  padding: 20px 0 0;
   width: 100%;
-  text-align: left;
-  color: black;
+  max-width: 480px;
 }
 
-/* Label styling */
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #555;
-}
-
-/* Input field styling */
-
-.form-group input {
+.form__field {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: border-color 0.3s;
-}
-
-/* Input focus state */
-
-.form-group input:focus {
-  outline: none;
-  border-color: #007BFF;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
-
-/* Submit button styling */
-
-button[type="submit"] {
-  background-color: #007BFF;
-  color: #fff;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  border-bottom: 2px solid white;
+  outline: 0;
+  font-size: 23px;
+  font-weight: 400;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
 }
 
-/* Button hover state */
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
+.form__field::-moz-placeholder {
+  color: transparent;
 }
 
-/* Link to the signup page */
-
-.login-container a {
-  margin-top: 15px;
-  display: inline-block;
-  text-decoration: none;
-  color: #007BFF;
-  font-size: 14px;
-  transition: color 0.3s;
+.form__field::placeholder {
+  color: transparent;
 }
 
-/* Hover effect for the link */
+.form__field:-moz-placeholder-shown~.form__label {
+  font-size: 30px;
+  cursor: text;
+  top: 13px;
+}
 
-.login-container a:hover {
-  color: #0056b3;
+.form__field:placeholder-shown~.form__label {
+  font-size: 30px;
+  cursor: text;
+  top: 13px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  border-width: 3px;
+  -o-border-image: linear-gradient(to right, #FFC107, #AA8108);
+     border-image: linear-gradient(to right, #FFC107, #AA8108);
+  border-image-slice: 1;
+}
+
+.form__field:focus~.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+.level__label {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.level__input {
+  margin-right: 7px;
+}
+
+.level__input:checked ~ .level__label {
+  color: #FFC107;
+}
+
+.explicacion__nivel {
+  font-size: 15px;
+  color: #C1BCBC;
+  margin-left: 20px;
+  max-width: 480px;
 }

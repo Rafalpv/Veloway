@@ -1,15 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,23 +18,89 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
-.signup-page {
-  background-image: url('../img/ciclismo-fondo.jpg');
-  background-size: 100%;
-  background-position: right;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100vh;
-  display: flex;
-  justify-content: flex-start
+.form__group {
+  position: relative;
+  padding: 20px 0 0;
+  width: 100%;
+  max-width: 480px;
 }
 
-.signup-container {
-  background-color: rgb(51, 51, 51, 0.95); 
-  color: white;
-  padding: 10vh;
-  max-width: 45%;
-  height: 100%;
+.form__field {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid white;
+  outline: 0;
+  font-size: 23px;
+  font-weight: 400;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown~.form__label {
+  font-size: 30px;
+  cursor: text;
+  top: 13px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #FFC107, #AA8108);
+  border-image-slice: 1;
+}
+
+.form__field:focus~.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+}
+
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+.level__label {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.level__input {
+  margin-right: 7px; 
+}
+
+.level__input:checked ~ .level__label {
+  color: #FFC107;
+}
+
+
+
+.explicacion__nivel {
+  font-size: 15px;
+  color: #C1BCBC;
+  margin-left: 20px;
+  max-width: 480px;
 }
