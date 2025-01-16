@@ -17,7 +17,8 @@ export default {
         montserrat: ['Montserrat', 'mono']
       },
       boxShadow: {
-        '3xl': '10px 10px 7px 3px rgba(51,51,51,0.92)'
+        image: '10px 10px 7px 3px rgba(41,41,41,0.92)',
+        boton: '10px 10px 7px 3px rgba(21,21,21,0.92)'
       }
     }
   },
