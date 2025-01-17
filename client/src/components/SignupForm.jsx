@@ -37,6 +37,7 @@ const SignupForm = ({ handleToggle }) => {
             pattern="^[a-zA-Z0-9]{5,20}$"
             className='form__field'
             placeholder=''
+            autoComplete='off'
           />
           <label
             htmlFor="nickname"
@@ -47,13 +48,14 @@ const SignupForm = ({ handleToggle }) => {
         </div>
         <div className='form__group'>
           <input
-            type="email"
-            name="email"
+            type='email'
+            name='email'
             className='form__field'
             required
-            pattern="^.{10,}$"
-            placeholder=''
+            pattern='^.{10,}$'
             onChange={handleInputChange}
+            placeholder=''
+            autoComplete='off'
           />
           <label
             htmlFor="email"
@@ -68,9 +70,9 @@ const SignupForm = ({ handleToggle }) => {
             name='password'
             className='form__field'
             required
-            placeholder=''
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
             onChange={handleInputChange}
+            placeholder=''
           />
           <label
             htmlFor="password"

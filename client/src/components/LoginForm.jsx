@@ -1,4 +1,5 @@
 import useForm from '../hooks/useForm'
+import { useNavigate } from 'react-router'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
@@ -6,9 +7,11 @@ const LoginForm = ({ handleToggle }) => {
     password: ''
   })
 
+  const navigate = useNavigate()
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formValues)
+    navigate('/map', { replace: true })
   }
 
   return (
@@ -26,6 +29,8 @@ const LoginForm = ({ handleToggle }) => {
             autoFocus
             onChange={handleInputChange}
             required
+            pattern="^[a-zA-Z0-9]{5,20}$"
+            autoComplete='off'
             placeholder=''
           />
           <label className='form__label' htmlFor='nickname'>Nombre de Usuario</label>
@@ -37,7 +42,9 @@ const LoginForm = ({ handleToggle }) => {
             type='password'
             onChange={handleInputChange}
             required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
             placeholder=''
+            autoComplete='off'
           />
           <label htmlFor='password' className='form__label'>Contraseña</label>
         </div>
