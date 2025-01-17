@@ -89,10 +89,10 @@
 }
 
 .level__input {
-  margin-right: 7px; 
+  margin-right: 7px;
 }
 
-.level__input:checked ~ .level__label {
+.level__input:checked~.level__label {
   color: #FFC107;
 }
 
@@ -102,3 +102,13 @@
   margin-left: 20px;
   max-width: 480px;
 }
+
+/* Estilo base para las columnas */
+.column {
+  transition: transform 0.8s ease-in-out;
+}
+
+.image-column.order-2 {
+  transform: translateX(-100%);
+}
+

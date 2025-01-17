@@ -2,11 +2,12 @@ import useForm from '../hooks/useForm'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
-    email: '',
+    nickname: '',
     password: ''
   })
 
   const handleSubmit = (e) => {
+    e.preventDefault()
     console.log(formValues)
   }
 
@@ -20,25 +21,27 @@ const LoginForm = ({ handleToggle }) => {
         <div className='form__group'>
           <input
             className='form__field'
-            type="email"
+            name='nickname'
+            type='text'
             autoFocus
             onChange={handleInputChange}
             required
             placeholder=''
           />
-          <label className='form__label' htmlFor="email">Nombre de Usuario</label>
+          <label className='form__label' htmlFor='nickname'>Nombre de Usuario</label>
         </div>
-        <div className="form__group">
+        <div className='form__group'>
           <input
             className='form__field'
+            name='password'
             type='password'
             onChange={handleInputChange}
             required
             placeholder=''
           />
-          <label htmlFor="password" className='form__label'>Contraseña</label>
+          <label htmlFor='password' className='form__label'>Contraseña</label>
         </div>
-        <button className='text-white font-bold text-xl bg-gold-dark rounded-2xl shadow-boton p-3 w-full' type='submit'>Acceder</button>
+        <button className='text-white font-bold text-xl bg-gold-dark rounded-2xl shadow-boton p-3 w-[70%]' type='submit'>Acceder</button>
       </form>
     </>
   )

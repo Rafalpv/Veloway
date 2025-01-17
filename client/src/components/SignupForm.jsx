@@ -12,6 +12,7 @@ const SignupForm = ({ handleToggle }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log(formValues)
     try {
       axiosInstance.post('/users/new', formValues)
     } catch (error) {
@@ -29,7 +30,6 @@ const SignupForm = ({ handleToggle }) => {
         <div className='form__group'>
           <input
             type="text"
-            id="nickname"
             name="nickname"
             required
             autoFocus
@@ -48,7 +48,6 @@ const SignupForm = ({ handleToggle }) => {
         <div className='form__group'>
           <input
             type="email"
-            id="email"
             name="email"
             className='form__field'
             required
@@ -66,7 +65,6 @@ const SignupForm = ({ handleToggle }) => {
         <div className='form__group'>
           <input
             type='password'
-            id='password'
             name='password'
             className='form__field'
             required
@@ -134,7 +132,7 @@ const SignupForm = ({ handleToggle }) => {
           </div>
         </div>
         <button
-          className='text-white font-bold text-xl bg-gold-dark rounded-2xl shadow-boton p-3 w-full'
+          className='text-white font-bold text-xl bg-gold-dark rounded-2xl shadow-boton p-3 w-[70%]'
           type="submit">
           Registrar
         </button>

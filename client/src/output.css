@@ -566,6 +566,10 @@ video {
   position: relative;
 }
 
+.-right-full{
+  right: -100%;
+}
+
 .left-3{
   left: 0.75rem;
 }
@@ -614,48 +618,16 @@ video {
   height: 100vh;
 }
 
-.w-\[90\%\]{
-  width: 90%;
-}
-
-.w-full{
-  width: 100%;
-}
-
 .w-\[480px\]{
   width: 480px;
 }
 
-.w-\[1\]{
-  width: 1;
+.w-\[70\%\]{
+  width: 70%;
 }
 
-.w-\[1re\2c \]{
-  width: 1re,;
-}
-
-.w-\[1rem\]{
-  width: 1rem;
-}
-
-.w-\[2rem\]{
-  width: 2rem;
-}
-
-.w-\[4rem\]{
-  width: 4rem;
-}
-
-.w-\[12rem\]{
-  width: 12rem;
-}
-
-.w-1{
-  width: 0.25rem;
-}
-
-.w-1\/2{
-  width: 50%;
+.w-\[88\%\]{
+  width: 88%;
 }
 
 .select-none{
@@ -716,13 +688,12 @@ video {
   background-color: rgb(255 160 0 / var(--tw-bg-opacity, 1));
 }
 
-.bg-green{
-  --tw-bg-opacity: 1;
-  background-color: rgb(32 84 53 / var(--tw-bg-opacity, 1));
-}
-
 .bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{
   background-image: url('/img/ciclista-fondo.jpg');
+}
+
+.bg-custom-gradient{
+  background-image: linear-gradient(0deg, rgba(67,111,85,1) 0%, rgba(73,135,62,1) 50%, rgba(32,84,53,1) 100%);
 }
 
 .bg-cover{
@@ -904,7 +875,7 @@ video {
   margin-right: 7px;
 }
 
-.level__input:checked ~ .level__label {
+.level__input:checked~.level__label {
   color: #FFC107;
 }
 
@@ -914,3 +885,14 @@ video {
   margin-left: 20px;
   max-width: 480px;
 }
+
+/* Estilo base para las columnas */
+
+.column {
+  transition: transform 0.8s ease-in-out;
+}
+
+.image-column.order-2 {
+  transform: translateX(-100%);
+}
+

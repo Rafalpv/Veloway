@@ -12,6 +12,9 @@ export default {
         'gold-dark': '#FFA000'
 
       },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(0deg, rgba(67,111,85,1) 0%, rgba(73,135,62,1) 50%, rgba(32,84,53,1) 100%)'
+      },
       fontFamily: {
         sixcaps: ['Six Caps', 'mono'],
         montserrat: ['Montserrat', 'mono']
