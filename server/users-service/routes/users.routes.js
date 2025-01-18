@@ -7,8 +7,8 @@ const router = express.Router()
  * @swagger
  * /users/new:
  *   post:
- *     summary: Crea un nuevo usuario.
- *     description: Endpoint para registrar un nuevo usuario en el sistema Veloway.
+ *     summary: New user registration
+ *     description: Endpoint to register a new user in Veloway.
  *     tags:
  *       - Users
  *     requestBody:
@@ -20,43 +20,30 @@ const router = express.Router()
  *             properties:
  *               nickname:
  *                 type: string
- *                 description: Nombre único de usuario.
+ *                 description: Nickname user.
  *                 example: velo_master
- *               name:
- *                 type: string
- *                 description: Nombre del usuario.
- *                 example: John
- *               lastname:
- *                 type: string
- *                 description: Apellido del usuario.
- *                 example: Doe
  *               email:
  *                 type: string
- *                 description: Correo electrónico del usuario.
+ *                 description: Email user.
  *                 format: email
  *                 example: john.doe@example.com
  *               photo:
  *                 type: string
- *                 description: URL de la foto de perfil.
+ *                 description: URL photo.
  *                 example: ''
  *               password:
  *                 type: string
- *                 description: Contraseña del usuario.
+ *                 description: Password user.
  *                 format: password
  *                 example: securePassword123
- *               privacy:
- *                 type: string
- *                 description: Configuración de privacidad del usuario (e.g., pública o privada).
- *                 enum: [public, private]
- *                 example: private
  *               level:
  *                 type: string
- *                 description: Nivel de experiencia del usuario.
+ *                 description: User experience level.
  *                 enum: [beginner, intermediate, advanced]
  *                 example: beginner
  *     responses:
  *       201:
- *         description: Usuario creado exitosamente.
+ *         description: User created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -77,21 +64,12 @@ const router = express.Router()
  *                     nickname:
  *                       type: string
  *                       example: velo_master
- *                     name:
- *                       type: string
- *                       example: John
- *                     lastname:
- *                       type: string
- *                       example: Doe
  *                     email:
  *                       type: string
  *                       example: john.doe@example.com
  *                     photo:
  *                       type: string
- *                       example: 'https://example.com/profile.jpg'
- *                     privacy:
- *                       type: string
- *                       example: private
+ *                       example: ''
  *                     level:
  *                       type: string
  *                       example: beginner
@@ -104,7 +82,7 @@ const router = express.Router()
  *                       format: date-time
  *                       example: 2025-01-05T12:00:00Z
  *       500:
- *         description: Error en el servidor al crear el usuario.
+ *         description: User creation server error.
  *         content:
  *           application/json:
  *             schema:
@@ -120,12 +98,12 @@ router.post('/new', usersController.newUser)
  * @swagger
  * /users:
  *   get:
- *     summary: Obtener todos los usuarios
- *     description: Devuelve una lista de todos los usuarios registrados en la aplicación.
+ *     summary: Get all users
+ *     description: Return a list of all users.
  *     tags: [Users]
  *     responses:
  *       200:
- *         description: Lista de usuarios recuperada con éxito
+ *         description: List of users obtained successfully
  *         content:
  *           application/json:
  *             schema:
@@ -135,38 +113,26 @@ router.post('/new', usersController.newUser)
  *                 properties:
  *                   id:
  *                     type: integer
- *                     description: ID del usuario
+ *                     description: user ID
  *                     example: 1
  *                   nickname:
  *                     type: string
- *                     description: Nombre de usuario
+ *                     description: User nickname
  *                     example: velo_master
- *                   name:
- *                     type: string
- *                     description: Nombre del usuario
- *                     example: John
- *                   lastname:
- *                     type: string
- *                     description: Apellido del usuario
- *                     example: Doe
  *                   email:
  *                     type: string
- *                     description: Correo electrónico del usuario
+ *                     description: User email
  *                     example: john.doe@example.com
  *                   photo:
  *                     type: string
- *                     description: URL de la foto de perfil del usuario
+ *                     description: URL photo
  *                     example: "https://example.com/photo.jpg"
- *                   privacy:
- *                     type: string
- *                     description: Configuración de privacidad del usuario
- *                     example: private
  *                   level:
  *                     type: string
- *                     description: Nivel del usuario (beginner, intermediate, advanced)
+ *                     description: User level (beginner, intermediate, advanced)
  *                     example: beginner
  *       500:
- *         description: Error interno del servidor
+ *         description: Server internal error
  *         content:
  *           application/json:
  *             schema:
@@ -174,7 +140,7 @@ router.post('/new', usersController.newUser)
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Error interno del servidor"
+ *                   example: "Server internal error"
  */
 router.get('/', usersController.listUsers)
 
@@ -182,20 +148,20 @@ router.get('/', usersController.listUsers)
  * @swagger
  * /users/{nickname}:
  *   get:
- *     summary: Obtener un usuario por su nickname
- *     description: Devuelve los detalles de un usuario que coincida con el nickname proporcionado.
+ *     summary: Get user by nickname
+ *     description: Returns the information about a user by nickname.
  *     tags: [Users]
  *     parameters:
  *       - name: nickname
  *         in: path
  *         required: true
- *         description: El nickname del usuario a buscar.
+ *         description: User nickname to search.
  *         schema:
  *           type: string
  *           example: velo_master
  *     responses:
  *       200:
- *         description: Usuario encontrado con éxito
+ *         description: User information obtained successfully
  *         content:
  *           application/json:
  *             schema:
@@ -203,20 +169,12 @@ router.get('/', usersController.listUsers)
  *               properties:
  *                 id:
  *                   type: integer
- *                   description: ID del usuario
+ *                   description: User ID
  *                   example: 1
  *                 nickname:
  *                   type: string
- *                   description: Nombre de usuario
+ *                   description: User nickname
  *                   example: velo_master
- *                 name:
- *                   type: string
- *                   description: Nombre del usuario
- *                   example: John
- *                 lastname:
- *                   type: string
- *                   description: Apellido del usuario
- *                   example: Doe
  *                 email:
  *                   type: string
  *                   description: Correo electrónico del usuario
@@ -225,16 +183,12 @@ router.get('/', usersController.listUsers)
  *                   type: string
  *                   description: URL de la foto de perfil del usuario
  *                   example: "https://example.com/photo.jpg"
- *                 privacy:
- *                   type: string
- *                   description: Configuración de privacidad del usuario
- *                   example: private
  *                 level:
  *                   type: string
- *                   description: Nivel del usuario (beginner, intermediate, advanced)
+ *                   description: User level (beginner, intermediate, advanced)
  *                   example: beginner
  *       404:
- *         description: Usuario no encontrado
+ *         description: User not found
  *         content:
  *           application/json:
  *             schema:
@@ -242,9 +196,9 @@ router.get('/', usersController.listUsers)
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Usuario no encontrado"
+ *                   example: "User not found"
  *       500:
- *         description: Error interno del servidor
+ *         description: Server internal error
  *         content:
  *           application/json:
  *             schema:
@@ -252,7 +206,7 @@ router.get('/', usersController.listUsers)
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Error interno del servidor"
+ *                   example: "Server internal error"
  */
 router.get('/:nickname', usersController.getUserByNickname)
 
