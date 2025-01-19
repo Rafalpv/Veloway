@@ -2,25 +2,27 @@ import express from 'express'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocs from './shared/config/swagger.js'
 import cors from 'cors'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import { PORT } from './shared/utils/const.js'
 
-import usersRoutes from './users-service/routes/users.routes.js'
-
-// CONFIGURACION DE EXPRESS
 const app = express()
+
 app.use(express.json())
 app.use(cors())
 
-// GESTION DE RUTAS
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-app.use('/users', usersRoutes)
 
-try {
-  app.listen(PORT, () => {
-    console.log(`Servidor running en http://localhost:${PORT}`)
-  })
-} catch (error) {
-  console.error('Unable to connect to the database:', error)
-}
+// Configuración del proxy
+app.use('/users', createProxyMiddleware({
+  target: 'http://localhost:4000',
+  changeOrigin: true
+}))
 
-export default app
+app.use('/auth', createProxyMiddleware({
+  target: 'http://localhost:5000',
+  changeOrigin: true
+}))
+
+app.listen(PORT, () => {
+  console.log(`API Gateway corriendo en http://localhost:${PORT}`)
+})
