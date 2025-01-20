@@ -1,31 +1,38 @@
 import { where } from 'sequelize'
 import Users from '../models/Users.js'
-import bycrypt from 'bcrypt'
+import bcrypt from 'bcrypt'
 
 // POST
 // http://localhost:3000/users/signup/new -> http://localhost:4000/signup/new
 const newUser = async (req, res) => {
   const { nickname, email, photo, password, level } = req.body
+
   try {
     const saltRounds = 10
-    const hashesPassword = await bycrypt.hash(password, saltRounds)
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
 
-    await Users.create({
+    const user = await Users.create({
       nickname,
       email,
-      password: hashesPassword,
+      password: hashedPassword,
       photo,
       level
-    }).then(user => {
-      res.status(201).json({
-        status: 'succes',
-        message: 'User created successfully',
-        User: user
-      })
+    })
+
+    res.status(201).json({
+      status: 'success',
+      message: 'User created successfully',
+      user
     })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Error creating user' })
+    console.error('Error creating user:', error)
+
+    // Responder con error
+    res.status(500).json({
+      status: 'error',
+      message: 'Error creating user',
+      error: error.message
+    })
   }
 }
 
