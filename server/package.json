@@ -6,7 +6,8 @@
   "proxy": "http://localhost:3000",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon server.js",
+    "dev": "nodemon app.js",
+    "dev-users": "nodemon ./users-service/user-service.js",
     "test": "vitest --config vitest.config.js"
   },
   "dependencies": {

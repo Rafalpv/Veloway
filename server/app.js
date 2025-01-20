@@ -12,10 +12,12 @@ app.use(cors())
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-// Configuración del proxy
 app.use('/users', createProxyMiddleware({
   target: 'http://localhost:4000',
-  changeOrigin: true
+  changeOrigin: true,
+  timeout: 5000,
+  proxyTimeout: 5000,
+  pathRewrite: { '^/users': '' }
 }))
 
 app.use('/auth', createProxyMiddleware({

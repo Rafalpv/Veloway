@@ -3,10 +3,9 @@ import Users from '../models/Users.js'
 import bycrypt from 'bcrypt'
 
 // POST
-// http://localhost:3000/users/new
+// http://localhost:3000/users/signup/new -> http://localhost:4000/signup/new
 const newUser = async (req, res) => {
   const { nickname, email, photo, password, level } = req.body
-
   try {
     const saltRounds = 10
     const hashesPassword = await bycrypt.hash(password, saltRounds)
