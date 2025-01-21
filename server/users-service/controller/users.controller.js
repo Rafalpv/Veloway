@@ -79,7 +79,7 @@ const validetaUser = async (req, res) => {
       return res.status(404).json({ error: 'User not find' })
     }
 
-    const validPassword = await bycrypt.compare(password, user.password)
+    const validPassword = await bcrypt.compare(password, user.password)
     if (!validPassword) {
       return res.status(401).json({ error: 'Invalid password' })
     }

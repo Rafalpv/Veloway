@@ -228,11 +228,11 @@ router.get('/:nickname', usersController.getUserByNickname)
  *               nickname:
  *                 type: string
  *                 description: The nickname of the user.
- *                 example: johndoe
+ *                 example: "velo_master"
  *               password:
  *                 type: string
  *                 description: The password of the user.
- *                 example: "12345"
+ *                 example: "securePassword123"
  *     responses:
  *       200:
  *         description: User validated successfully.
