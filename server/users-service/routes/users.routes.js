@@ -210,4 +210,71 @@ router.get('/', usersController.listUsers)
  */
 router.get('/:nickname', usersController.getUserByNickname)
 
+/**
+ * @swagger
+ * /users/validate:
+ *   post:
+ *     summary: Validate a user
+ *     description: Validates a user by checking if the provided nickname and password are correct.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nickname:
+ *                 type: string
+ *                 description: The nickname of the user.
+ *                 example: johndoe
+ *               password:
+ *                 type: string
+ *                 description: The password of the user.
+ *                 example: "12345"
+ *     responses:
+ *       200:
+ *         description: User validated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User validated successfully
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: User not find
+ *       401:
+ *         description: Invalid password.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Invalid password
+ *       500:
+ *         description: Server error while validating user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error validating user
+ */
+router.post('/validate', usersController.validetaUser)
+
 export default router
