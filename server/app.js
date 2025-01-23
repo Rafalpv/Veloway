@@ -7,7 +7,7 @@ import { PORT } from './shared/utils/const.js'
 
 const app = express()
 
-app.use(express.json({ limit: '10mb' })) 
+app.use(express.json({ limit: '10mb' }))
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 

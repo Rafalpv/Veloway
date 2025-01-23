@@ -70,6 +70,7 @@ const getUserByNickname = async (req, res) => {
 // http:localhost:3000/users/validate
 const validetaUser = async (req, res) => {
   const { nickname, password } = req.body
+
   try {
     const user = await Users.findOne({
       where: { nickname }
@@ -83,7 +84,7 @@ const validetaUser = async (req, res) => {
     if (!validPassword) {
       return res.status(401).json({ error: 'Invalid password' })
     }
-    res.status(200).json({ message: 'User validated successfully' })
+    res.status(200).json({ user: user.dataValues, message: 'User validated successfully' })
   } catch (error) {
     res.status(500).json({ message: 'Error validating user' })
   }
