@@ -12,10 +12,9 @@ const userLogin = async (req, res) => {
       password
     })
 
-    const userData = userResponse.data
-
+    const userData = userResponse.data.user
     const token = jwt.sign(
-      { id: userData.id, nickname: userData.nickname },
+      { nickname: userData.nickname },
       process.env.SECRET_JWT,
       { expiresIn: '1h' }
     )

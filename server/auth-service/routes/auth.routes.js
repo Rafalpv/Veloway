@@ -74,7 +74,10 @@ const router = express.Router()
 router.post('/login', authController.userLogin)
 
 router.get('/check-auth', verifyToken, (req, res) => {
-  res.json({ auth: true })
+  res.json({
+    auth: true,
+    nickname: req.nickname
+  })
 })
 
 export default router

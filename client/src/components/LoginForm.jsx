@@ -14,7 +14,7 @@ const LoginForm = ({ handleToggle }) => {
     e.preventDefault()
     try {
       await axiosInstance.post('/auth/login', formValues)
-      navigate('/app')
+      navigate('/profile')
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
       console.error('Detalles del error:', err.response?.data || err.message)
