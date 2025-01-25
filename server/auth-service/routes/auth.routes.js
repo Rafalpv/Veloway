@@ -1,6 +1,6 @@
 import express from 'express'
 import authController from '../controller/auth.controller.js'
-import authMiddleware from '../../shared/middleware/authMiddleware.js'
+import verifyToken from '../../shared/middleware/authMiddleware.js'
 
 const router = express.Router()
 
@@ -73,12 +73,8 @@ const router = express.Router()
  */
 router.post('/login', authController.userLogin)
 
-// Ruta protegida: solo accesible si el token es válido
-router.get('/protected', authMiddleware, (req, res) => {
-  res.json({
-    message: 'Access granted to protected resource',
-    user: req.user // Datos del usuario decodificados del token
-  })
+router.get('/check-auth', verifyToken, (req, res) => {
+  res.json({ auth: true })
 })
 
 export default router

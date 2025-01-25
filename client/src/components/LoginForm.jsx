@@ -1,5 +1,6 @@
 import useForm from '../hooks/useForm'
 import { useNavigate } from 'react-router'
+import axiosInstance from '../utils/axiosInstance'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
@@ -9,9 +10,16 @@ const LoginForm = ({ handleToggle }) => {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    navigate('/map', { replace: true })
+    try {
+      await axiosInstance.post('/auth/login', formValues)
+      navigate('/app')
+    } catch (err) {
+      console.error('Error al iniciar sesión:', err)
+      console.error('Detalles del error:', err.response?.data || err.message)
+      // Puedes mostrar un mensaje de error al usuario
+    }
   }
 
   return (

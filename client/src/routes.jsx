@@ -1,20 +1,20 @@
 import { createBrowserRouter } from 'react-router'
-import Map from './pages/Map'
 import Auth from './pages/Auth'
 import App from './App'
+import ProtectedRoute from './components/ProtectedRoute' // Importa el componente de protección
 
 const router = createBrowserRouter([
   {
+    path: '/app',
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    )
+  },
+  {
     path: '/',
-    element: <App />
-  },
-  {
-    path: '/auth',
     element: <Auth />
-  },
-  {
-    path: '/map',
-    element: <Map />
   }
 ])
 

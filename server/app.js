@@ -8,8 +8,14 @@ import { PORT } from './shared/utils/const.js'
 const app = express()
 
 app.use(express.json({ limit: '10mb' }))
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  })
+)
 
 app.use('/users', createProxyMiddleware({
   target: 'http://localhost:4000',

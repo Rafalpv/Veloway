@@ -7,7 +7,6 @@ const userLogin = async (req, res) => {
   const { nickname, password } = req.body
 
   try {
-    // Llama al servicio de usuarios para validar las credenciales
     const userResponse = await axios.post('http://localhost:4000/validate', {
       nickname,
       password
@@ -15,7 +14,6 @@ const userLogin = async (req, res) => {
 
     const userData = userResponse.data
 
-    // Generar un token JWT para el usuario
     const token = jwt.sign(
       { id: userData.id, nickname: userData.nickname },
       process.env.SECRET_JWT,
@@ -23,8 +21,9 @@ const userLogin = async (req, res) => {
     )
 
     const cookies = {
-      httOnly: true,
-      sameSite: true,
+      httpOnly: true,
+      sameSite: 'Lax',
+      secure: false,
       maxAge: 60 * 60 * 1000
     }
 
@@ -34,7 +33,6 @@ const userLogin = async (req, res) => {
       .json({ message: 'User login successful', token })
   } catch (error) {
     if (error.response) {
-      // Maneja errores provenientes de los servicios
       res
         .status(error.response.status)
         .json({ error: error.response.data.error })

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const authMiddleware = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   const token = req.cookies.authToken
 
   if (!token) {
@@ -9,11 +9,11 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_JWT)
-    req.user = decoded // Agregar datos del usuario al objeto req
+    req.user = decoded
     next()
   } catch (error) {
     res.status(401).json({ error: 'Invalid token.' })
   }
 }
 
-export default authMiddleware
+export default verifyToken
