@@ -1,4 +1,4 @@
-import axiosInstance from '../utils/axiosInstance'
+import axiosInstance from '../api/axiosInstance'
 import useForm from '../hooks/useForm'
 
 const SignupForm = ({ handleToggle }) => {
@@ -29,18 +29,18 @@ const SignupForm = ({ handleToggle }) => {
       <form onSubmit={handleSubmit} className='flex flex-col items-center h-auto space-y-14 w-[480px]'>
         <div className='form__group'>
           <input
-            type="text"
-            name="nickname"
+            type='text'
+            name='nickname'
             required
             autoFocus
             onChange={handleInputChange}
-            pattern="^[a-zA-Z0-9]{5,20}$"
+            pattern='^[a-zA-Z0-9]{5,20}$'
             className='form__field'
             placeholder=''
             autoComplete='off'
           />
           <label
-            htmlFor="nickname"
+            htmlFor='nickname'
             className='form__label'
           >
             Nombre de Usuario
@@ -58,7 +58,7 @@ const SignupForm = ({ handleToggle }) => {
             autoComplete='off'
           />
           <label
-            htmlFor="email"
+            htmlFor='email'
             className='form__label'
           >
             Email
@@ -70,12 +70,12 @@ const SignupForm = ({ handleToggle }) => {
             name='password'
             className='form__field'
             required
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
+            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
             onChange={handleInputChange}
             placeholder=''
           />
           <label
-            htmlFor="password"
+            htmlFor='password'
             className='form__label'
           >
             Contraseña
@@ -83,7 +83,7 @@ const SignupForm = ({ handleToggle }) => {
         </div>
         <div className='space-y-3'>
           <label
-            htmlFor="level"
+            htmlFor='level'
             className='text-3xl font-bold'
           >
             Nivel
@@ -93,9 +93,9 @@ const SignupForm = ({ handleToggle }) => {
               <label className='level__label'>
                 <input
                   className='level__input'
-                  type="radio"
-                  name="level"
-                  value="beginner"
+                  type='radio'
+                  name='level'
+                  value='beginner'
                   required
                   onChange={handleInputChange}
                 />
@@ -107,9 +107,9 @@ const SignupForm = ({ handleToggle }) => {
               <label className='level__label'>
                 <input
                   className='level__input'
-                  type="radio"
-                  name="level"
-                  value="intermediate"
+                  type='radio'
+                  name='level'
+                  value='intermediate'
                   required
                   onChange={handleInputChange}
                 />
@@ -121,9 +121,9 @@ const SignupForm = ({ handleToggle }) => {
               <label className='level__label'>
                 <input
                   className='level__input'
-                  type="radio"
-                  name="level"
-                  value="advanced"
+                  type='radio'
+                  name='level'
+                  value='advanced'
                   required
                   onChange={handleInputChange}
                 />
@@ -135,7 +135,7 @@ const SignupForm = ({ handleToggle }) => {
         </div>
         <button
           className='text-white font-bold text-xl bg-gold-dark rounded-2xl shadow-boton p-3 w-[70%]'
-          type="submit">
+          type='submit'>
           Registrar
         </button>
       </form>

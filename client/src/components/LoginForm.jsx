@@ -1,6 +1,6 @@
 import useForm from '../hooks/useForm'
 import { useNavigate } from 'react-router'
-import axiosInstance from '../utils/axiosInstance'
+import axiosInstance from '../api/axiosInstance'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
@@ -18,7 +18,6 @@ const LoginForm = ({ handleToggle }) => {
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
       console.error('Detalles del error:', err.response?.data || err.message)
-      // Puedes mostrar un mensaje de error al usuario
     }
   }
 
@@ -37,7 +36,7 @@ const LoginForm = ({ handleToggle }) => {
             autoFocus
             onChange={handleInputChange}
             required
-            pattern="^[a-zA-Z0-9]{5,20}$"
+            pattern='^[a-zA-Z0-9]{5,20}$'
             autoComplete='off'
             placeholder=''
           />
@@ -50,7 +49,7 @@ const LoginForm = ({ handleToggle }) => {
             type='password'
             onChange={handleInputChange}
             required
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
+            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
             placeholder=''
             autoComplete='off'
           />
