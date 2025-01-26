@@ -5,12 +5,23 @@ import bcrypt from 'bcrypt'
 // POST
 // http://localhost:3000/users/signup/new -> http://localhost:4000/signup/new
 const newUser = async (req, res) => {
-  const { nickname, email, photo, password, level } = req.body
+  const { nickname, email, password, level, photo } = req.body
 
   try {
+    // Verificar si el usuario ya existe
+    const existingUser = await Users.findOne({ where: { email } })
+    if (existingUser) {
+      return res.status(409).json({
+        status: 'error',
+        message: 'El correo ya está registrado.'
+      })
+    }
+
+    // Hashear la contraseña
     const saltRounds = 10
     const hashedPassword = await bcrypt.hash(password, saltRounds)
 
+    // Crear el usuario
     const user = await Users.create({
       nickname,
       email,
@@ -21,16 +32,19 @@ const newUser = async (req, res) => {
 
     res.status(201).json({
       status: 'success',
-      message: 'User created successfully',
-      user
+      message: 'Usuario creado exitosamente',
+      user: {
+        id: user.id,
+        nickname: user.nickname,
+        email: user.email,
+        level: user.level,
+        createdAt: user.createdAt
+      }
     })
   } catch (error) {
-    console.error('Error creating user:', error)
-
-    // Responder con error
     res.status(500).json({
       status: 'error',
-      message: 'Error creating user',
+      message: 'Error interno del servidor',
       error: error.message
     })
   }

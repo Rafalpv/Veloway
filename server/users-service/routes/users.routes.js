@@ -1,5 +1,6 @@
 import express from 'express'
 import usersController from '../controller/users.controller.js'
+import validateRegisterData from '../middleware/usersValidators.js'
 
 const router = express.Router()
 
@@ -92,7 +93,7 @@ const router = express.Router()
  *                   type: string
  *                   example: Error creating user
  */
-router.post('/new', usersController.newUser)
+router.post('/new', validateRegisterData, usersController.newUser)
 
 /**
  * @swagger

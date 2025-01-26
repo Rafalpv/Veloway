@@ -12,7 +12,6 @@ const SignupForm = ({ handleToggle }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formValues)
     try {
       axiosInstance.post('/users/new', formValues)
     } catch (error) {
@@ -34,7 +33,7 @@ const SignupForm = ({ handleToggle }) => {
             required
             autoFocus
             onChange={handleInputChange}
-            pattern='^[a-zA-Z0-9]{5,20}$'
+           // pattern='^[a-zA-Z0-9]{5,20}$'
             className='form__field'
             placeholder=''
             autoComplete='off'
@@ -52,7 +51,7 @@ const SignupForm = ({ handleToggle }) => {
             name='email'
             className='form__field'
             required
-            pattern='^.{10,}$'
+           // pattern='^.{10,}$'
             onChange={handleInputChange}
             placeholder=''
             autoComplete='off'
@@ -70,7 +69,7 @@ const SignupForm = ({ handleToggle }) => {
             name='password'
             className='form__field'
             required
-            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
+            // pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
             onChange={handleInputChange}
             placeholder=''
           />
