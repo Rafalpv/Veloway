@@ -1,4 +1,4 @@
-import { where } from 'sequelize'
+import { Op } from 'sequelize'
 import Users from '../models/Users.js'
 import bcrypt from 'bcrypt'
 
@@ -8,12 +8,19 @@ const newUser = async (req, res) => {
   const { nickname, email, password, level, photo } = req.body
 
   try {
-    // Verificar si el usuario ya existe
-    const existingUser = await Users.findOne({ where: { email } })
+    const existingUser = await Users.findOne({
+      where: {
+        [Op.or]: [{ nickname }, { email }]
+      }
+    })
+
     if (existingUser) {
+      const message = existingUser.nickname === nickname
+        ? 'El nickname ya está registrado.'
+        : 'El correo ya está registrado.'
       return res.status(409).json({
         status: 'error',
-        message: 'El correo ya está registrado.'
+        message
       })
     }
 
@@ -43,9 +50,8 @@ const newUser = async (req, res) => {
     })
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Error interno del servidor',
-      error: error.message
+      success: false,
+      message: 'Error al registrar el usuario'
     })
   }
 }

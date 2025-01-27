@@ -1,7 +1,7 @@
 import express from 'express'
 import authController from '../controller/auth.controller.js'
 import verifyToken from '../middleware/authMiddleware.js'
-import { validateLoginInput, checkLoginInput } from '../middleware/validator/validators.js'
+import validateLoginInput from '../middleware/validator/validators.js'
 
 const router = express.Router()
 
@@ -88,7 +88,7 @@ const router = express.Router()
  *                   description: Server error message.
  *                   example: Error during login process
  */
-router.post('/login', validateLoginInput, checkLoginInput, authController.userLogin)
+router.post('/login', validateLoginInput, authController.userLogin)
 
 router.get('/check-auth', verifyToken, (req, res) => {
   res.json({

@@ -1,5 +1,6 @@
 import axiosInstance from '../api/axiosInstance'
 import useForm from '../hooks/useForm'
+import toast from 'react-hot-toast'
 
 const SignupForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
@@ -10,12 +11,26 @@ const SignupForm = ({ handleToggle }) => {
     level: ''
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
     try {
-      axiosInstance.post('/users/new', formValues)
+      // Enviamos los datos al endpoint de registro
+      await axiosInstance.post('/users/new', formValues)
+
+      // Notificación de éxito
+      toast.success('Usuario creado con éxito', {
+        duration: 5000,
+        position: 'top-left'
+      })
     } catch (error) {
-      console.log('Error al crear un nuevo usuario')
+      const errorMessage =
+        error.response?.data?.message || 'Error al crear el usuario'
+
+      toast.error(errorMessage, {
+        duration: 5000,
+        position: 'top-left'
+      })
     }
   }
 
@@ -33,7 +48,7 @@ const SignupForm = ({ handleToggle }) => {
             required
             autoFocus
             onChange={handleInputChange}
-           // pattern='^[a-zA-Z0-9]{5,20}$'
+            pattern='^[a-zA-Z0-9]{5,20}$'
             className='form__field'
             placeholder=''
             autoComplete='off'
@@ -51,7 +66,7 @@ const SignupForm = ({ handleToggle }) => {
             name='email'
             className='form__field'
             required
-           // pattern='^.{10,}$'
+            pattern='^.{10,}$'
             onChange={handleInputChange}
             placeholder=''
             autoComplete='off'
@@ -69,7 +84,7 @@ const SignupForm = ({ handleToggle }) => {
             name='password'
             className='form__field'
             required
-            // pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
+            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
             onChange={handleInputChange}
             placeholder=''
           />
