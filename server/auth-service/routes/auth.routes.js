@@ -1,6 +1,7 @@
 import express from 'express'
 import authController from '../controller/auth.controller.js'
 import verifyToken from '../middleware/authMiddleware.js'
+import { validateLoginInput, checkLoginInput } from '../middleware/validator/validators.js'
 
 const router = express.Router()
 
@@ -10,58 +11,30 @@ const router = express.Router()
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Inicia sesión y obtiene un token de autenticación
+ *     summary: Logs in and sets a cookie with the authentication token.
  *     tags:
- *       - Autenticación
+ *       - Authentication
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - nickname
+ *               - password
  *             properties:
  *               nickname:
  *                 type: string
- *                 description: Nombre de usuario del usuario
+ *                 description: The user's nickname.
  *                 example: veloMaster
  *               password:
  *                 type: string
- *                 description: Contraseña del usuario
+ *                 description: The user's password.
  *                 example: securePassword123
  *     responses:
  *       200:
- *         description: Inicio de sesión exitoso, se devuelve el token
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
- *                   description: Token de autenticación generado
- *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
- *       401:
- *         description: Credenciales inválidas
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: Invalid password
- *       404:
- *         description: Usuario no encontrado
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: User not found
- *       500:
- *         description: Error interno del servidor
+ *         description: Login successful. A message is returned, and a cookie with the authentication token is set.
  *         content:
  *           application/json:
  *             schema:
@@ -69,9 +42,53 @@ const router = express.Router()
  *               properties:
  *                 message:
  *                   type: string
+ *                   description: Success message.
+ *                   example: User login successful
+ *       400:
+ *        description: Missing nickname or password.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                error:
+ *                  type: string
+ *                  example: Missing nickname or password
+ *       401:
+ *         description: Invalid credentials.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Authentication error message.
+ *                   example: Invalid password
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message when the user does not exist.
+ *                   example: User not found
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Server error message.
  *                   example: Error during login process
  */
-router.post('/login', authController.userLogin)
+router.post('/login', validateLoginInput, checkLoginInput, authController.userLogin)
 
 router.get('/check-auth', verifyToken, (req, res) => {
   res.json({

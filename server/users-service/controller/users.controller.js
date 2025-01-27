@@ -51,7 +51,7 @@ const newUser = async (req, res) => {
 }
 
 // GET
-// http://localhost:3000/users
+// http://localhost:3000/users -> http://localhost:4000/
 const listUsers = async (req, res) => {
   try {
     const users = await Users.findAll()
@@ -63,7 +63,7 @@ const listUsers = async (req, res) => {
 }
 
 // GET
-// http://localhost:3000/users/nickname
+// http://localhost:3000/users/nickname -> http://localhost:4000/nickname
 const getUserByNickname = async (req, res) => {
   try {
     const { nickname } = req.params
@@ -81,7 +81,7 @@ const getUserByNickname = async (req, res) => {
 }
 
 // POST
-// http:localhost:3000/users/validate
+// http:localhost:3000/users/validate -> http://localhost:4000/validate
 const validetaUser = async (req, res) => {
   const { nickname, password } = req.body
 

@@ -22,7 +22,7 @@ const router = express.Router()
  *               nickname:
  *                 type: string
  *                 description: Nickname user.
- *                 example: velo_master
+ *                 example: veloMaster
  *               email:
  *                 type: string
  *                 description: Email user.
@@ -64,7 +64,7 @@ const router = express.Router()
  *                       example: 1
  *                     nickname:
  *                       type: string
- *                       example: velo_master
+ *                       example: veloMaster
  *                     email:
  *                       type: string
  *                       example: john.doe@example.com
@@ -119,7 +119,7 @@ router.post('/new', validateRegisterData, usersController.newUser)
  *                   nickname:
  *                     type: string
  *                     description: User nickname
- *                     example: velo_master
+ *                     example: veloMaster
  *                   email:
  *                     type: string
  *                     description: User email
@@ -159,7 +159,7 @@ router.get('/', usersController.listUsers)
  *         description: User nickname to search.
  *         schema:
  *           type: string
- *           example: velo_master
+ *           example: veloMaster
  *     responses:
  *       200:
  *         description: User information obtained successfully
@@ -175,7 +175,7 @@ router.get('/', usersController.listUsers)
  *                 nickname:
  *                   type: string
  *                   description: User nickname
- *                   example: velo_master
+ *                   example: veloMaster
  *                 email:
  *                   type: string
  *                   description: Correo electrónico del usuario
@@ -229,7 +229,7 @@ router.get('/:nickname', usersController.getUserByNickname)
  *               nickname:
  *                 type: string
  *                 description: The nickname of the user.
- *                 example: "velo_master"
+ *                 example: "veloMaster"
  *               password:
  *                 type: string
  *                 description: The password of the user.

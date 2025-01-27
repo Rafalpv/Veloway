@@ -1,44 +1,29 @@
-import axios from 'axios'
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-dotenv.config({ path: './auth-service/.env' })
+import { validationResult } from 'express-validator'
+import { validateUserCredentials, setAuthToken } from '../utils/functions.js'
 
 const userLogin = async (req, res) => {
   const { nickname, password } = req.body
 
+  const error = validationResult(req)
+  if (!error.isEmpty()) {
+    return res.status(400).json({ error: error.array() })
+  }
+
   try {
-    const userResponse = await axios.post('http://localhost:4000/validate', {
-      nickname,
-      password
-    })
+    const userData = await validateUserCredentials(nickname, password)
 
-    const userData = userResponse.data.user
-    const token = jwt.sign(
-      { nickname: userData.nickname },
-      process.env.SECRET_JWT,
-      { expiresIn: '1h' }
-    )
-
-    const cookies = {
-      httpOnly: true,
-      sameSite: 'Lax',
-      secure: false,
-      maxAge: 60 * 60 * 1000
-    }
+    setAuthToken(res, userData)
 
     res
-      .cookie('authToken', token, cookies)
       .status(200)
-      .json({ message: 'User login successful', token })
+      .json({ message: 'User login successful' })
   } catch (error) {
-    if (error.response) {
-      res
-        .status(error.response.status)
-        .json({ error: error.response.data.error })
-    } else {
-      console.error(error)
-      res.status(500).json({ message: 'Error during login process' })
+    // Manejo de errores
+    if (error.message.includes('Invalid credentials')) {
+      return res.status(401).json({ error: 'Invalid credentials' })
     }
+    console.error(error)
+    res.status(500).json({ message: 'Error during login process' })
   }
 }
 
