@@ -1,6 +1,7 @@
 import useForm from '../hooks/useForm'
 import { useNavigate } from 'react-router'
 import axiosInstance from '../api/axiosInstance'
+import toast from 'react-hot-toast'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
@@ -13,7 +14,14 @@ const LoginForm = ({ handleToggle }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axiosInstance.post('/auth/login', formValues)
+      await toast.promise(
+        axiosInstance.post('/auth/login', formValues),
+        {
+          pending: 'Iniciando sesión...',
+          success: 'Inicio de sesión exitoso!',
+          error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.'
+        }
+      )
       navigate('/profile')
     } catch (err) {
       console.error('Error al iniciar sesión:', err)

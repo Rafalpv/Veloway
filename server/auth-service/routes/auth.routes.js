@@ -97,4 +97,8 @@ router.get('/check-auth', verifyToken, (req, res) => {
   })
 })
 
+router.get('/logout', (req, res) => {
+  res.clearCookie('authToken', { httpOnly: true, path: '/' }).json({ message: 'User logged out' })
+})
+
 export default router

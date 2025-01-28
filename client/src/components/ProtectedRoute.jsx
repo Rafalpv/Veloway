@@ -3,8 +3,8 @@ import { useAuth } from '../context/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
   const auth = useAuth()
-
-  if (!auth) {
+  console.log(auth.authState.auth)
+  if (!auth.authState.auth) {
     return <Navigate to='/' replace />
   }
 

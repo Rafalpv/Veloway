@@ -1,17 +1,13 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
+import LogoutButton from '../components/LogoutButton'
 
 const Profile = () => {
   const { authState } = useAuth()
-  console.log(authState)
   return (
     <div>
-      {authState.auth
-        ? (
-          <p>Welcome, {authState.user}!</p>)
-        : (
-          <p>Please log in.</p>)
-      }
+      <p>Welcome, {authState.user}! </p>
+      <LogoutButton />
     </div>
   )
 }
