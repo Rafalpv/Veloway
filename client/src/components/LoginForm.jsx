@@ -20,9 +20,11 @@ const LoginForm = ({ handleToggle }) => {
           pending: 'Iniciando sesión...',
           success: 'Inicio de sesión exitoso!',
           error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.'
+        }, {
+          position: 'top-right '
         }
       )
-      navigate('/profile')
+      navigate('/admin')
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
       console.error('Detalles del error:', err.response?.data || err.message)

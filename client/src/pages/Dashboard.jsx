@@ -2,7 +2,7 @@ import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import LogoutButton from '../components/LogoutButton'
 
-const Profile = () => {
+const Dashboard = () => {
   const { authState } = useAuth()
   return (
     <div>
@@ -12,4 +12,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Dashboard
