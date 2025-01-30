@@ -1,14 +1,12 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
-import LogoutButton from '../components/LogoutButton'
+import Header from '../components/Header'
 
 const Dashboard = () => {
-  const { authState } = useAuth()
   return (
-    <div>
-      <p>Welcome, {authState.user}! </p>
-      <LogoutButton />
-    </div>
+    <main className='bg-backgraound-admin h-screen'>
+      <Header />
+    </main>
   )
 }
 

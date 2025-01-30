@@ -7,6 +7,7 @@ export default {
     extend: {
       colors: {
         'background-light': '#ECE8E8',
+        'backgraound-admin': '#D6DBE0',
         green: '#205435',
         gold: '#FFC107',
         'gold-dark': '#FFA000'
