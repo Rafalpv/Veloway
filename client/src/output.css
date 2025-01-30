@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Six+Caps&display=swap');
 
 *, ::before, ::after{
   --tw-border-spacing-x: 0;
@@ -598,16 +598,28 @@ video {
   grid-column: span 3 / span 3;
 }
 
+.mb-6{
+  margin-bottom: 1.5rem;
+}
+
+.ml-14{
+  margin-left: 3.5rem;
+}
+
 .flex{
   display: flex;
+}
+
+.table{
+  display: table;
 }
 
 .grid{
   display: grid;
 }
 
-.h-14{
-  height: 3.5rem;
+.h-12{
+  height: 3rem;
 }
 
 .h-\[90\%\]{
@@ -622,12 +634,8 @@ video {
   height: 100vh;
 }
 
-.h-16{
-  height: 4rem;
-}
-
-.w-14{
-  width: 3.5rem;
+.w-12{
+  width: 3rem;
 }
 
 .w-\[480px\]{
@@ -640,6 +648,14 @@ video {
 
 .w-\[88\%\]{
   width: 88%;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
 
 .select-none{
@@ -672,6 +688,22 @@ video {
   justify-content: space-between;
 }
 
+.gap-10{
+  gap: 2.5rem;
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-6 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-y-14 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(3.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -690,12 +722,26 @@ video {
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
+.space-y-6 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.overflow-x-auto{
+  overflow-x: auto;
+}
+
 .rounded-2xl{
   border-radius: 1rem;
 }
 
 .rounded-full{
   border-radius: 9999px;
+}
+
+.border{
+  border-width: 1px;
 }
 
 .border-2{
@@ -706,18 +752,18 @@ video {
   border-bottom-width: 1px;
 }
 
+.border-b-2{
+  border-bottom-width: 2px;
+}
+
 .border-black{
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
 }
 
-.border-gray-200{
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
-}
-
-.bg-\[bac\]{
-  background-color: bac;
+.bg-backgraound-admin{
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 219 224 / var(--tw-bg-opacity, 1));
 }
 
 .bg-background-light{
@@ -730,14 +776,8 @@ video {
   background-color: rgb(255 160 0 / var(--tw-bg-opacity, 1));
 }
 
-.bg-backgraound-admin{
-  --tw-bg-opacity: 1;
-  background-color: rgb(214 219 224 / var(--tw-bg-opacity, 1));
-}
-
-.bg-white{
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+.bg-transparent{
+  background-color: transparent;
 }
 
 .bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{
@@ -756,16 +796,33 @@ video {
   background-position: center;
 }
 
+.p-2{
+  padding: 0.5rem;
+}
+
 .p-3{
   padding: 0.75rem;
+}
+
+.p-4{
+  padding: 1rem;
+}
+
+.px-20{
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.text-left{
+  text-align: left;
 }
 
 .text-center{
   text-align: center;
 }
 
-.font-montserrat{
-  font-family: Montserrat, mono;
+.font-poppins{
+  font-family: Poppins, mono;
 }
 
 .font-sixcaps{
@@ -782,8 +839,23 @@ video {
   line-height: 2.25rem;
 }
 
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 .text-\[20vw\]{
   font-size: 20vw;
+}
+
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-xl{
@@ -793,6 +865,10 @@ video {
 
 .font-bold{
   font-weight: 700;
+}
+
+.font-semibold{
+  font-weight: 600;
 }
 
 .leading-none{
@@ -811,6 +887,11 @@ video {
 .text-gold{
   --tw-text-opacity: 1;
   color: rgb(255 193 7 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 }
 
 .text-white{
@@ -836,6 +917,14 @@ video {
   --tw-shadow: 10px 10px 7px 3px rgba(41,41,41,0.92);
   --tw-shadow-colored: 10px 10px 7px 3px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.transition{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .transition-all{
@@ -973,8 +1062,22 @@ video {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:bg-gray-200:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-300:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:text-gray-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
 .hover\:text-white:hover{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
-

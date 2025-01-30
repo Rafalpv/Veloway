@@ -14,9 +14,8 @@ const LogoutButton = () => {
   return (
     <>
       <button
-        className="h-14 w-14 flex items-center justify-center rounded-full border-2 border-black text-black text-2xl hover:bg-black hover:text-white transition-all duration-300"
-        onClick={handleLogout}
-      >
+        className="h-12 w-12 flex items-center justify-center rounded-full border-2 border-black text-black text-2xl hover:bg-black hover:text-white transition-all duration-300"
+        onClick={handleLogout}>
         <IoMdLogOut />
       </button>
     </>

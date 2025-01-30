@@ -18,7 +18,7 @@ export default {
       },
       fontFamily: {
         sixcaps: ['Six Caps', 'mono'],
-        montserrat: ['Montserrat', 'mono']
+        poppins: ['Poppins', 'mono']
       },
       boxShadow: {
         image: '10px 10px 7px 3px rgba(41,41,41,0.92)',

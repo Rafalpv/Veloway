@@ -3,22 +3,22 @@ import { useState, useEffect } from 'react'
 
 const CellUser = ({ user }) => {
   return (
-    <tr>
-      <td>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span>👤</span>
+    <tr className="border-b border-black">
+      <td className="p-4">
+        <div className='flex items-center gap-10'>
+          <span className='text-2xl'>👤</span>
           <div>
-            <strong>{user.nickname}</strong>
+            <strong className='text-xl'>{user.nickname}</strong>
             <br />
-            <span style={{ fontSize: 'small', color: 'gray' }}>
-              {user.email}
-            </span>
+            <span className="text-sm text-gray-500">{user.email}</span>
           </div>
         </div>
       </td>
-      <td>{user.level}</td>
-      <td>
-        <button>⋮</button>
+      <td className="p-4 text-lg">{user.level}</td>
+      <td className="p-4">{user.createdAt}</td>
+
+      <td className="p-4 text-center">
+        <button className="text-2xl hover:bg-gray-200 rounded-full p-2 transition">⋮</button>
       </td>
     </tr>
   )
@@ -50,26 +50,19 @@ const ListUsers = () => {
 
 const TableUsers = () => {
   return (
-    <div style={{ overflowX: 'auto', padding: '20px' }}>
-      <table
-        style={{
-          width: '100%',
-          borderCollapse: 'collapse',
-          background: '#f0f3f7'
-        }}
-      >
-        <thead>
+    <div className='overflow-x-auto px-20'>
+      <table className='w-full bg-transparent'>
+        <thead className='text-2xl border-b border-black'>
           <tr>
-            <th style={{ textAlign: 'left', padding: '10px' }}>Nombre de Usuario</th>
-            <th style={{ textAlign: 'left', padding: '10px' }}>Nivel ⬇</th>
-            <th></th>
+            <th className='text-left ml-14 p-4'>Nombre de Usuario</th>
+            <th className='text-left p-4'>Nivel <button>⬇</button></th>
+            <th className='text-left p-4'>Fecha inicio</th>
+            <th className='p-4'></th>
           </tr>
         </thead>
         <ListUsers />
       </table>
-      <div style={{ textAlign: 'center', padding: '10px' }}>
-        <span>1 2 3 4 5 6 ... 19</span> {/* Paginación de ejemplo */}
-      </div>
+      {/* Paginación de ejemplo */}
     </div>
   )
 }

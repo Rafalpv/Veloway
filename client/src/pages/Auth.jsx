@@ -26,7 +26,7 @@ const Auth = () => {
 
       {/* Columna de los formularios */}
       <div
-        className={`bg-custom-gradient opacity-90 col-span-2 font-montserrat text-white flex flex-col items-center justify-center column form-column ${isLoginPage ? 'order-1' : 'order-2'}`}
+        className={`bg-custom-gradient opacity-90 col-span-2 font-poppins text-white flex flex-col items-center justify-center column form-column ${isLoginPage ? 'order-1' : 'order-2'}`}
       >
         {
           isLoginPage

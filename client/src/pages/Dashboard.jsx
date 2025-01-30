@@ -3,10 +3,12 @@ import TableUsers from '../components/TableUsers'
 
 const Dashboard = () => {
   return (
-    <main className='bg-backgraound-admin h-screen'>
-      <Header />
-      <TableUsers />
-    </main>
+    <div className='bg-backgraound-admin h-screen font-poppins'>
+      < Header />
+      <main>
+        <TableUsers />
+      </main>
+    </div>
   )
 }
 
