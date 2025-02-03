@@ -31,6 +31,11 @@ const Users = sequelize.define(
     level: {
       type: DataTypes.ENUM('beginner', 'intermediate', 'advanced'),
       allowNull: false
+    },
+    role: {
+      type: DataTypes.ENUM('user', 'admin'),
+      allowNull: false,
+      defaultValue: 'user'
     }
   },
   {

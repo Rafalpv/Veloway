@@ -6,7 +6,8 @@ const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
     auth: false,
-    user: null // Aquí guardaremos la información del usuario
+    user: null,
+    loading: true // Nuevo estado para controlar la carga
   })
 
   useEffect(() => {
@@ -15,10 +16,11 @@ export const AuthProvider = ({ children }) => {
         const response = await axiosInstance.get('/auth/check-auth')
         setAuthState({
           auth: true,
-          user: response.data.nickname
+          user: response.data.user,
+          loading: false
         })
       } catch (err) {
-        setAuthState({ auth: false, user: null })
+        setAuthState({ auth: false, user: null, loading: false })
       }
     }
 
@@ -27,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await axiosInstance.get('/auth/logout')
-    setAuthState({ auth: false, user: null })
+    setAuthState({ auth: false, user: null, loading: false })
   }
 
   return (

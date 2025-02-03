@@ -2,6 +2,7 @@ import useForm from '../hooks/useForm'
 import { useNavigate } from 'react-router'
 import axiosInstance from '../api/axiosInstance'
 import toast from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({
@@ -10,6 +11,7 @@ const LoginForm = ({ handleToggle }) => {
   })
 
   const navigate = useNavigate()
+  const { setAuthState } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,11 +22,19 @@ const LoginForm = ({ handleToggle }) => {
           pending: 'Iniciando sesión...',
           success: 'Inicio de sesión exitoso!',
           error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.'
-        }, {
+        },
+        {
           position: 'top-right '
         }
       )
-      navigate('/admin')
+      // Después de iniciar sesión, obtén la información del usuario
+      const response = await axiosInstance.get('/auth/check-auth')
+      setAuthState({
+        auth: true,
+        user: response.data.user
+      })
+
+      response.data.user.role === 'admin' ? navigate('/admin') : navigate('/app')
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
       console.error('Detalles del error:', err.response?.data || err.message)

@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 // POST
 // http://localhost:3000/users/signup/new -> http://localhost:4000/signup/new
 const newUser = async (req, res) => {
-  const { nickname, email, password, level, photo } = req.body
+  const { nickname, email, password, level, photo, role } = req.body
 
   try {
     const existingUser = await Users.findOne({
@@ -34,7 +34,8 @@ const newUser = async (req, res) => {
       email,
       password: hashedPassword,
       photo,
-      level
+      level,
+      role
     })
 
     res.status(201).json({

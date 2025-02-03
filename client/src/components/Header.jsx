@@ -1,14 +1,6 @@
 import { FiMenu } from 'react-icons/fi'
-import { IoMdLogOut } from 'react-icons/io'
 import { MdOutlineDarkMode, MdOutlineRefresh } from 'react-icons/md'
-
-const LogoutButton = () => {
-  return (
-    <button className="border border-black p-2 rounded-full hover:bg-gray-300 transition">
-      <IoMdLogOut className="text-xl" />
-    </button>
-  )
-}
+import LogoutButton from './LogoutButton'
 
 const Header = () => {
   return (

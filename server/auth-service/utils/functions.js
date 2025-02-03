@@ -18,14 +18,14 @@ export const validateUserCredentials = async (nickname, password) => {
 
 export const setAuthToken = (res, userData) => {
   const token = jwt.sign(
-    { nickname: userData.nickname },
+    { id_user: userData.id_user, nickname: userData.nickname, role: userData.role },
     process.env.SECRET_JWT,
-    { expiresIn: '1h' }
+    { expiresIn: '15m' }
   )
 
   const cookies = {
     httpOnly: true,
-    sameSite: 'Lax',
+    sameSite: 'Strict',
     secure: false,
     maxAge: 60 * 60 * 1000
   }

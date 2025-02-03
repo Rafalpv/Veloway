@@ -1,21 +1,13 @@
-import axiosInstance from '../api/axiosInstance'
 import { IoMdLogOut } from 'react-icons/io'
+import { useAuth } from '../context/AuthContext'
 
 const LogoutButton = () => {
-  const handleLogout = async () => {
-    try {
-      const response = await axiosInstance.get('/auth/logout')
-      return response.data
-    } catch (error) {
-      return error.response.data
-    }
-  }
-
+  const { logout } = useAuth()
   return (
     <>
       <button
         className="h-12 w-12 flex items-center justify-center rounded-full border-2 border-black text-black text-2xl hover:bg-black hover:text-white transition-all duration-300"
-        onClick={handleLogout}>
+        onClick={logout}>
         <IoMdLogOut />
       </button>
     </>

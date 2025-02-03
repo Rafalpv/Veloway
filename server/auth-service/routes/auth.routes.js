@@ -93,7 +93,7 @@ router.post('/login', validateLoginInput, authController.userLogin)
 router.get('/check-auth', verifyToken, (req, res) => {
   res.json({
     auth: true,
-    nickname: req.nickname
+    user: req.user
   })
 })
 
