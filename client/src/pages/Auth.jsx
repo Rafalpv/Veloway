@@ -16,7 +16,7 @@ const Auth = () => {
         className={`relative grid place-items-center col-span-3 column image-column ${isLoginPage ? 'order-2 -right-full' : 'order-1'}`}
       >
         <div
-          className="w-[88%] h-[90%] shadow-image flex items-center justify-center bg-cover bg-center bg-[url('/img/ciclista-fondo.jpg')]"
+          className={`w-[85%] h-[90%] shadow-image-der flex items-center justify-center bg-cover bg-center bg-[url('/img/ciclista-fondo.jpg')] ${isLoginPage ? 'shadow-image-der' : 'shadow-image-izq'}`}
         >
           <h1 className="font-sixcaps text-gold text-[20vw] tracking-widest leading-none text-center select-none">
             Velo<br />way
@@ -26,7 +26,7 @@ const Auth = () => {
 
       {/* Columna de los formularios */}
       <div
-        className={`bg-custom-gradient opacity-90 col-span-2 font-poppins text-white flex flex-col items-center justify-center column form-column ${isLoginPage ? 'order-1' : 'order-2'}`}
+        className={`bg-blue col-span-2 shadow-image font-poppins text-white flex flex-col items-center justify-center column form-column ${isLoginPage ? 'order-1 rounded-r-2xl shadow-image-der' : 'order-2 rounded-l-2xl shadow-image-izq'}`}
       >
         {
           isLoginPage

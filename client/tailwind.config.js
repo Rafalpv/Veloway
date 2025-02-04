@@ -9,6 +9,7 @@ export default {
         'background-light': '#ECE8E8',
         'backgraound-admin': '#D6DBE0',
         green: '#205435',
+        blue: '#3F51B5',
         gold: '#FFC107',
         'gold-dark': '#FFA000'
 
@@ -21,8 +22,9 @@ export default {
         poppins: ['Poppins', 'mono']
       },
       boxShadow: {
-        image: '10px 10px 7px 3px rgba(41,41,41,0.92)',
-        boton: '10px 10px 7px 3px rgba(21,21,21,0.92)'
+        'image-der': '7px 3px 3px 3px rgba(45,45,45,0.92)',
+        'image-izq': '-7px 3px 3px 3px rgba(25,25,25,0.92)',
+        boton: '5px 6px 1px 2px rgba(31,31,21,0.92)'
       }
     }
   },
