@@ -1,6 +1,7 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UsersContext } from '../context/UsersContext'
 import FilterButton from './FilterButton'
+import FilterButtonLevel from './FilterButtonLevel'
 
 const CellUser = ({ user }) => {
   return (
@@ -43,14 +44,16 @@ const TableUsers = () => {
         <thead className='text-2xl border-b border-black'>
           <tr>
             <th className='text-left ml-14 p-4'>Nombre de Usuario</th>
-            <th className='text-left p-4'>Nivel <button>⬇</button></th>
+            <th className='text-left p-4'>
+              Nivel
+              <FilterButtonLevel />
+            </th>
             <th className='text-left p-4'>Fecha inicio</th>
-            <th className='p-4'><FilterButton/></th>
+            <th className='p-4'><FilterButton /></th>
           </tr>
         </thead>
         <ListUsers />
       </table>
-      {/* Paginación de ejemplo */}
     </div>
   )
 }

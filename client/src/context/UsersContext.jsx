@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react'
+import { createContext, useEffect, useReducer } from 'react'
 import axiosInstance from '../api/axiosInstance'
 
 export const userReducer = (state, action) => {
@@ -9,7 +9,7 @@ export const userReducer = (state, action) => {
     case 'FILTER_USERS':
       return {
         ...state,
-        filteredUsers: state.users.filter(user =>
+        filteredUsers: state.filteredUsers.filter(user =>
           user.nickname.toLowerCase().includes(action.payload.toLowerCase())
         )
       }
@@ -26,6 +26,14 @@ export const userReducer = (state, action) => {
 
     case 'RESET_FILTERS':
       return { ...state, filteredUsers: state.users }
+
+    case 'FILTER_BY_LEVELS':
+      return {
+        ...state,
+        filteredUsers: state.filteredUsers.filter(user =>
+          action.payload.includes(user.level)
+        )
+      }
 
     default:
       return state
@@ -68,13 +76,18 @@ export const UsersProvider = ({ children }) => {
     dispatch({ type: 'RESET_FILTERS' })
   }
 
+  const filterByLevel = (selectedLevels) => {
+    dispatch({ type: 'FILTER_BY_LEVELS', payload: selectedLevels })
+  }
+
   return (
     <UsersContext.Provider value={{
       users: state.users,
       filteredUsers: state.filteredUsers,
       filterUsers,
       sortUsers,
-      resetFilters
+      resetFilters,
+      filterByLevel
     }}>
       {children}
     </UsersContext.Provider>
