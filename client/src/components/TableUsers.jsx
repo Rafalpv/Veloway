@@ -1,5 +1,6 @@
-import axiosInstance from '../api/axiosInstance'
-import { useState, useEffect } from 'react'
+import { useContext } from 'react'
+import { UsersContext } from '../context/UsersContext'
+import FilterButton from './FilterButton'
 
 const CellUser = ({ user }) => {
   return (
@@ -16,7 +17,6 @@ const CellUser = ({ user }) => {
       </td>
       <td className="p-4 text-lg">{user.level}</td>
       <td className="p-4">{user.createdAt}</td>
-
       <td className="p-4 text-center">
         <button className="text-2xl hover:bg-gray-200 rounded-full p-2 transition">⋮</button>
       </td>
@@ -25,23 +25,11 @@ const CellUser = ({ user }) => {
 }
 
 const ListUsers = () => {
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await axiosInstance.get('/users')
-        setUsers(response.data)
-      } catch (error) {
-        console.error('Error fetching users:', error)
-      }
-    }
-    getUsers()
-  }, [])
+  const { filteredUsers } = useContext(UsersContext)
 
   return (
     <tbody>
-      {users.map((user) => (
+      {filteredUsers.map((user) => (
         <CellUser key={user.id_user} user={user} />
       ))}
     </tbody>
@@ -57,7 +45,7 @@ const TableUsers = () => {
             <th className='text-left ml-14 p-4'>Nombre de Usuario</th>
             <th className='text-left p-4'>Nivel <button>⬇</button></th>
             <th className='text-left p-4'>Fecha inicio</th>
-            <th className='p-4'></th>
+            <th className='p-4'><FilterButton/></th>
           </tr>
         </thead>
         <ListUsers />

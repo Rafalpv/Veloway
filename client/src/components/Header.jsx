@@ -1,11 +1,12 @@
+import LogoutButton from './LogoutButton'
 import { FiMenu } from 'react-icons/fi'
 import { MdOutlineDarkMode, MdOutlineRefresh } from 'react-icons/md'
-import LogoutButton from './LogoutButton'
 
 const Header = () => {
   return (
     <header className='flex items-center justify-between p-4 mb-6 border-b border-black'>
       <FiMenu className="text-4xl cursor-pointer" />
+
       {/* Título y enlaces */}
       <div className='flex flex-col items-center space-y-8'>
         <h1 className='text-3xl font-bold'>Veloway Admin</h1>
@@ -21,7 +22,9 @@ const Header = () => {
         <button className="border border-black p-2 rounded-full hover:bg-gray-400 transition">
           <MdOutlineDarkMode className="text-xl" />
         </button>
-        <button className="border border-black p-2 rounded-full hover:bg-gray-300 transition">
+        <button
+          className="border border-black p-2 rounded-full hover:bg-gray-300 transition"
+        >
           <MdOutlineRefresh className="text-xl" />
         </button>
         <LogoutButton />
