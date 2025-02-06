@@ -1,36 +1,24 @@
-import { IoFilter } from 'react-icons/io5'
 import { useContext, useState } from 'react'
 import { UsersContext } from '../context/UsersContext'
+import { IoFilter } from 'react-icons/io5'
 
 const FilterButtonLevel = () => {
-  const { filterByLevel, resetFilters } = useContext(UsersContext)
+  const { filterByLevel, selectedLevels } = useContext(UsersContext)
   const [showMenu, setShowMenu] = useState(false)
-  const [selectedLevels, setSelectedLevels] = useState([])
+
   const levels = ['beginner', 'intermediate', 'advanced']
 
-  const toggleMenu = () => setShowMenu(!showMenu)
-
   const handleCheckboxChange = (level) => {
-    let updatedLevels = [...selectedLevels]
-    if (updatedLevels.includes(level)) {
-      updatedLevels = updatedLevels.filter(l => l !== level)
-    } else {
-      updatedLevels.push(level)
-    }
-    setSelectedLevels(updatedLevels)
-    if (updatedLevels.length === 0) {
-      resetFilters()
-    } else {
-      filterByLevel(updatedLevels)
-    }
+    const updatedLevels = selectedLevels.includes(level)
+      ? selectedLevels.filter(l => l !== level)
+      : [...selectedLevels, level]
+
+    filterByLevel(updatedLevels)
   }
 
   return (
     <div className='relative inline-block'>
-      <button
-        onClick={toggleMenu}
-        className='ml-2 px-2 py-1 bg-transparent hover:bg-gray-200'
-      >
+      <button onClick={() => setShowMenu(!showMenu)} className='ml-2 px-2 py-1 bg-transparent hover:bg-gray-200'>
         <IoFilter />
       </button>
 
