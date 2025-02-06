@@ -31,11 +31,15 @@ export const userReducer = (state, action) => {
           ? user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
           : true
 
+        const matchesSearchEmail = searchTerm
+          ? user.email.toLowerCase().includes(searchTerm.toLowerCase())
+          : true
+
         const matchesLevel = selectedLevels.length > 0
           ? selectedLevels.includes(user.level)
           : true
 
-        if (matchesSearch && matchesLevel) acc.push(user)
+        if ((matchesSearch || matchesSearchEmail) && matchesLevel) acc.push(user)
         return acc
       }, [])
 

@@ -6,7 +6,7 @@ const LogoutButton = () => {
   return (
     <>
       <button
-        className="h-12 w-12 flex items-center justify-center rounded-full border-2 border-black text-black text-2xl hover:bg-black hover:text-white transition-all duration-300"
+        className="h-12 w-12 flex items-center justify-center rounded-full border-2 border-black text-black text-2xl hover:bg-red-600 hover:text-white transition-all duration-300"
         onClick={logout}>
         <IoMdLogOut />
       </button>

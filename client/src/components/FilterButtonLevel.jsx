@@ -18,12 +18,15 @@ const FilterButtonLevel = () => {
 
   return (
     <div className='relative inline-block'>
-      <button onClick={() => setShowMenu(!showMenu)} className='ml-2 px-2 py-1 bg-transparent hover:bg-gray-200'>
+      <button
+        onClick={() => setShowMenu(!showMenu)}
+        className='ml-2 bg-transparent'
+      >
         <IoFilter />
       </button>
 
       {showMenu && (
-        <div className='absolute left-0 mt-2 bg-gray-200 border rounded shadow-boton p-2'>
+        <div className='absolute left-2 mt-2 bg-gray-200 border rounded shadow-lg p-2 z-50 min-w-56'>
           {levels.map(level => (
             <label key={level} className="block px-2 py-1">
               <input
@@ -38,6 +41,7 @@ const FilterButtonLevel = () => {
         </div>
       )}
     </div>
+
   )
 }
 
