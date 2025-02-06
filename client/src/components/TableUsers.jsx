@@ -1,7 +1,9 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { UsersContext } from '../context/UsersContext'
 import FilterButton from './FilterButton'
 import FilterButtonLevel from './FilterButtonLevel'
+import AddUsersButton from './AddUsersButton'
+import ResetButton from './ResetButton'
 
 const CellUser = ({ user }) => {
   return (
@@ -17,7 +19,9 @@ const CellUser = ({ user }) => {
         </div>
       </td>
       <td className="p-4 text-lg">{user.level}</td>
-      <td className="p-4">{user.createdAt}</td>
+      <td className="p-4 text-center">{user.createdAt}</td>
+      <td></td>
+      <td></td>
       <td className="p-4 text-center">
         <button className="text-2xl hover:bg-gray-200 rounded-full p-2 transition">⋮</button>
       </td>
@@ -43,13 +47,12 @@ const TableUsers = () => {
       <table className='w-full bg-transparent'>
         <thead className='text-2xl border-b border-black'>
           <tr>
-            <th className='text-left ml-14 p-4'>Nombre de Usuario</th>
-            <th className='text-left p-4'>
-              Nivel
-              <FilterButtonLevel />
-            </th>
-            <th className='text-left p-4'>Fecha inicio</th>
-            <th className='p-4'><FilterButton /></th>
+            <th className='text-left p-4 w-1/4'>Nombre de Usuario</th>
+            <th className='text-left p-4 w-1/12'>Nivel <FilterButtonLevel /></th>
+            <th className='text-cente p-4 w-1/3'>Fecha inicio</th>
+            <th className='py-4 w-1/5'><FilterButton /></th>
+            <th className=''><ResetButton /></th>
+            <th className='w-20'><AddUsersButton /></th>
           </tr>
         </thead>
         <ListUsers />

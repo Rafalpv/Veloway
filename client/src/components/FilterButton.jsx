@@ -1,18 +1,12 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { UsersContext } from '../context/UsersContext'
 import { IoSearchOutline } from 'react-icons/io5'
 
 const FilterButton = () => {
-  const { filterUsers, resetFilters } = useContext(UsersContext)
-  const [searchTerms, setSearchTerms] = useState('')
+  const { filterUsers, searchTerm } = useContext(UsersContext)
 
   const handleSearchTerm = (e) => {
-    setSearchTerms(e.target.value)
-    if (e.target.value === '') {
-      resetFilters()
-    } else {
-      filterUsers(e.target.value)
-    }
+    filterUsers(e.target.value)
   }
 
   return (
@@ -21,7 +15,7 @@ const FilterButton = () => {
       <input
         className='w-full bg-transparent text-xl focus:outline-none'
         type='text'
-        value={searchTerms}
+        value={searchTerm}
         placeholder='Buscar...'
         onChange={handleSearchTerm}
       />
