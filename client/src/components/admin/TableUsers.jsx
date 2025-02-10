@@ -4,6 +4,8 @@ import FilterButton from './FilterButton'
 import FilterButtonLevel from './FilterButtonLevel'
 import AddUsersButton from './AddUsersButton'
 import ResetButton from './ResetButton'
+import DropDownMenu from './DropDownMenu'
+import { SlOptionsVertical } from 'react-icons/sl'
 
 const CellUser = ({ user }) => {
   return (
@@ -23,7 +25,7 @@ const CellUser = ({ user }) => {
       <td></td>
       <td></td>
       <td className="p-4 text-center">
-        <button className="text-2xl hover:bg-gray-200 rounded-full p-2 transition">⋮</button>
+        <button className='text-2xl hover:bg-gray-200 rounded-full p-2 transition'><SlOptionsVertical /></button>
       </td>
     </tr>
   )
