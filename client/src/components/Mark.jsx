@@ -10,13 +10,8 @@ const Mark = ({ markerId, position }) => {
   }
 
   return (
-    <div className='bg-zinc-500 p-4 m-10'
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={style}>
-
-      {position[0]}
+    <div className='bg-zinc-500 p-4 m-2 cursor-pointer rounded' ref={setNodeRef} {...attributes} {...listeners} style={style}>
+      Lat: {position[0]}, Lng: {position[1]}
     </div>
   )
 }
