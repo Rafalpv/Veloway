@@ -113,22 +113,27 @@ const validetaUser = async (req, res) => {
 
 // DELETE
 // http:localhost:3000/user/{nickname} -> http://localhost:4000/{nickname}
-const deleteUser = async (req, res) => {
+const deleteUsers = ('/user/:nickname', async (req, res) => {
   const { nickname } = req.params
 
   try {
-    const user = await Users.destroy({
-      where: { nickname }
-    })
-  } catch {
-    res.status(500).json({ message: 'Error deleting user' })
+    const resultado = await Users.destroy({ where: { nickname } })
+
+    if (resultado === 0) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' })
+    }
+
+    return res.status(200).json({ mensaje: 'Usuario eliminado correctamente' })
+  } catch (error) {
+    console.error('Error en el backend:', error)
+    return res.status(500).json({ mensaje: 'Error eliminando usuario' })
   }
-}
+})
 
 export default {
   newUser,
   listUsers,
   getUserByNickname,
   validetaUser,
-  deleteUser
+  deleteUsers
 }

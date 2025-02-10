@@ -62,6 +62,13 @@ export const userReducer = (state, action) => {
         filteredUsers: state.users
       }
 
+    case 'DELETE_USER':
+      return {
+        ...state,
+        users: state.users.filter(user => user.nickname !== action.payload),
+        filteredUsers: state.filteredUsers.filter(user => user.nicknamec !== action.payload)
+      }
+
     default:
       return state
   }
@@ -113,6 +120,15 @@ export const UsersProvider = ({ children }) => {
     dispatch({ type: 'RESET_FILTERS' })
   }
 
+  const deleteUser = (nickaname) => {
+    try {
+      axiosInstance.delete(`/users/${nickaname}`)
+      dispatch({ type: 'DELETE_USER', payload: nickaname })
+    } catch (error) {
+      console.error('Error al eliminar el usuario: ', error)
+    }
+  }
+
   return (
     <UsersContext.Provider value={{
       users: state.users,
@@ -122,7 +138,8 @@ export const UsersProvider = ({ children }) => {
       filterUsers,
       filterByLevel,
       sortUsers,
-      resetFilters
+      resetFilters,
+      deleteUser
     }}>
       {children}
     </UsersContext.Provider>
