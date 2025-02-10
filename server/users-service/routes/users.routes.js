@@ -280,50 +280,50 @@ router.post('/validate', usersController.validetaUser)
 
 /**
  * @swagger
- * /users/{nickname}:
+ * /user/{nickname}:
  *   delete:
- *     summary: Delete a user by nickname
- *     description: Removes a user from the database using their nickname.
+ *     summary: Eliminar un usuario por su nickname
+ *     description: Elimina un usuario de la base de datos basado en su nickname.
  *     tags:
  *       - Users
  *     parameters:
- *       - in: path
- *         name: nickname
+ *       - name: nickname
+ *         in: path
  *         required: true
+ *         description: Nickname del usuario a eliminar
  *         schema:
  *           type: string
- *         description: Nickname of the user to delete
  *     responses:
  *       200:
- *         description: User deleted successfully
+ *         description: Usuario eliminado correctamente
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 mensaje:
  *                   type: string
- *                   example: "User deleted successfully"
+ *                   example: Usuario eliminado correctamente
  *       404:
- *         description: User not found
+ *         description: Usuario no encontrado
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 mensaje:
  *                   type: string
- *                   example: "User not found"
+ *                   example: Usuario no encontrado
  *       500:
- *         description: Server error
+ *         description: Error interno del servidor al eliminar el usuario
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 mensaje:
  *                   type: string
- *                   example: "Error deleting user"
+ *                   example: Error eliminando usuario
  */
 router.delete('/:nickname', usersController.deleteUser)
 
