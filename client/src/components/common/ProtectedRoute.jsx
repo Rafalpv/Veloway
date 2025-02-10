@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import { IoIosBicycle } from 'react-icons/io'
 
 const ProtectedRoute = ({ children }) => {

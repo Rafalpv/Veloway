@@ -1,5 +1,5 @@
 import { IoMdLogOut } from 'react-icons/io'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 
 const LogoutButton = () => {
   const { logout } = useAuth()

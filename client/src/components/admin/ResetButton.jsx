@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { UsersContext } from '../context/UsersContext'
+import { UsersContext } from '../../context/UsersContext'
 import { MdOutlineRefresh } from 'react-icons/md'
 
 const ResetButton = () => {

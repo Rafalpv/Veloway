@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router'
 import Auth from './pages/Auth'
 import App from './App'
 import Dashboard from './pages/Dashboard'
-import ProtectedRoute from './components/ProtectedRoute' // Importa el componente de protección
+import ProtectedRoute from './components/common/ProtectedRoute'
 
 const router = createBrowserRouter([
   {

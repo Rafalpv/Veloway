@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { UsersContext } from '../context/UsersContext'
+import { UsersContext } from '../../context/UsersContext'
 import { IoSearchOutline } from 'react-icons/io5'
 
 const FilterButton = () => {

@@ -1,8 +1,8 @@
-import useForm from '../hooks/useForm'
 import { useNavigate } from 'react-router'
-import axiosInstance from '../api/axiosInstance'
+import useForm from '../../hooks/useForm'
+import axiosInstance from '../../api/axiosInstance'
 import toast from 'react-hot-toast'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 
 const LoginForm = ({ handleToggle }) => {
   const [formValues, handleInputChange] = useForm({

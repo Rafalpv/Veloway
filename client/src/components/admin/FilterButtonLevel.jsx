@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { UsersContext } from '../context/UsersContext'
+import { UsersContext } from '../../context/UsersContext'
 import { IoFilter } from 'react-icons/io5'
 
 const FilterButtonLevel = () => {

@@ -1,5 +1,5 @@
-import Header from '../components/Header'
-import TableUsers from '../components/TableUsers'
+import Header from '../components/admin/Header'
+import TableUsers from '../components/admin/TableUsers'
 import { UsersProvider } from '../context/UsersContext'
 
 const Dashboard = () => {

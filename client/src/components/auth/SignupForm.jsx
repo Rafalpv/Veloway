@@ -1,5 +1,5 @@
-import axiosInstance from '../api/axiosInstance'
-import useForm from '../hooks/useForm'
+import axiosInstance from '../../api/axiosInstance'
+import useForm from '../../hooks/useForm'
 import toast from 'react-hot-toast'
 
 const SignupForm = ({ handleToggle }) => {
