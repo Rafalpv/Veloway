@@ -278,4 +278,53 @@ router.get('/:nickname', usersController.getUserByNickname)
  */
 router.post('/validate', usersController.validetaUser)
 
+/**
+ * @swagger
+ * /users/{nickname}:
+ *   delete:
+ *     summary: Delete a user by nickname
+ *     description: Removes a user from the database using their nickname.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: nickname
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Nickname of the user to delete
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User deleted successfully"
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User not found"
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error deleting user"
+ */
+router.delete('/:nickname', usersController.deleteUser)
+
 export default router
