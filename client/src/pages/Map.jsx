@@ -1,7 +1,10 @@
 import React, { useState, useCallback } from 'react'
+import MarketSwap from '../components/MarketsSwapy'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { closestCorners, DndContext } from '@dnd-kit/core'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { arrayMove } from '@dnd-kit/sortable'
 
 const createNumberIcon = (index) => {
   return L.divIcon({
@@ -33,57 +36,59 @@ const ClickHandler = ({ onMapClick }) => {
 }
 
 // Componente marcador
-const CustomMarker = ({ marker }) => (
-  <Marker position={marker.position} icon={createNumberIcon(marker.index)}>
-    <Popup>Marcador #{marker.index}<br />Coordenadas: {marker.position[0].toFixed(5)}, {marker.position[1].toFixed(5)}</Popup>
-  </Marker>
-)
 
 const Mapa = () => {
   const position = [37.18817, -3.60667]
   const [markers, setMarkers] = useState([])
-  const [width, setWidth] = useState(50)
 
   // Función optimizada para manejar los clics
   const handleMapClick = useCallback((e) => {
     setMarkers((prevMarkers) => [
       ...prevMarkers,
-      { position: [e.latlng.lat, e.latlng.lng], index: prevMarkers.length + 1 }
+      { position: [e.latlng.lat, e.latlng.lng], markerId: prevMarkers.length + 1 }
     ])
   }, [])
 
+  const CustomMarker = ({ marker }) => (
+    < Marker position={marker.position} icon={createNumberIcon(getMarkerIndex(marker.markerId) + 1)} >
+      <Popup>Pos: #{marker.markerId}<br />Id: {marker.markerId}</Popup>
+    </Marker >
+  )
+  const getMarkerIndex = id => markers.findIndex(marker => marker.markerId === id)
+
+  const handleDragEnd = event => {
+    const { active, over } = event
+    if (active.id === over.id) return
+    setMarkers(markers => {
+      const originIndex = getMarkerIndex(active.id)
+      const newPos = getMarkerIndex(over.id)
+
+      return arrayMove(markers, originIndex, newPos)
+    })
+  }
+
   return (
-    <div>
-      {/* Contenedor del mapa */}
-      <div>
-        <MapContainer center={position} zoom={13} scrollWheelZoom={false} style={{ height: '100vh', width: `${width}%` }}>
+    <div className='flex h-screen'>
+      < div className='flex-1 w-2/3' >
+        <MapContainer center={position} zoom={4} scrollWheelZoom={false} style={{ height: '100vh', width: '100%' }}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {/* Captura clics en el mapa */}
           <ClickHandler onMapClick={handleMapClick} />
 
-          {/* Renderiza los marcadores */}
-          {markers.map((marker, index) => (
-            <CustomMarker key={index} marker={marker} />
+          {markers.map((marker) => (
+            <CustomMarker key={marker.pos} marker={marker} />
           ))}
         </MapContainer>
+      </div >
+      <div className='w-1/3'>
+        <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+          <MarketSwap markers={markers} />
+        </DndContext>
       </div>
-
-      {/* Panel de marcadores */}
-      <section className="w-1/3 bg-gray-100 p-4 overflow-y-auto">
-        <h2 className="text-lg font-bold mb-2">Marcadores</h2>
-        <ul className="space-y-2">
-          {markers.map((marker, index) => (
-            <li key={index} className="p-2 bg-white rounded shadow">
-              <strong>#{index + 1}</strong>: {marker.position[0].toFixed(5)}, {marker.position[1].toFixed(5)}
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+    </div >
   )
 }
 
