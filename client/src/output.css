@@ -606,6 +606,10 @@ video {
   grid-column: span 3 / span 3;
 }
 
+.mb-2{
+  margin-bottom: 0.5rem;
+}
+
 .mb-6{
   margin-bottom: 1.5rem;
 }
@@ -624,10 +628,6 @@ video {
 
 .mt-2{
   margin-top: 0.5rem;
-}
-
-.mb-2{
-  margin-bottom: 0.5rem;
 }
 
 .mt-3{
@@ -861,11 +861,6 @@ video {
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
 }
 
-.border-gray-300{
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-}
-
 .bg-backgraound-admin{
   --tw-bg-opacity: 1;
   background-color: rgb(214 219 224 / var(--tw-bg-opacity, 1));
@@ -891,10 +886,6 @@ video {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
 }
 
-.bg-transparent{
-  background-color: transparent;
-}
-
 .bg-gray-300{
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
@@ -905,9 +896,8 @@ video {
   background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
 }
 
-.bg-white{
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+.bg-transparent{
+  background-color: transparent;
 }
 
 .bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{
@@ -932,10 +922,6 @@ video {
 
 .p-4{
   padding: 1rem;
-}
-
-.p-10{
-  padding: 2.5rem;
 }
 
 .px-2{
@@ -1054,11 +1040,6 @@ video {
   color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 }
 
-.text-white{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
 .text-gray-800{
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity, 1));
@@ -1067,6 +1048,11 @@ video {
 .text-red-600{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 .underline{

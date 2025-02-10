@@ -113,7 +113,7 @@ const validetaUser = async (req, res) => {
 
 // DELETE
 // http:localhost:3000/user/{nickname} -> http://localhost:4000/{nickname}
-const deleteUsers = ('/user/:nickname', async (req, res) => {
+const deleteUser = ('/user/:nickname', async (req, res) => {
   const { nickname } = req.params
 
   try {
@@ -135,5 +135,5 @@ export default {
   listUsers,
   getUserByNickname,
   validetaUser,
-  deleteUsers
+  deleteUser
 }
