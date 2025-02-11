@@ -1,5 +1,5 @@
 import { Marker, Popup } from 'react-leaflet'
-import { createNumberIcon } from '../utils/mapUtils'
+import { createNumberIcon } from '../../utils/mapUtils'
 
 const CustomMarker = ({ marker, index }) => {
   return (
