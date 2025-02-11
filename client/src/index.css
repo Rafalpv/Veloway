@@ -1,38 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Six+Caps&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #BFC2AE;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cambiar el fondo de la ventana */
-.leaflet-routing-container {
-  background-color: #f9f9f9; /* Color claro */
-  border: 1px solid #ccc; /* Borde gris */
-  border-radius: 8px; /* Esquinas redondeadas */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
 }
 
-/* Estilo de las rutas alternativas */
-.leaflet-routing-alt {
-  background-color: #061f22; /* Fondo azul claro */
-  padding: 10px; /* Espaciado interno */
-  margin: 5px 0; /* Separación entre alternativas */
-  border-radius: 6px; /* Bordes redondeados */
+.form__group {
+  position: relative;
+  padding: 20px 0 0;
+  width: 100%;
+  max-width: 480px;
 }
 
-/* Texto dentro de las rutas */
-.leaflet-routing-alt h3,
-.leaflet-routing-alt p {
-  color: #00796b; /* Color de texto */
-  font-family: 'Arial', sans-serif; /* Fuente personalizada */
-  font-size: 14px; /* Tamaño de texto */
+.form__field {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid white;
+  outline: 0;
+  font-size: 23px;
+  font-weight: 400;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown~.form__label {
+  font-size: 30px;
+  cursor: text;
+  top: 13px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #FFC107, #AA8108);
+  border-image-slice: 1;
+}
+
+.form__field:focus~.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+}
+
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+.level__label {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.level__input {
+  margin-right: 7px;
+}
+
+.level__input:checked~.level__label {
+  color: #FFC107;
+}
+
+.explicacion__nivel {
+  font-size: 15px;
+  color: #C1BCBC;
+  margin-left: 20px;
+  max-width: 480px;
+}
+
+/* Estilo base para las columnas */
+.column {
+  transition: transform 0.8s ease-in-out;
+}
+
+.image-column.order-2 {
+  transform: translateX(-100%);
 }

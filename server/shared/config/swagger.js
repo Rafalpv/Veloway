@@ -2,14 +2,14 @@ import swaggerJSDoc from 'swagger-jsdoc'
 
 const swaggerOptions = {
   swaggerDefinition: {
-    openapi: '3.0.0', // Especifica la versión de OpenAPI
+    openapi: '3.0.0',
     info: {
       title: 'API de Gestión de Rutas',
       version: '1.0.0',
       description: 'Documentación de la API para la gestión de rutas',
       contact: {
         name: 'Rafa Luque',
-        email: 'rafalpv@correo.ugr.es'
+        email: 'rafaluperezvico@gmail.com'
       }
     },
     servers: [
@@ -19,7 +19,7 @@ const swaggerOptions = {
       }
     ]
   },
-  apis: ['./routes/*.js'] // Ruta a los archivos donde defines tus endpoints
+  apis: ['../**/routes/*.js'] // Ruta a los archivos donde defines tus endpoints
 }
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions)

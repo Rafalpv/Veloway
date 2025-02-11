@@ -1,27 +1,56 @@
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocs from './config/swagger.js'
+import swaggerDocs from './shared/config/swagger.js'
 import cors from 'cors'
-import { PORT } from './utils/const.js'
-import sequelize from './config/database.js'
-
-import './models/Usuario.js'
+import { createProxyMiddleware } from 'http-proxy-middleware'
+import { PORT } from './shared/utils/const.js'
 
 const app = express()
-app.use(express.json())
-app.use(cors())
 
-// Ruta de Swagger
+app.use(express.json({ limit: '10mb' }))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-try {
-  await sequelize.sync()
-  console.log('Connection has been established successfully.')
-  app.listen(PORT, () => {
-    console.log(`Servidor running en http://localhost:${PORT}`)
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true
   })
-} catch (error) {
-  console.error('Unable to connect to the database:', error)
-}
+)
 
-export default app
+app.use('/users', createProxyMiddleware({
+  target: 'http://localhost:4000',
+  changeOrigin: true,
+  timeout: 5000,
+  proxyTimeout: 5000,
+  pathRewrite: { '^/users': '' },
+  on: {
+    proxyReq: (proxyReq, req, res) => {
+      const bodyData = JSON.stringify(req.body)
+      proxyReq.setHeader('Content-Type', 'application/json')
+      proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
+      proxyReq.write(bodyData)
+    }
+  },
+  logger: console
+}))
+
+app.use('/auth', createProxyMiddleware({
+  target: 'http://localhost:5000',
+  changeOrigin: true,
+  timeout: 5000,
+  proxyTimeout: 5000,
+  pathRewrite: { '^/auth': '' },
+  on: {
+    proxyReq: (proxyReq, req, res) => {
+      const bodyData = JSON.stringify(req.body)
+      proxyReq.setHeader('Content-Type', 'application/json')
+      proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
+      proxyReq.write(bodyData)
+    }
+  },
+  logger: console
+}))
+
+app.listen(PORT, () => {
+  console.log(`API Gateway corriendo en http://localhost:${PORT}`)
+})
