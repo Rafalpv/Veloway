@@ -1,16 +1,15 @@
+import { marker } from 'leaflet'
 import { createContext, useContext, useState } from 'react'
 
-// 1️⃣ Crear el contexto
 const MapMarkersContext = createContext()
 
-// 2️⃣ Proveedor del contexto
 export const MapMarkersProvider = ({ children }) => {
   const [markers, setMarkers] = useState([])
 
   // Agregar marcador en el mapa
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
-    setMarkers((prev) => [...prev, { markerId: prev.length + 1, position: [lat, lng] }])
+    setMarkers((prev) => [...prev, { markerId: Date.now(), position: [lat, lng] }])
   }
 
   // Drag & Drop: actualizar el orden de los marcadores
@@ -33,12 +32,15 @@ export const MapMarkersProvider = ({ children }) => {
     })
   }
 
+  const handleDeleteMark = (id) => {
+    setMarkers((prev) => prev.filter((marker) => marker.markerId !== id))
+  }
+
   return (
-    <MapMarkersContext.Provider value={{ markers, handleMapClick, handleDragEnd }}>
+    <MapMarkersContext.Provider value={{ markers, handleMapClick, handleDragEnd, handleDeleteMark }}>
       {children}
     </MapMarkersContext.Provider>
   )
 }
 
-// 3️⃣ Hook para consumir el contexto
 export const useMapMarkers = () => useContext(MapMarkersContext)

@@ -4,7 +4,6 @@ import { useMapMarkers } from '../../context/MapMarkersContext' // Usamos el con
 
 const ListMarcadores = () => {
   const { markers, handleDragEnd } = useMapMarkers()
-  console.log(markers)
 
   return (
     <div className='w-1/3'>

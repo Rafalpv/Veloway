@@ -14,7 +14,7 @@ export const createNumberIcon = (index) => {
       font-size: 16px;
       font-weight: bold;
       border: 1px solid yellow;
-    ">${index}</div>`,
+    ">${index === 0 ? 'A' : index}</div>`,
     className: '',
     iconSize: [30, 30],
     iconAnchor: [15, 15]
