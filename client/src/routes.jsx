@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router'
 import Auth from './pages/Auth'
 import CreateRoute from './pages/CreateRoute'
 import Dashboard from './pages/Dashboard'
+import DashboardUsers from './pages/DashboardUsers'
+import AdminLayout from './layout/AdminLayout'
 import ProtectedRoute from './components/common/ProtectedRoute'
 
 const router = createBrowserRouter([
@@ -10,18 +12,22 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    path: '/map',
-    element: (
-      <CreateRoute />
-    )
+    path: '/user',
+    element: <CreateRoute />
   },
   {
     path: '/admin',
-    element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
-    )
+    element: <AdminLayout />, // Layout común para las rutas de admin
+    children: [
+      {
+        index: true, // Se carga cuando entras a `/admin`
+        element: <Dashboard />
+      },
+      {
+        path: 'users', // Se accede en `/admin/users`
+        element: <DashboardUsers />
+      }
+    ]
   }
 ])
 

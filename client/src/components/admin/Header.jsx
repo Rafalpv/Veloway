@@ -11,9 +11,10 @@ const Header = () => {
       <div className='flex flex-col items-center space-y-8'>
         <h1 className='text-3xl font-bold'>Veloway Admin</h1>
         <nav className="flex space-x-20 text-lg">
-          <a href="#" className="font-semibold border-b-2 border-black">Usuarios</a>
-          <a href="#" className="hover:text-gray-600 transition">Estadísticas</a>
-          <a href="#" className="hover:text-gray-600 transition">Algo más</a>
+          <a href="#" className="hover:text-gray-600 transition">Inicio</a>
+          <a href="#" className="hover:text-gray-600 transition">Usuarios</a>
+          <a href="#" className="hover:text-gray-600 transition">Rutas</a>
+          <a href="#" className="hover:text-gray-600 transition">Retos</a>
         </nav>
       </div>
 
