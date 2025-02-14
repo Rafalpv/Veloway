@@ -111,3 +111,19 @@
 .image-column.order-2 {
   transform: translateX(-100%);
 }
+
+.bg-gold{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 193 7 / var(--tw-bg-opacity, 1));
+}
+
+.bg-greenButton{
+  --tw-bg-opacity: 1;
+  background-color: rgb(144 236 111 / var(--tw-bg-opacity, 1));
+}
+
+.bg-blueButton{
+  --tw-bg-opacity: 1;
+  background-color: rgb(187 152 242 / var(--tw-bg-opacity, 1));
+}
+
