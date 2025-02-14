@@ -61,13 +61,13 @@ function Dashboard() {
   }, [])
 
   return (
-    <div ref={container} className="grid grid-cols-5 grid-rows-5 h-screen w-screen">
-      <aside className="col-span-1 row-span-4 flex flex-col gap-2 h-full">
+    <div ref={container} className='flex h-full'>
+      <aside className='flex flex-col mx-6 my-6 justify-between gap-6' >
         {widgets.map((slot) => (
-          <div key={slot.id} data-swapy-slot={slot.id} className="flex-1 flex mx-6 my-6">
+          <div key={slot.id} data-swapy-slot={slot.id} className='h-full space-y-4'>
             <div
               data-swapy-item={slot.id}
-              className={`bg-${slot.color} p-4 flex items-center justify-center w-full rounded-3xl border-2 border-black`}
+              className={`bg-${slot.color} p-8 flex items-center justify-center h-full rounded-3xl border-2 border-black`}
             >
               <div className="text-3xl font-bold">
                 {slot.mainContainer ? slot.mainContent : slot.secondContent}
@@ -77,13 +77,13 @@ function Dashboard() {
         ))}
       </aside>
 
-      <section className="col-start-2 col-span-4 row-span-4 text-white flex mr-5 my-6">
-        <div data-swapy-slot='mainSlot' className="flex-1 flex">
+      <section className='flex-1 text-white mx-4 my-6'>
+        <div data-swapy-slot='mainSlot' className='h-full'>
           <div
             data-swapy-item='mainSlot'
-            className='w-full h-full flex items-center justify-center rounded-3xl border-2 border-black'
+            className='flex items-center justify-center h-full rounded-3xl border-2 border-black'
           >
-            <div className="text-3xl font-bold">{mainContain}</div>
+            <div className='text-3xl font-bold'>{mainContain}</div>
           </div>
         </div>
       </section>
