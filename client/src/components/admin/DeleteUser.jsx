@@ -44,7 +44,7 @@ const DeleteUser = ({ nickname }) => {
 
   return (
     <button
-      className="justify-between px-4 py-2 border-2 border-black shadow-boton rounded-full hover:bg-red-400 duration-300"
+      className="justify-between px-1 py-1 border-2 border-black shadow-boton rounded-full hover:bg-red-400 duration-300"
       onClick={handleDeleteUser}
     >
       <TiDelete className="text-4xl cursor-pointer" />

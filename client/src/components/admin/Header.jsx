@@ -1,31 +1,53 @@
 import LogoutButton from './LogoutButton'
 import { FiMenu } from 'react-icons/fi'
 import { MdOutlineDarkMode } from 'react-icons/md'
+import { NavLink } from 'react-router'
 
 const Header = () => {
   return (
-    <header className='flex items-center justify-between p-4 mb-6 border-b border-black'>
-      <FiMenu className="text-4xl cursor-pointer ml-10" />
+    <header className='flex items-center justify-around p-4 mb-6 border-b border-black'>
+      <h2 className='text-7xl font-sixcaps tracking-wider'>VELOWAY </h2>
 
       {/* Título y enlaces */}
       <div className='flex flex-col items-center space-y-8'>
-        <h1 className='text-3xl font-bold'>Veloway Admin</h1>
-        <nav className="flex space-x-20 text-lg">
-          <a href="#" className="hover:text-gray-600 transition">Inicio</a>
-          <a href="#" className="hover:text-gray-600 transition">Usuarios</a>
-          <a href="#" className="hover:text-gray-600 transition">Rutas</a>
-          <a href="#" className="hover:text-gray-600 transition">Retos</a>
+
+        <nav className='flex space-x-20 text-xl font-semibold'>
+          <NavLink
+            to='/admin'
+            className={({ isActive }) => isActive ? '' : ''}
+          >
+            Inicio
+          </NavLink>
+          <NavLink
+            to='/admin/users'
+            className={({ isActive }) => isActive ? '' : ''}
+          >
+            Usuarios
+          </NavLink>
+          <NavLink
+            to='/admin/orders'
+            className={({ isActive }) => isActive ? '' : ''}
+          >
+            Pedidos
+          </NavLink>
+          <NavLink
+            to='/admin/retos'
+            className={({ isActive }) => isActive ? '' : ''}
+          >
+            Retos
+          </NavLink>
         </nav>
-      </div>
+
+      </div >
 
       {/* Botones de accesibilidad y logout */}
-      <div className="flex items-center space-x-4">
+      < div className="flex items-center space-x-4" >
         <button className="border border-black p-2 rounded-full hover:bg-gray-400 transition">
           <MdOutlineDarkMode className="text-xl" />
         </button>
         <LogoutButton />
-      </div>
-    </header>
+      </div >
+    </header >
   )
 }
 
