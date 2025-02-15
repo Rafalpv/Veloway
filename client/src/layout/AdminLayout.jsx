@@ -4,9 +4,9 @@ import { UsersProvider } from '../context/UsersContext'
 
 const AdminLayout = () => {
   return (
-    <div className='bg-backgraound-admin font-poppins'>
+    <div className='flex flex-col h-screen bg-backgraound-admin font-poppins'>
       <Header />
-      <main className='h-screen'>
+      <main className='flex-1 overflow-auto'>
         <UsersProvider>
           <Outlet />
           </UsersProvider>

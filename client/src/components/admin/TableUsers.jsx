@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UsersContext } from '../../context/UsersContext'
 import FilterButton from './FilterButton'
 import FilterButtonLevel from './FilterButtonLevel'
@@ -43,16 +43,18 @@ const ListUsers = () => {
 }
 
 const TableUsers = () => {
+  const [showMenu, setShowMenu] = useState(false)
+
   return (
-    <div className='overflow-x-auto px-20'>
+    <div className='relative overflow-hidden px-20'>
       <table className='w-full bg-transparent'>
         <thead className='text-2xl border-b border-black'>
           <tr>
             <th className='text-left p-4 w-1/4'>Nombre de Usuario</th>
-            <th className='text-left p-4 w-1/12'>Nivel <FilterButtonLevel /></th>
+            <th className='text-left p-4 w-1/12'>Nivel <FilterButtonLevel showMenu={showMenu} setShowMenu={setShowMenu} /></th>
             <th className='text-cente p-4 w-1/3'>Fecha inicio</th>
             <th className='py-4 w-1/5'><FilterButton /></th>
-            <th className=''><ResetButton /></th>
+            <th className=''><ResetButton showMenu={showMenu} setShowMenu={setShowMenu} /></th>
             <th className='w-20'><AddUsersButton /></th>
           </tr>
         </thead>

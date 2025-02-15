@@ -8,19 +8,19 @@ import ProtectedRoute from './components/common/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
     element: <Auth />
   },
   {
-    path: '/user',
+    path: 'user',
     element: <CreateRoute />
   },
   {
-    path: '/admin',
+    path: 'admin',
     element: <AdminLayout />, // Layout común para las rutas de admin
     children: [
       {
-        index: true, // Se carga cuando entras a `/admin`
+        index: true, // Se accede en `/admin`
         element: <Dashboard />
       },
       {
