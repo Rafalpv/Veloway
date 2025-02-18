@@ -54,7 +54,7 @@ const TableUsers = () => {
             <th className='text-left p-4 w-1/12'>Nivel <FilterButtonLevel showMenu={showMenu} setShowMenu={setShowMenu} /></th>
             <th className='text-cente p-4 w-1/3'>Fecha inicio</th>
             <th className='py-4 w-1/5'><FilterButton /></th>
-            <th className=''><ResetButton showMenu={showMenu} setShowMenu={setShowMenu} /></th>
+            <th ><ResetButton setShowMenu={setShowMenu} /></th>
             <th className='w-20'><AddUsersButton /></th>
           </tr>
         </thead>

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { UsersContext } from '../context/UsersContext'
 import { MdOutlineRefresh } from 'react-icons/md'
 
-const ResetButton = ({ showMenu, setShowMenu }) => {
+const ResetButton = ({ setShowMenu }) => {
   const { resetFilters } = useContext(UsersContext)
   const handlerResetFilters = () => {
     resetFilters()

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SignupForm from '@auth/components/SignupForm'
 import LoginForm from '@auth/components/LoginForm'
+import './Auth.css'
 
 const Auth = () => {
   const [isLoginPage, setIsLoginPage] = useState(true)
