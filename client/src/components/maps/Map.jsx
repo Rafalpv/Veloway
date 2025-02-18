@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, useMapEvents, Polyline, useMap } from 'react-leaflet'
 import CustomMarker from './CustomMarker'
 import { useMapMarkers } from '../../context/MapMarkersContext'
-import { FiMaximize2, FiMinimize2, FiLayers } from 'react-icons/fi'
+import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
+import LayerButton from './LayerButton'
 import axiosInstance from '../../api/axiosInstance'
 import 'leaflet/dist/leaflet.css'
-import { decode } from '@googlemaps/polyline-codec'
 import axios from 'axios'
 
 const ClickHandler = ({ onMapClick }) => {
@@ -14,19 +14,19 @@ const ClickHandler = ({ onMapClick }) => {
 }
 
 const Map = () => {
-  const [city, setCity] = useState('')
   const { markers, handleMapClick } = useMapMarkers()
+  const [city, setCity] = useState('')
   const [isMaximized, setIsMaximized] = useState(true)
+  const [layer, setLayer] = useState(<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributor" />)
   const [routeCoords, setRouteCoords] = useState([])
 
-  const [map, setMap] = useState(null)
   const [position, setPosition] = useState([37.18817, -3.60667])
 
   const MapViewUpdater = ({ position }) => {
     const map = useMap()
     useEffect(() => {
       map.flyTo(position, 13, { duration: 1.5 })
-    }, [position, map])
+    }, [position])
     return null
   }
 
@@ -69,22 +69,17 @@ const Map = () => {
   }, [markers])
 
   return (
-    <div className={`relative m-10 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden ${isMaximized ? 'w-full' : 'w-2/3 h-[500px]'}`}>
+    <div className={`relative m-5 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden ${isMaximized ? 'w-full' : 'w-2/3 h-[500px]'}`}>
       {/* Botones y buscador alineados */}
-      <div className="absolute bottom-4 left-4 flex gap-4 z-[1000]">
+      <div className="absolute bottom-4 left-4 flex gap-2 z-[500]">
         <button
-          className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-200 transition"
+          className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition'
           onClick={() => setIsMaximized(!isMaximized)}
         >
           {isMaximized ? <FiMinimize2 size={24} /> : <FiMaximize2 size={24} />}
         </button>
 
-        <button
-          className="bg-white rounded-full shadow-lg p-3 hover:bg-gray-200 transition"
-          onClick={() => console.log('Capas')}
-        >
-          <FiLayers />
-        </button>
+        <LayerButton layer={layer} setLayer={setLayer} />
 
         {/* Buscador */}
         <div className="flex items-center space-x-2 bg-white p-2 rounded shadow-lg">
@@ -107,10 +102,7 @@ const Map = () => {
       {/* Contenedor del mapa */}
       <div className="absolute top-0 left-0 w-full h-full">
         <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+          {layer}
           <ClickHandler onMapClick={handleMapClick} />
           {markers.map((marker, index) => (
             <CustomMarker key={marker.markerId} marker={marker} index={index} />
