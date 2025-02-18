@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { MapContainer, TileLayer, useMapEvents, Polyline, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, useMapEvents, Polyline } from 'react-leaflet'
+import { decode } from '@googlemaps/polyline-codec'
 import CustomMarker from './CustomMarker'
 import { useMapMarkers } from '../../context/MapMarkersContext'
 import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
@@ -21,14 +22,6 @@ const Map = () => {
   const [routeCoords, setRouteCoords] = useState([])
 
   const [position, setPosition] = useState([37.18817, -3.60667])
-
-  const MapViewUpdater = ({ position }) => {
-    const map = useMap()
-    useEffect(() => {
-      map.flyTo(position, 13, { duration: 1.5 })
-    }, [position])
-    return null
-  }
 
   const handleSearch = async () => {
     if (!city) return
@@ -57,9 +50,14 @@ const Map = () => {
         const response = await axiosInstance.get('http://localhost:3000/routes', {
           params: {
             origin: `${markers[0].position[0]},${markers[0].position[1]}`,
-            destination: `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`
+            destination: `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`,
+            waypoints: markers.slice(1, markers.length - 1).map(marker => `${marker.position[0]},${marker.position[1]}`)
           }
         })
+
+        const dataRoute = response.data.routes[0].legs
+        const dataDecode = decode(response.data.routes[0].overview_polyline.points)
+        setRouteCoords(dataDecode)
       } catch (error) {
         console.error('Error fetching route:', error)
       }
@@ -109,11 +107,10 @@ const Map = () => {
           ))}
           {routeCoords.length > 0 && (
             <Polyline
-              pathOptions={{ color: 'blue', weight: 5 }}
+              pathOptions={{ color: 'blue', weight: 3, opacity: 0.7 }}
               positions={routeCoords}
             />
           )}
-          <MapViewUpdater position={position} />
         </MapContainer>
       </div>
     </div>
