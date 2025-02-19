@@ -3,20 +3,19 @@ import L from 'leaflet'
 export const createNumberIcon = (index) => {
   return L.divIcon({
     html: `<div style="
-      background-color: #333; 
+      background-color: ${index === 0 ? 'green' : 'blue'};
       color: white; 
-      width: 30px; 
-      height: 30px; 
+      width: 25px; 
+      height: 25px; 
       border-radius: 50%; 
       display: flex; 
       align-items: center; 
       justify-content: center;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: bold;
-      border: 1px solid yellow;
-    ">${index === 0 ? 'A' : index}</div>`,
+    ">${index === 0 ? '&#9658;' : index}</div>`,
     className: '',
-    iconSize: [30, 30],
+    iconSize: [15, 15],
     iconAnchor: [15, 15]
   })
 }

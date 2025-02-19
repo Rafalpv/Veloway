@@ -47,11 +47,16 @@ const Map = () => {
       if (markers.length < 2) return
 
       try {
+        const waypointsString = markers
+          .slice(1, markers.length - 1) // Excluir origen y destino
+          .map(marker => `${marker.position[0]},${marker.position[1]}`) // "lat,lng"
+          .join('|') // Unir con "|"
+
         const response = await axiosInstance.get('http://localhost:3000/routes', {
           params: {
             origin: `${markers[0].position[0]},${markers[0].position[1]}`,
             destination: `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`,
-            waypoints: markers.slice(1, markers.length - 1).map(marker => `${marker.position[0]},${marker.position[1]}`)
+            waypoints: waypointsString // 🔹 Ahora se envía correctamente como string
           }
         })
 
