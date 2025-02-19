@@ -25,10 +25,10 @@ const Header = () => {
             Usuarios
           </NavLink>
           <NavLink
-            to='/admin/orders'
+            to='/admin/routes'
             className={({ isActive }) => isActive ? '' : ''}
           >
-            Pedidos
+            Rutas
           </NavLink>
           <NavLink
             to='/admin/retos'
