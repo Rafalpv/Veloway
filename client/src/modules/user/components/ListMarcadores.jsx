@@ -3,7 +3,7 @@ import MarketsSwapy from './MarketsSwapy'
 import { useMapMarkers } from '@user/context/MapMarkersContext' // Usamos el contexto
 
 const ListMarcadores = () => {
-  const { markers, handleDragEnd } = useMapMarkers()
+  const { markers, handleDragEnd, selectedM } = useMapMarkers()
 
   return (
     <div className='w-1/3'>

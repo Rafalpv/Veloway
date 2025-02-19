@@ -1,18 +1,23 @@
+import { useMapMarkers } from '../context/MapMarkersContext'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { FaFlagCheckered } from 'react-icons/fa'
 
-const Mark = ({ markerId, position, index }) => {
+const Mark = ({ markerId, index }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: markerId })
-
+  const { selectedMarker, setSelectedMarker, totalMarkers } = useMapMarkers()
   const style = {
     transition,
     transform: CSS.Transform.toString(transform)
   }
 
   return (
-    <div className={`${index === 0 ? 'bg-green' : 'bg-zinc-500'} p-4 m-2 cursor-pointer rounded`} ref={setNodeRef} {...attributes} {...listeners} style={style} >
-      {index + 1
-      }.{markerId}
+    <div
+      className={`${index === 0 ? 'bg-green' : 'bg-zinc-500'} ${(selectedMarker === markerId) ? 'border-2 border-yellow-400' : ''} p-4 m-2 cursor-pointer rounded`}
+      ref={setNodeRef} {...attributes} {...listeners} style={style}
+      onMouseEnter={() => setSelectedMarker(markerId)}
+      onMouseLeave={() => setSelectedMarker(null)}>
+      {index === 0 ? '►' : totalMarkers === index ? <FaFlagCheckered /> : index}
     </div >
   )
 }

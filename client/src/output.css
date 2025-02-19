@@ -985,6 +985,11 @@ video {
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
 }
 
+.border-yellow-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(250 204 21 / var(--tw-border-opacity, 1));
+}
+
 .bg-backgraound-admin{
   --tw-bg-opacity: 1;
   background-color: rgb(214 219 224 / var(--tw-bg-opacity, 1));
