@@ -29,13 +29,20 @@ export const MapMarkersProvider = ({ children }) => {
       return updatedMarkers
     })
   }
+  const handleChangeOrder = () => {
+    setMarkers((prev) => {
+      const updatedMarkers = [...prev]
+      updatedMarkers.reverse()
+      return updatedMarkers
+    })
+  }
 
   const handleDeleteMark = (id) => {
     setMarkers((prev) => prev.filter((marker) => marker.markerId !== id))
   }
 
   return (
-    <MapMarkersContext.Provider value={{ markers, selectedMarker, setSelectedMarker, totalMarkers: markers.length - 1, handleMapClick, handleDragEnd, handleDeleteMark }}>
+    <MapMarkersContext.Provider value={{ markers, selectedMarker, setSelectedMarker, totalMarkers: markers.length - 1, handleMapClick, handleDragEnd, handleDeleteMark, handleChangeOrder }}>
       {children}
     </MapMarkersContext.Provider>
   )

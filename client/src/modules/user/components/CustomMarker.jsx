@@ -1,19 +1,31 @@
+import { useState } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 import { TiDelete } from 'react-icons/ti'
 import { createIcon } from '@user/utils/mapUtils'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
 const CustomMarker = ({ marker, index }) => {
-  const { handleDeleteMark, selectedMarker } = useMapMarkers()
+  const { handleDeleteMark, selectedMarker, updateMarkerPosition } = useMapMarkers() // Agregar función para actualizar posición
+  const [draggable, setDraggable] = useState(true) // Activamos draggable por defecto
 
   return (
-    <Marker position={marker.position} icon={createIcon(index, marker.markerId, selectedMarker)}>
-      <Popup >
+    <Marker
+      position={marker.position}
+      icon={createIcon(index, marker.markerId, selectedMarker)}
+      draggable={draggable} // Hacemos que sea arrastrable
+      eventHandlers={{
+        dragend: (event) => {
+          const newPos = event.target.getLatLng() // Obtener la nueva posición
+          updateMarkerPosition(marker.markerId, newPos) // Actualizar en el contexto
+        }
+      }}
+    >
+      <Popup>
         <h3 className='text-lg font-bold'>Marcador {index}</h3>
         <button
-          className='relative top-3 right-3 ml-2' // Corrección en el margen
+          className='relative top-3 right-3 ml-2'
           onClick={(e) => {
-            e.stopPropagation() // Evita que el clic en el botón active otros eventos
+            e.stopPropagation()
             handleDeleteMark(marker.markerId)
           }}
         >

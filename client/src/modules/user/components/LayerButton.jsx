@@ -5,7 +5,6 @@ import { TileLayer } from 'react-leaflet'
 const LayerButton = ({ layer, setLayer }) => {
   const [isLayerVisible, setIsLayerVisible] = useState(false)
 
-  // Lista de capas de ejemplo
   const Layers = [
     { id: 1, image: '/img/layer1.png', TitleLayer: <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributor" /> },
     { id: 2, image: '/img/layer2.png', TitleLayer: <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; Carto" /> },
