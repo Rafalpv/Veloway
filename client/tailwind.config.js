@@ -10,6 +10,8 @@ export default {
         'backgraound-admin': '#D6DBE0',
         green: '#205435',
         blue: '#3F51B5',
+        blueButton: '#BB98F2',
+        greenButton: '#90EC6F',
         gold: '#FFC107',
         'gold-dark': '#FFA000'
 
