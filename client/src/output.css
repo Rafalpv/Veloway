@@ -758,6 +758,27 @@ video {
   height: 100vh;
 }
 
+.max-h-9{
+  max-height: 2.25rem;
+}
+
+.max-h-40{
+  max-height: 10rem;
+}
+
+.max-h-64{
+  max-height: 16rem;
+}
+
+.max-h-lvh{
+  max-height: 100lvh;
+}
+
+.max-h-min{
+  max-height: -moz-min-content;
+  max-height: min-content;
+}
+
 .w-1\/12{
   width: 8.333333%;
 }
@@ -1067,6 +1088,11 @@ video {
 .bg-zinc-500{
   --tw-bg-opacity: 1;
   background-color: rgb(113 113 122 / var(--tw-bg-opacity, 1));
+}
+
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
 .bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{

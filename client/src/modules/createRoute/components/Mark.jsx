@@ -13,7 +13,7 @@ const Mark = ({ markerId, index }) => {
 
   return (
     <div
-      className={`${index === 0 ? 'bg-green' : 'bg-zinc-500'} ${(selectedMarker === markerId) ? ' flex flex-row border-2 border-yellow-400' : ''} p-4 m-2 cursor-pointer rounded`}
+      className={`${index === 0 ? 'bg-green' : 'bg-zinc-500'} ${(selectedMarker === markerId) ? ' flex flex-row border-2 border-yellow-400' : ''} p-4 m-2 cursor-pointer rounded-full`}
       ref={setNodeRef} {...attributes} {...listeners} style={style}
       onMouseEnter={() => setSelectedMarker(markerId)}
       onMouseLeave={() => setSelectedMarker(null)}>
