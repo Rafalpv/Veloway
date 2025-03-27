@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    path: 'user',
+    path: 'route',
     element: <CreateRoute />
   },
   {

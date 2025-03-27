@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { MapContainer, TileLayer, useMap, useMapEvents, Polyline, Marker, Popup } from 'react-leaflet'
-import { decode } from '@googlemaps/polyline-codec'
+import { MapContainer, TileLayer, useMap, useMapEvents, Polyline } from 'react-leaflet'
 import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 import CustomMarker from './CustomMarker'
 import LayerButton from './LayerButton'
-import axiosInstance from '@api/axiosInstance'
 import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
 
@@ -23,61 +21,30 @@ const ClickHandler = ({ onMapClick }) => {
 }
 
 const Map = () => {
-  const { markers, handleMapClick } = useMapMarkers()
+  const { markers, handleMapClick, routes } = useMapMarkers()
   const [city, setCity] = useState('')
   const [isMaximized, setIsMaximized] = useState(true)
   const [layer, setLayer] = useState(<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap contributor' />)
-  const [routeCoords, setRouteCoords] = useState([])
   const [position, setPosition] = useState([37.18817, -3.60667])
-  const [searchMarker, setSearchMarker] = useState(null)
+  const [searchResults, setSearchResults] = useState([])
 
   const handleSearch = async () => {
     if (!city) return
     try {
       const response = await axios.get('http://localhost:3000/routes/locations', {
-        params: {
-          ubication: city
-        }
+        params: { ubication: city }
       })
-      if (response.data.length > 0) {
-        const { lat, lon } = response.data[0]
-        const newPosition = [parseFloat(lat), parseFloat(lon)]
-        setPosition(newPosition)
-        setSearchMarker(newPosition)
-      }
+      setSearchResults(response.data)
     } catch (error) {
       console.error('Error al obtener la ubicación:', error)
     }
   }
 
-  useEffect(() => {
-    const fetchRoute = async () => {
-      if (markers.length < 2) return
-      try {
-        const waypointsString = markers
-          .slice(1, markers.length - 1)
-          .map(marker => `${marker.position[0]},${marker.position[1]}`)
-          .join('|')
-
-        const response = await axiosInstance.get('http://localhost:3000/routes', {
-          params: {
-            origin: `${markers[0].position[0]},${markers[0].position[1]}`,
-            destination: `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`,
-            waypoints: waypointsString
-          }
-        })
-
-        const dataRoute = response.data.routes[0].legs
-        console.log('Ruta:', dataRoute)
-        const dataDecode = decode(response.data.routes[0].overview_polyline.points)
-        setRouteCoords(dataDecode)
-      } catch (error) {
-        console.error('Error fetching route:', error)
-      }
-    }
-
-    fetchRoute()
-  }, [])
+  const handleSelectCity = (selectedCity) => {
+    setCity(selectedCity.name)
+    setPosition([selectedCity.lat, selectedCity.lon]) // Mueve el mapa a la ciudad seleccionada
+    setSearchResults([]) // Oculta la lista después de seleccionar
+  }
 
   return (
     <div className={`relative m-5 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden ${isMaximized ? 'w-full' : 'w-2/3 h-[500px]'}`}>
@@ -91,20 +58,35 @@ const Map = () => {
 
         <LayerButton layer={layer} setLayer={setLayer} />
 
-        <div className="flex items-center space-x-2 bg-white p-2 rounded shadow-lg">
+        <div className="relative">
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Introduce una ciudad"
-            className="border p-2 rounded"
+            className="border p-2 rounded w-64"
           />
           <button
             onClick={handleSearch}
-            className="bg-blue-500 px-4 py-2 rounded shadow-lg hover:bg-blue-600"
+            className="bg-white px-4 py-2 ml-2 rounded shadow-lg"
           >
             Buscar
           </button>
+
+          {/* Lista de sugerencias */}
+          {searchResults.length > 0 && (
+            <ul className="absolute bottom-full left-0 w-64 bg-white border border-gray-300 shadow-lg rounded-md mt-1 max-h-60 overflow-auto">
+              {searchResults.map((suggest, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSelectCity(suggest)}
+                  className="p-2 cursor-pointer hover:bg-gray-100"
+                >
+                  {suggest.name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
@@ -113,18 +95,15 @@ const Map = () => {
           {layer}
           <MapCenterHandler position={position} />
           <ClickHandler onMapClick={handleMapClick} />
+
           {markers.map((marker, index) => (
             <CustomMarker key={marker.markerId} marker={marker} index={index} />
           ))}
-          {searchMarker && (
-            <Marker position={searchMarker}>
-              <Popup>Ubicación buscada</Popup>
-            </Marker>
-          )}
-          {routeCoords.length > 0 && (
+
+          {routes.length > 0 && (
             <Polyline
               pathOptions={{ color: 'blue', weight: 3, opacity: 0.7 }}
-              positions={routeCoords}
+              positions={routes}
             />
           )}
         </MapContainer>

@@ -1,11 +1,13 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import axiosInstance from '@api/axiosInstance'
+import { decode } from '@googlemaps/polyline-codec'
 
 const MapMarkersContext = createContext()
 
 export const MapMarkersProvider = ({ children }) => {
   const [markers, setMarkers] = useState([])
   const [selectedMarker, setSelectedMarker] = useState(null)
-  const [routes, setRoutes] = useState([])
+  const [routes, setRoutes] = useState([]) // Estado para almacenar la ruta calculada
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
@@ -30,6 +32,7 @@ export const MapMarkersProvider = ({ children }) => {
       return updatedMarkers
     })
   }
+
   const handleChangeOrder = () => {
     setMarkers((prev) => {
       const updatedMarkers = [...prev]
@@ -39,7 +42,11 @@ export const MapMarkersProvider = ({ children }) => {
   }
 
   const updateMarkerPosition = (id, newPos) => {
-    setMarkers((prev) => prev.map((marker) => (marker.markerId === id ? { ...marker, position: [newPos.lat, newPos.lng] } : marker)))
+    setMarkers((prev) =>
+      prev.map((marker) =>
+        marker.markerId === id ? { ...marker, position: [newPos.lat, newPos.lng] } : marker
+      )
+    )
   }
 
   const handleDeleteMark = (id) => {
@@ -48,10 +55,55 @@ export const MapMarkersProvider = ({ children }) => {
 
   const handleDeleteAll = () => {
     setMarkers([])
+    setRoutes([]) // También limpiamos la ruta al eliminar todos los marcadores
   }
 
+  // Función para obtener la ruta desde el backend
+  const fetchRoute = async () => {
+    if (markers.length < 2) return
+
+    try {
+      const waypointsString = markers
+        .slice(1, markers.length - 1)
+        .map(marker => `${marker.position[0]},${marker.position[1]}`)
+        .join('|')
+
+      const response = await axiosInstance.get('/routes', {
+        params: {
+          origin: `${markers[0].position[0]},${markers[0].position[1]}`,
+          destination: `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`,
+          waypoints: waypointsString
+        }
+      })
+
+      const dataDecode = decode(response.data.routes[0].overview_polyline.points)
+      setRoutes(dataDecode)
+    } catch (error) {
+      console.error('Error fetching route:', error)
+    }
+  }
+
+  // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
+  useEffect(() => {
+    fetchRoute()
+  }, [])
+
   return (
-    <MapMarkersContext.Provider value={{ markers, selectedMarker, setSelectedMarker, totalMarkers: markers.length - 1, handleMapClick, handleDragEnd, handleDeleteMark, handleChangeOrder, updateMarkerPosition, handleDeleteAll }}>
+    <MapMarkersContext.Provider
+      value={{
+        markers,
+        selectedMarker,
+        setSelectedMarker,
+        totalMarkers: markers.length - 1,
+        routes,
+        handleMapClick,
+        handleDragEnd,
+        handleDeleteMark,
+        handleChangeOrder,
+        updateMarkerPosition,
+        handleDeleteAll
+      }}
+    >
       {children}
     </MapMarkersContext.Provider>
   )
