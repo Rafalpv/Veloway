@@ -5,9 +5,11 @@ const DeletAllMarks = () => {
   const { handleDeleteAll } = useMapMarkers()
 
   return (
-    <button className='border-2 border-black rounded-xl p-4 hover:bg-slate-400 shadow-boton' onClick={handleDeleteAll}>
-      <TbHttpDelete size={24} />
-    </button>
+    <div>
+      <button className='border-2 border-black rounded-xl p-4 hover:bg-red-400 shadow-boton' onClick={handleDeleteAll}>
+        <TbHttpDelete size={35} />
+      </button>
+    </div>
   )
 }
 

@@ -9,6 +9,7 @@ export const MapMarkersProvider = ({ children }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [routesPolyline, setRoutesPolyline] = useState([]) // Estado para almacenar la ruta calculada
   const [steps, setSteps] = useState([])
+  const [isRoundTrip, setIsRoundTrip] = useState(false)
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
@@ -57,7 +58,7 @@ export const MapMarkersProvider = ({ children }) => {
   const handleDeleteAll = () => {
     setMarkers([])
     setSteps([])
-    setRoutesPolyline([]) // También limpiamos la ruta al eliminar todos los marcadores
+    setRoutesPolyline([])
   }
 
   // Función para obtener la ruta desde el backend
@@ -91,7 +92,7 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [markers])
+  }, [])
 
   return (
     <MapMarkersContext.Provider
@@ -107,7 +108,9 @@ export const MapMarkersProvider = ({ children }) => {
         handleDeleteMark,
         handleChangeOrder,
         updateMarkerPosition,
-        handleDeleteAll
+        handleDeleteAll,
+        isRoundTrip,
+        setIsRoundTrip
       }}
     >
       {children}

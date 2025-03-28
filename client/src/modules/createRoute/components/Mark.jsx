@@ -5,7 +5,7 @@ import { FaFlagCheckered } from 'react-icons/fa'
 
 const Mark = ({ markerId, index }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: markerId })
-  const { selectedMarker, setSelectedMarker, totalMarkers, steps } = useMapMarkers()
+  const { selectedMarker, setSelectedMarker, totalMarkers, steps, handleDeleteMark } = useMapMarkers()
   const style = {
     transition,
     transform: CSS.Transform.toString(transform)
@@ -13,12 +13,21 @@ const Mark = ({ markerId, index }) => {
 
   return (
     <div
-      className={`${index === 0 ? 'bg-green' : 'bg-zinc-500'} ${(selectedMarker === markerId) ? ' flex flex-row border-2 border-yellow-400' : ''} p-4 m-2 cursor-pointer rounded-full`}
+      className={`
+      h-14 flex items-center justify-center rounded-full 
+      border-2 border-black shadow-lg m-2
+      hover:scale-105
+      ${index === 0 ? 'bg-green-500 font-bold' : 'bg-white'}
+      ${selectedMarker === markerId ? 'border-yellow-400' : ''}
+      `}
       ref={setNodeRef} {...attributes} {...listeners} style={style}
       onMouseEnter={() => setSelectedMarker(markerId)}
-      onMouseLeave={() => setSelectedMarker(null)}>
-      {index === 0 ? `► ${steps.length > 0 ? steps[index].start_address : ''}` : totalMarkers === index ? <FaFlagCheckered /> : index}
-      </div >
+      onMouseLeave={() => setSelectedMarker(null)}
+    >
+      <span className="w-full h-full flex items-center justify-center rounded-full aspect-square font-semibold">
+        {index === 0 ? `► ${steps.length > 0 ? steps[index].start_address : ''}` : index}
+      </span>
+    </div>
   )
 }
 

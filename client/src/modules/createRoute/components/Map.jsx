@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, useMap, useMapEvents, Polyline } from 'react-leaflet'
 import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
+import { IoSearchOutline } from 'react-icons/io5'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 import CustomMarker from './CustomMarker'
 import LayerButton from './LayerButton'
@@ -23,7 +24,7 @@ const ClickHandler = ({ onMapClick }) => {
 const Map = () => {
   const { markers, handleMapClick, routesPolyline } = useMapMarkers()
   const [city, setCity] = useState('')
-  const [isMaximized, setIsMaximized] = useState(true)
+  const [isMaximized, setIsMaximized] = useState(false)
   const [layer, setLayer] = useState(<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap contributor' />)
   const [position, setPosition] = useState([37.18817, -3.60667])
   const [searchResults, setSearchResults] = useState([])
@@ -47,35 +48,38 @@ const Map = () => {
   }
 
   return (
-    <div className={`relative m-5 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden ${isMaximized ? 'w-full' : 'w-2/3 h-[500px]'}`}>
-      <div className="absolute bottom-4 left-4 flex gap-2 z-[500]">
+    <div className={'map relative m-5 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden w-full'}>
+      < div className="absolute bottom-4 left-4 flex gap-2 z-[500]" >
         <button
           className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition'
-          onClick={() => setIsMaximized(!isMaximized)}
+          onClick={() => {
+            !isMaximized ? document.querySelector('.map').requestFullscreen() : document.exitFullscreen()
+            setIsMaximized(!isMaximized)
+          }}
         >
           {isMaximized ? <FiMinimize2 size={24} /> : <FiMaximize2 size={24} />}
         </button>
 
         <LayerButton layer={layer} setLayer={setLayer} />
 
-        <div className="relative">
+        <div className='relative flex'>
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Introduce una ciudad"
-            className="border p-2 rounded w-64"
+            className="border p-2 rounded-3xl w-64"
           />
           <button
             onClick={handleSearch}
-            className="bg-white px-4 py-2 ml-2 rounded shadow-lg"
+            className="bg-white px-4 py-2 ml-2 rounded-full shadow-lg"
           >
-            Buscar
+            <IoSearchOutline size={24} />
           </button>
 
           {/* Lista de sugerencias */}
           {searchResults.length > 0 && (
-            <ul className="absolute bottom-full left-0 w-64 bg-white border border-gray-300 shadow-lg rounded-md mt-1 max-h-60 overflow-auto">
+            <ul className="absolute bottom-full left-0 w-64 bg-white border border-gray-300 shadow-lg rounded-3xl mt-1 max-h-60 overflow-auto">
               {searchResults.map((suggest, index) => (
                 <li
                   key={index}
@@ -88,7 +92,7 @@ const Map = () => {
             </ul>
           )}
         </div>
-      </div>
+      </div >
 
       <div className="absolute top-0 left-0 w-full h-full">
         <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
@@ -108,7 +112,7 @@ const Map = () => {
           )}
         </MapContainer>
       </div>
-    </div>
+    </div >
   )
 }
 
