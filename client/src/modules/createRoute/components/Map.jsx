@@ -21,7 +21,7 @@ const ClickHandler = ({ onMapClick }) => {
 }
 
 const Map = () => {
-  const { markers, handleMapClick, routes } = useMapMarkers()
+  const { markers, handleMapClick, routesPolyline } = useMapMarkers()
   const [city, setCity] = useState('')
   const [isMaximized, setIsMaximized] = useState(true)
   const [layer, setLayer] = useState(<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap contributor' />)
@@ -100,10 +100,10 @@ const Map = () => {
             <CustomMarker key={marker.markerId} marker={marker} index={index} />
           ))}
 
-          {routes.length > 0 && (
+          {routesPolyline.length > 0 && (
             <Polyline
               pathOptions={{ color: 'blue', weight: 3, opacity: 0.7 }}
-              positions={routes}
+              positions={routesPolyline}
             />
           )}
         </MapContainer>

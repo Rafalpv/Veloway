@@ -7,7 +7,8 @@ const MapMarkersContext = createContext()
 export const MapMarkersProvider = ({ children }) => {
   const [markers, setMarkers] = useState([])
   const [selectedMarker, setSelectedMarker] = useState(null)
-  const [routes, setRoutes] = useState([]) // Estado para almacenar la ruta calculada
+  const [routesPolyline, setRoutesPolyline] = useState([]) // Estado para almacenar la ruta calculada
+  const [steps, setSteps] = useState([])
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
@@ -55,7 +56,8 @@ export const MapMarkersProvider = ({ children }) => {
 
   const handleDeleteAll = () => {
     setMarkers([])
-    setRoutes([]) // También limpiamos la ruta al eliminar todos los marcadores
+    setSteps([])
+    setRoutesPolyline([]) // También limpiamos la ruta al eliminar todos los marcadores
   }
 
   // Función para obtener la ruta desde el backend
@@ -76,8 +78,11 @@ export const MapMarkersProvider = ({ children }) => {
         }
       })
 
+      console.log(response.data.routes[0])
+      setSteps(response.data.routes[0].legs)
+
       const dataDecode = decode(response.data.routes[0].overview_polyline.points)
-      setRoutes(dataDecode)
+      setRoutesPolyline(dataDecode)
     } catch (error) {
       console.error('Error fetching route:', error)
     }
@@ -86,7 +91,7 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [])
+  }, [markers])
 
   return (
     <MapMarkersContext.Provider
@@ -95,7 +100,8 @@ export const MapMarkersProvider = ({ children }) => {
         selectedMarker,
         setSelectedMarker,
         totalMarkers: markers.length - 1,
-        routes,
+        steps,
+        routesPolyline,
         handleMapClick,
         handleDragEnd,
         handleDeleteMark,
