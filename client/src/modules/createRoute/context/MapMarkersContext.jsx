@@ -51,6 +51,10 @@ export const MapMarkersProvider = ({ children }) => {
     )
   }
 
+  const handleAddStartPoint = (markerPosition) => {
+    setMarkers((prev) => [{ markerId: Date.now(), position: markerPosition }, ...prev.slice(1)])
+  }
+
   const handleDeleteMark = (id) => {
     setMarkers((prev) => prev.filter((marker) => marker.markerId !== id))
   }
@@ -110,7 +114,8 @@ export const MapMarkersProvider = ({ children }) => {
         updateMarkerPosition,
         handleDeleteAll,
         isRoundTrip,
-        setIsRoundTrip
+        setIsRoundTrip,
+        handleAddStartPoint
       }}
     >
       {children}
