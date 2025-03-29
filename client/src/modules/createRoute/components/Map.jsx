@@ -51,6 +51,12 @@ const Map = () => {
     setCity('')
   }
 
+  const handleAddPoint = (e, type) => {
+    e.stopPropagation()
+    handleAddStartPoint(selectedUbication, type)
+    setSelectedUbication(null)
+  }
+
   const toggleFullscreen = () => {
     if (!isMaximized) {
       document.querySelector('.map')?.requestFullscreen()
@@ -105,25 +111,22 @@ const Map = () => {
           ))}
 
           {selectedUbication && (
-            <Marker position={selectedUbication} draggable={true}>
+            <Marker position={selectedUbication}>
               <Popup>
                 <div className="flex gap-2 p-2">
-                  <button className="bg-blue-500 bg-greenButton border-2 border-black px-4 py-2 rounded shadow-md "
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleAddStartPoint(selectedUbication)
-                      setSelectedUbication(null)
-                    }}>
-                    START POINT
-                  </button>
-                  <button className='bg-blueButton text-white px-4 py-2 rounded shadow-md border-2 border-black '>
-                    ADD POINT
-                  </button>
-                  {!isRoundTrip &&
-                    <button className="bg-red-500 text-white px-4 py-2 rounded shadow-md border-2 border-black ">
-                      END POINT
+                  {[
+                    { label: 'START POINT', type: 'start', className: 'bg-greenButton' },
+                    { label: 'ADD POINT', type: 'add', className: 'bg-blueButton' },
+                    !isRoundTrip && { label: 'END POINT', type: 'end', className: 'bg-red-500' }
+                  ].filter(Boolean).map(({ label, type, className }) => (
+                    <button
+                      key={type}
+                      className={`${className} px-4 py-2 rounded shadow-md border-2 border-black`}
+                      onClick={(e) => handleAddPoint(e, type)}
+                    >
+                      {label}
                     </button>
-                  }
+                  ))}
                 </div>
               </Popup>
             </Marker>

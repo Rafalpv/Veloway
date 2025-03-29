@@ -1098,6 +1098,11 @@ video {
   background-color: rgb(187 152 242 / var(--tw-bg-opacity, 1));
 }
 
+.bg-green{
+  --tw-bg-opacity: 1;
+  background-color: rgb(32 84 53 / var(--tw-bg-opacity, 1));
+}
+
 .bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{
   background-image: url('/img/ciclista-fondo.jpg');
 }

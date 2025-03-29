@@ -51,8 +51,22 @@ export const MapMarkersProvider = ({ children }) => {
     )
   }
 
-  const handleAddStartPoint = (markerPosition) => {
-    setMarkers((prev) => [{ markerId: Date.now(), position: markerPosition }, ...prev.slice(1)])
+  const handleAddStartPoint = (markerPosition, option) => {
+    switch (option) {
+      case 'start':
+        setMarkers((prev) => [{ markerId: Date.now(), position: markerPosition }, ...prev.slice(1)])
+        break
+      case 'end':
+        setMarkers((prev) => [...prev, { markerId: Date.now(), position: markerPosition }])
+        break
+      default:
+        setMarkers((prev) => [
+          ...prev.slice(0, prev.length - 1),
+          { markerId: Date.now(), position: markerPosition },
+          prev[prev.length - 1]
+        ])
+        break
+    }
   }
 
   const handleDeleteMark = (id) => {
