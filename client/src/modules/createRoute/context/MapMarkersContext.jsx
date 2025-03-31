@@ -84,17 +84,23 @@ export const MapMarkersProvider = ({ children }) => {
     if (markers.length < 2) return
 
     try {
-      const waypointsString = markers
-        .slice(1, markers.length - 1)
+      const origin = `${markers[0].position[0]},${markers[0].position[1]}`
+      let waypointsArray = markers.slice(1, markers.length - 1) // Puntos intermedios
+
+      let destination = `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`
+
+      if (isRoundTrip) {
+        // Si es ida y vuelta, el último punto se convierte en un waypoint
+        waypointsArray = [...waypointsArray, { position: markers[markers.length - 1].position }]
+        destination = origin // El destino vuelve a ser el punto de origen
+      }
+
+      const waypointsString = waypointsArray
         .map(marker => `${marker.position[0]},${marker.position[1]}`)
         .join('|')
 
       const response = await axiosInstance.get('/routes', {
-        params: {
-          origin: `${markers[0].position[0]},${markers[0].position[1]}`,
-          destination: `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`,
-          waypoints: waypointsString
-        }
+        params: { origin, destination, waypoints: waypointsString }
       })
 
       console.log(response.data.routes[0])
