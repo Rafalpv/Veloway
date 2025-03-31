@@ -6,7 +6,7 @@ import ListMarcadores from '@user/components/ListMarcadores'
 const CreateRoute = () => {
   return (
     <MapMarkersProvider>
-      <div className='flex'>
+      <div className='flex h-screen'>
         <ListMarcadores />
         <Map />
       </div>
