@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FiLayers } from 'react-icons/fi'
 import { TileLayer } from 'react-leaflet'
 
-const LayerButton = ({ layer, setLayer }) => {
+const LayerButton = ({ setLayer }) => {
   const [isLayerVisible, setIsLayerVisible] = useState(false)
 
   const Layers = [

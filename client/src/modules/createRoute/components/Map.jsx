@@ -22,13 +22,12 @@ const ClickHandler = ({ onMapClick }) => {
 }
 
 const Map = () => {
-  const { markers, handleMapClick, routesPolyline, isRoundTrip, handleAddStartPoint } = useMapMarkers()
+  const { markers, handleMapClick, routesPolyline, isRoundTrip, handleAddStartPoint, position, setPosition } = useMapMarkers()
   const [city, setCity] = useState('')
   const [isMaximized, setIsMaximized] = useState(false)
   const [layer, setLayer] = useState(
     <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap contributors' />
   )
-  const [position, setPosition] = useState([37.18817, -3.60667])
   const [selectedUbication, setSelectedUbication] = useState(null)
   const [searchResults, setSearchResults] = useState([])
 
@@ -73,7 +72,7 @@ const Map = () => {
         <button className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition' onClick={toggleFullscreen}>
           {isMaximized ? <FiMinimize2 size={24} /> : <FiMaximize2 size={24} />}
         </button>
-        <LayerButton layer={layer} setLayer={setLayer} />
+        <LayerButton setLayer={setLayer} />
 
         {/* Barra de búsqueda */}
         <div className='relative flex'>

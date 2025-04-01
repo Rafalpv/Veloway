@@ -8,8 +8,9 @@ export const MapMarkersProvider = ({ children }) => {
   const [markers, setMarkers] = useState([])
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [routesPolyline, setRoutesPolyline] = useState([]) // Estado para almacenar la ruta calculada
-  const [steps, setSteps] = useState([])
+  const [legs, setLegs] = useState([])
   const [isRoundTrip, setIsRoundTrip] = useState(false)
+  const [position, setPosition] = useState([37.18817, -3.60667])
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
@@ -75,7 +76,7 @@ export const MapMarkersProvider = ({ children }) => {
 
   const handleDeleteAll = () => {
     setMarkers([])
-    setSteps([])
+    setLegs([])
     setRoutesPolyline([])
   }
 
@@ -104,7 +105,7 @@ export const MapMarkersProvider = ({ children }) => {
       })
 
       console.log(response.data.routes[0])
-      setSteps(response.data.routes[0].legs)
+      setLegs(response.data.routes[0].legs)
 
       const dataDecode = decode(response.data.routes[0].overview_polyline.points)
       setRoutesPolyline(dataDecode)
@@ -125,7 +126,7 @@ export const MapMarkersProvider = ({ children }) => {
         selectedMarker,
         setSelectedMarker,
         totalMarkers: markers.length - 1,
-        steps,
+        legs,
         routesPolyline,
         handleMapClick,
         handleDragEnd,
@@ -135,7 +136,9 @@ export const MapMarkersProvider = ({ children }) => {
         handleDeleteAll,
         isRoundTrip,
         setIsRoundTrip,
-        handleAddStartPoint
+        handleAddStartPoint,
+        position,
+        setPosition
       }}
     >
       {children}
