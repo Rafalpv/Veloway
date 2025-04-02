@@ -3,11 +3,11 @@ import { useMapMarkers } from '../context/MapMarkersContext'
 import { useSortable } from '@dnd-kit/sortable'
 import { useMarkersContext } from './MarketsSwapy'
 import { CSS } from '@dnd-kit/utilities'
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { TiDelete } from 'react-icons/ti'
 
 const Mark = ({ marker, index }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: marker.markerId })
-  const { selectedMarker, setSelectedMarker, legs, totalMarkers, isRoundTrip, setPosition } = useMapMarkers()
+  const { selectedMarker, setSelectedMarker, legs, totalMarkers, isRoundTrip, setPosition, handleDeleteMark } = useMapMarkers()
   const { listVisible } = useMarkersContext()
   const [moreInfoMark, setMoreInfoMark] = useState(false)
 
@@ -48,11 +48,20 @@ const Mark = ({ marker, index }) => {
           </span>
         </div>
       </div>
-      {listVisible && (
+      {/* {listVisible && (
         <button className="ml-2 transition-transform duration-300" onClick={handleClick}>
           <MdOutlineKeyboardArrowDown size={30} className={`${moreInfoMark ? 'rotate-180' : 'rotate-0'}`} />
         </button>
-      )}
+      )} */}
+      <button
+        className='ml-3'
+        onClick={(e) => {
+          e.stopPropagation()
+          handleDeleteMark(marker.markerId)
+        }}
+      >
+        <TiDelete size={30} />
+      </button>
     </div>
   )
 }

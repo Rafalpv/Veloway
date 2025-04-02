@@ -4,6 +4,7 @@ import Dashboard from '@admin/pages/Dashboard'
 import DashboardUsers from '@admin/pages/DashboardUsers'
 import AdminLayout from '@admin/layout/AdminLayout'
 import CreateRoute from '@user/pages/CreateRoute'
+import UserRoute from '@userRoutes/pages/UserRoutes'
 import ProtectedRoute from './ProtectedRoute'
 
 const router = createBrowserRouter([
@@ -12,8 +13,17 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    path: 'route',
-    element: <CreateRoute />
+    path: 'routes',
+    children: [
+      {
+        index: true,
+        element: <UserRoute />
+      },
+      {
+        path: 'create',
+        element: <CreateRoute />
+      }
+    ]
   },
   {
     path: 'admin',

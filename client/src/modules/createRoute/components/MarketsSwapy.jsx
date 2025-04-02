@@ -1,11 +1,10 @@
-import { createContext, useContext, useState } from 'react'
-import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { IoMdArrowDropleft } from 'react-icons/io'
+import { RiPinDistanceFill } from 'react-icons/ri'
+import { FcClock } from 'react-icons/fc'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useMapMarkers } from '../context/MapMarkersContext'
 import Mark from './Mark'
-import ChangeOrderButton from './ChangeOrderButton'
-import RoundTripButton from './RoundTripButton'
-import DeletAllMarks from './DeleteAllMarks'
 
 const MarkersContext = createContext(null)
 
@@ -13,45 +12,69 @@ const useMarkersContext = () => useContext(MarkersContext)
 
 const MarketsSwapy = ({ markers }) => {
   const [listVisible, setListVisible] = useState(false)
+  const [totalKms, setTotalKms] = useState(0)
+  const [totalTime, setTotalTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
   const { legs } = useMapMarkers()
+
+  const getTotalKms = () => {
+    let total = 0
+    legs.forEach(leg => {
+      total += parseFloat(leg.distance.value) / 1000
+    })
+    setTotalKms(total.toFixed(2))
+  }
+
+  const getTotalTime = () => {
+    let totalSeconds = 0
+    legs.forEach(leg => {
+      totalSeconds += parseFloat(leg.duration.value)
+    })
+    const hours = Math.floor(totalSeconds / 3600)
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+    const seconds = totalSeconds % 60
+    setTotalTime({ seconds, minutes, hours })
+  }
+
+  useEffect(() => {
+    getTotalKms()
+    getTotalTime()
+  }, [legs])
 
   return (
     <MarkersContext.Provider value={{ listVisible }}>
       <div className={`relative flex flex-col justify-start ${listVisible ? 'w-1/3' : ''} bg-neutral-100 border-2 h-screen p-4`}>
-        {/* Lista de marcadores */}
         {markers.length > 0 &&
           <div className='bg-backgraound-admin p-2 overflow-auto mb-6 max-h-[60vh] border-2 border-black rounded-xl'>
             <SortableContext items={markers.map(marker => marker.markerId)} strategy={verticalListSortingStrategy}>
               {markers.map((marker, index) => (
-                <Mark key={marker.markerId} marker={marker} index={index} />
+                <div key={marker.markerId} className='flex flex-col justify-center items-center'>
+                  <Mark marker={marker} index={index} />
+                  {(markers.length > 1 && index !== markers.length - 1) ? legs[index] && legs[index].distance.text + ' | ' + legs[index].duration.text : ''}
+                </div>
               ))}
             </SortableContext>
           </div>}
 
-        <div>
-          {legs.map((leg, index) => {
-            return (
-              <span key={index}>
-                {leg.distance.text}
-              </span>
-            )
-          })}
+        <div className="flex gap-6 font-poppins text-xl bg-gray-100 p-4 rounded-lg shadow-md">
+          <span className="flex flex-col justify-center items-center font-semibold gap-3 text-gray-700">
+            < RiPinDistanceFill /> <span className="text-blue-600">{totalKms} km</span>
+          </span>
+          <span className="flex flex-col font-semibold text-gray-700">
+            < FcClock />
+            <span className="text-green-600">
+              {totalTime.hours > 0 && `${totalTime.hours} h `}
+              {totalTime.minutes > 0 && `${totalTime.minutes} min `}
+              {totalTime.seconds > 0 && `${totalTime.seconds} seg`}
+            </span>
+          </span>
         </div>
-
-        {/* Contenedor de botones */}
-        <div className={`flex ${listVisible ? 'flex-row justify-evenly' : 'flex-col items-center gap-4'} mt-2`}>
-          <ChangeOrderButton />
-          <RoundTripButton />
-          <DeletAllMarks />
-        </div>
-
         {/* Botón para mostrar/ocultar la lista */}
-        <button className='absolute top-1/2 -right-5 border-2 border-black rounded-full bg-white shadow-md'
+        <button className='absolute top-1/2 -right-5  border-2 border-black'
           onClick={() => setListVisible(!listVisible)}>
-          <IoMdArrowDropleft size={25} className={`${listVisible ? 'rotate-0' : 'rotate-180'} `} />
+          <IoMdArrowDropleft size={30} className={`${listVisible ? 'rotate-0' : 'rotate-180'} `} />
         </button>
-      </div>
-    </MarkersContext.Provider>
+      </div >
+    </MarkersContext.Provider >
   )
 }
 

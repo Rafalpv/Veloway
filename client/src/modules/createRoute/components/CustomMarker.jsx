@@ -1,10 +1,9 @@
 import { Marker, Popup } from 'react-leaflet'
-import { TiDelete } from 'react-icons/ti'
 import { createIcon } from '@user/utils/mapUtils'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
 const CustomMarker = ({ marker, index }) => {
-  const { handleDeleteMark, selectedMarker, updateMarkerPosition, totalMarkers, isRoundTrip } = useMapMarkers() // Agregar función para actualizar posición
+  const { selectedMarker, updateMarkerPosition, totalMarkers, isRoundTrip } = useMapMarkers() // Agregar función para actualizar posición
 
   return (
     <Marker
@@ -20,15 +19,6 @@ const CustomMarker = ({ marker, index }) => {
     >
       <Popup>
         <h3 className='text-lg font-bold'>Marcador {index}</h3>
-        <button
-          className='relative top-3 right-3 ml-2'
-          onClick={(e) => {
-            e.stopPropagation()
-            handleDeleteMark(marker.markerId)
-          }}
-        >
-          <TiDelete size={30} />
-        </button>
       </Popup>
     </Marker>
   )

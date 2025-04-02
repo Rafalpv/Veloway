@@ -11,7 +11,8 @@ export default defineConfig({
       '@api': path.resolve(__dirname, './src/api'),
       '@admin': path.resolve(__dirname, './src/modules/admin'),
       '@user': path.resolve(__dirname, './src/modules/createRoute'),
-      '@auth': path.resolve(__dirname, './src/modules/auth')
+      '@auth': path.resolve(__dirname, './src/modules/auth'),
+      '@userRoutes': path.resolve(__dirname, './src/modules/user')
     },
     preserveSymlinks: true
   },

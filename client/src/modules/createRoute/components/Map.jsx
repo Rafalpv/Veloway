@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, useMap, useMapEvents, Polyline, Marker, Popup } from 'react-leaflet'
 import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
 import { IoSearchOutline } from 'react-icons/io5'
+import SaveRouteButton from './SaveRouteButton'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 import CustomMarker from './CustomMarker'
 import LayerButton from './LayerButton'
+import ChangeOrderButton from './ChangeOrderButton'
+import RoundTripButton from './RoundTripButton'
+import DeletAllMarks from './DeleteAllMarks'
 import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
 
@@ -67,6 +71,14 @@ const Map = () => {
 
   return (
     <div className='map relative m-5 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden w-full'>
+      <div className='absolute top-2 left-16 flex gap-4 z-[410]'>
+        <ChangeOrderButton />
+        <RoundTripButton />
+        <DeletAllMarks />
+      </div>
+
+      <SaveRouteButton />
+
       {/* Controles */}
       <div className='absolute bottom-4 left-4 flex gap-2 z-[500]'>
         <button className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition' onClick={toggleFullscreen}>
@@ -134,7 +146,7 @@ const Map = () => {
           {routesPolyline.length > 0 && <Polyline pathOptions={{ color: 'blue', weight: 3, opacity: 0.7 }} positions={routesPolyline} />}
         </MapContainer>
       </div>
-    </div>
+    </div >
   )
 }
 

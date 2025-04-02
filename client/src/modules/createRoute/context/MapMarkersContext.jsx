@@ -104,7 +104,6 @@ export const MapMarkersProvider = ({ children }) => {
         params: { origin, destination, waypoints: waypointsString }
       })
 
-      console.log(response.data.routes[0])
       setLegs(response.data.routes[0].legs)
 
       const dataDecode = decode(response.data.routes[0].overview_polyline.points)
@@ -117,7 +116,7 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [])
+  }, [markers, isRoundTrip])
 
   return (
     <MapMarkersContext.Provider

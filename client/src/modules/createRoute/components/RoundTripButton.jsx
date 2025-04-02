@@ -6,8 +6,8 @@ const RoundTripButton = () => {
 
   return (
     <div>
-      <button className={`border-2 border-black rounded-xl p-4 hover:bg-greenButton shadow-boton ${isRoundTrip ? 'bg-greenButton' : ''} `} onClick={() => setIsRoundTrip(!isRoundTrip)} >
-        <TfiExchangeVertical size={35} />
+      <button className={`border-2 border-black rounded-full p-4 bg-white shadow-boton ${isRoundTrip ? 'bg-greenButton' : ''} `} onClick={() => setIsRoundTrip(!isRoundTrip)} >
+        <TfiExchangeVertical size={25} />
       </button >
     </div>
   )

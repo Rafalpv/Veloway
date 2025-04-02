@@ -6,8 +6,8 @@ const DeletAllMarks = () => {
 
   return (
     <div>
-      <button className='border-2 border-black rounded-xl p-4 hover:bg-red-400 shadow-boton' onClick={handleDeleteAll}>
-        <TbHttpDelete size={35} />
+      <button className='border-2 border-black rounded-xl p-4 bg-red-400 shadow-boton' onClick={handleDeleteAll}>
+        <TbHttpDelete size={25} />
       </button>
     </div>
   )
