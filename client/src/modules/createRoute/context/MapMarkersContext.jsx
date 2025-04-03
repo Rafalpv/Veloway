@@ -11,6 +11,8 @@ export const MapMarkersProvider = ({ children }) => {
   const [legs, setLegs] = useState([])
   const [isRoundTrip, setIsRoundTrip] = useState(false)
   const [position, setPosition] = useState([37.18817, -3.60667])
+  const [totalKms, setTotalKms] = useState(0)
+  const [totalTime, setTotalTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
@@ -113,9 +115,30 @@ export const MapMarkersProvider = ({ children }) => {
     }
   }
 
+  const getTotalKms = () => {
+    let total = 0
+    legs.forEach(leg => {
+      total += parseFloat(leg.distance.value) / 1000
+    })
+    setTotalKms(total.toFixed(2))
+  }
+
+  const getTotalTime = () => {
+    let totalSeconds = 0
+    legs.forEach(leg => {
+      totalSeconds += parseFloat(leg.duration.value)
+    })
+    const hours = Math.floor(totalSeconds / 3600)
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+    const seconds = totalSeconds % 60
+    setTotalTime({ seconds, minutes, hours })
+  }
+
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
+    getTotalKms()
+    getTotalTime()
   }, [])
 
   return (
@@ -137,7 +160,9 @@ export const MapMarkersProvider = ({ children }) => {
         setIsRoundTrip,
         handleAddStartPoint,
         position,
-        setPosition
+        setPosition,
+        totalKms,
+        totalTime
       }}
     >
       {children}

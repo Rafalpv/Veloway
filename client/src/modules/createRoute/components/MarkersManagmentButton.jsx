@@ -18,7 +18,7 @@ const MarkersMangmentButton = ({ option, color }) => {
 
   return (
     <div>
-      <button className={`border-2 border-black rounded-full p-4 bg-${color}-400 hover:bg-${color}-600 shadow-boton`} onClick={selectedFunction}>
+      <button className={`border-2 border-black rounded-full p-4 bg-${color}-400 hover:bg-${color}-600 shadow-boton transition-colors duration-500`} onClick={selectedFunction}>
         {option === 'deleteAll' && <TbHttpDelete size={25} />}
         {option === 'changeOrder' && <TbExchange size={25} />}
         {option === 'roundTrip' && <TfiExchangeVertical size={25} />}

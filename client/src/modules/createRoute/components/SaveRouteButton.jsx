@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { IoAdd, IoClose } from 'react-icons/io5'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import TimeDistanceInfo from './TimeDistanceInfo'
 
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -82,7 +83,6 @@ const SaveRouteButton = () => {
                 <ResumeStepsByLeg leg={leg} key={index} />
               ))}
             </div>
-
             <button
               className='w-full bg-greenButton text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700'
               onClick={handleSave}

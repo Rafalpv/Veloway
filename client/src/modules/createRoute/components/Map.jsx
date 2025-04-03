@@ -4,11 +4,14 @@ import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
 import { IoSearchOutline } from 'react-icons/io5'
 import SaveRouteButton from './SaveRouteButton'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
+import { useMarkersContext } from '../pages/CreateRoute'
 import CustomMarker from './CustomMarker'
 import LayerButton from './LayerButton'
 import MarkersMangmentButton from './MarkersManagmentButton'
 import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
+import ListMarkers from './ListMarkers'
+import { IoMdArrowDropleft } from 'react-icons/io'
 
 const MapCenterHandler = ({ position }) => {
   const map = useMap()
@@ -32,6 +35,8 @@ const Map = () => {
   )
   const [selectedUbication, setSelectedUbication] = useState(null)
   const [searchResults, setSearchResults] = useState([])
+
+  const { listVisible, setListVisible } = useMarkersContext()
 
   const handleSearch = async () => {
     if (!city.trim()) return
@@ -77,6 +82,11 @@ const Map = () => {
 
       <SaveRouteButton />
 
+      {!listVisible &&
+        <div className='absolute top-1/2 -translate-y-1/2 right-5 z-[500]'>
+          <ListMarkers />
+        </div>}
+
       {/* Controles */}
       <div className='absolute bottom-4 left-4 flex gap-2 z-[500]'>
         <button className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition' onClick={toggleFullscreen}>
@@ -107,6 +117,18 @@ const Map = () => {
             </ul>
           )}
         </div>
+      </div>
+      <div className="absolute top-1/2 left-2 z-[500] transform -translate-y-1/2">
+        <button
+          className="bg-white border-2 border-gray-700 shadow-lg rounded-full p-2 transition-transform duration-300 hover:bg-gray-200 active:scale-95"
+          onClick={() => setListVisible(!listVisible)}
+        >
+          <IoMdArrowDropleft
+            size={30}
+            className={`text-gray-700 transition-transform duration-300 ${listVisible ? 'rotate-0' : 'rotate-180'
+              }`}
+          />
+        </button>
       </div>
 
       {/* Mapa */}
