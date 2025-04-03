@@ -55,25 +55,28 @@ const MarketsSwapy = ({ markers }) => {
             </SortableContext>
           </div>}
 
-        <div className="flex gap-6 font-poppins text-xl bg-gray-100 p-4 rounded-lg shadow-md">
-          <span className="flex flex-col justify-center items-center font-semibold gap-3 text-gray-700">
-            < RiPinDistanceFill /> <span className="text-blue-600">{totalKms} km</span>
+        <div className={`flex ${listVisible ? '' : 'flex-col'} items-center justify-center gap-8 font-poppins text-lg p-4 bg-white  rounded-xl shadow-lg border border-gray-200`}>
+          {/* Distancia */}
+          <span className="flex flex-col items-center font-semibold text-gray-700">
+            <RiPinDistanceFill className="text-3xl text-blue-500" />
+            <span className="text-blue-600 text-xl">{totalKms} km</span>
           </span>
-          <span className="flex flex-col font-semibold text-gray-700">
-            < FcClock />
-            <span className="text-green-600">
+
+          {/* Tiempo */}
+          <span className="flex flex-col items-center font-semibold text-gray-700">
+            <FcClock className="text-3xl" />
+            <span className="text-green-600 text-xl">
               {totalTime.hours > 0 && `${totalTime.hours} h `}
-              {totalTime.minutes > 0 && `${totalTime.minutes} min `}
-              {totalTime.seconds > 0 && `${totalTime.seconds} seg`}
-            </span>
+            {totalTime.minutes >= 0 && `${totalTime.minutes} min `}
           </span>
-        </div>
-        {/* Botón para mostrar/ocultar la lista */}
-        <button className='absolute top-1/2 -right-5  border-2 border-black'
-          onClick={() => setListVisible(!listVisible)}>
-          <IoMdArrowDropleft size={30} className={`${listVisible ? 'rotate-0' : 'rotate-180'} `} />
-        </button>
-      </div >
+        </span>
+      </div>
+      {/* Botón para mostrar/ocultar la lista */}
+      <button className='absolute top-1/2 -right-5  border-2 border-black'
+        onClick={() => setListVisible(!listVisible)}>
+        <IoMdArrowDropleft size={30} className={`${listVisible ? 'rotate-0' : 'rotate-180'} `} />
+      </button>
+    </div >
     </MarkersContext.Provider >
   )
 }

@@ -53,7 +53,7 @@ const Mark = ({ marker, index }) => {
           <MdOutlineKeyboardArrowDown size={30} className={`${moreInfoMark ? 'rotate-180' : 'rotate-0'}`} />
         </button>
       )} */}
-      <button
+      {listVisible && <button
         className='ml-3'
         onClick={(e) => {
           e.stopPropagation()
@@ -61,7 +61,7 @@ const Mark = ({ marker, index }) => {
         }}
       >
         <TiDelete size={30} />
-      </button>
+      </button>}
     </div>
   )
 }

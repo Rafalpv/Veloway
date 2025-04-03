@@ -6,9 +6,7 @@ import SaveRouteButton from './SaveRouteButton'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 import CustomMarker from './CustomMarker'
 import LayerButton from './LayerButton'
-import ChangeOrderButton from './ChangeOrderButton'
-import RoundTripButton from './RoundTripButton'
-import DeletAllMarks from './DeleteAllMarks'
+import MarkersMangmentButton from './MarkersManagmentButton'
 import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
 
@@ -70,11 +68,11 @@ const Map = () => {
   }
 
   return (
-    <div className='map relative m-5 border-2 border-black rounded-lg transition-all duration-300 overflow-hidden w-full'>
-      <div className='absolute top-2 left-16 flex gap-4 z-[410]'>
-        <ChangeOrderButton />
-        <RoundTripButton />
-        <DeletAllMarks />
+    <div className='map relative m-4 border-2 border-black transition-all duration-300 overflow-hidden w-full'>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-[410]">
+        <MarkersMangmentButton option={'changeOrder'} color={'slate'} />
+        <MarkersMangmentButton option={'roundTrip'} color={'emerald'} />
+        <MarkersMangmentButton option={'deleteAll'} color={'red'} />
       </div>
 
       <SaveRouteButton />

@@ -56,10 +56,10 @@ const SaveRouteButton = () => {
     <>
       <div className='absolute top-4 right-4 flex gap-2 z-[500]'>
         <button
-          className='border-2 border-black rounded-xl p-4 shadow-boton bg-greenButton'
+          className='border-2 border-black rounded-xl p-2 shadow-boton bg-greenButton'
           onClick={() => setIsModalOpen(true)}
         >
-          <IoAdd size={20} />
+          <IoAdd size={38} />
         </button>
       </div>
 

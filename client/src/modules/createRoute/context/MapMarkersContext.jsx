@@ -116,7 +116,7 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [markers, isRoundTrip])
+  }, [])
 
   return (
     <MapMarkersContext.Provider
