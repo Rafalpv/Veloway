@@ -31,7 +31,7 @@ const Mark = ({ marker, index }) => {
           className={`
           ${(moreInfoMark && listVisible) ? 'h-40' : 'h-14'} 
           ${listVisible ? 'w-full rounded-lg' : 'w-14 aspect-square rounded-full'}
-          flex items-center justify-between border-2 border-black shadow-lg 
+          flex items-center justify-center border-2 border-black shadow-lg 
           hover:scale-105
           ${index === 0 ? 'bg-green-500 font-bold' : 'bg-white'}
           ${selectedMarker === marker.markerId ? 'border-yellow-400' : ''}

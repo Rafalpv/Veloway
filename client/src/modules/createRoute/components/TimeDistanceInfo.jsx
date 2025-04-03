@@ -8,7 +8,7 @@ const TimeDistanceInfo = () => {
   const { listVisible } = useMarkersContext()
 
   return (
-    <div className={`flex ${listVisible ? '' : 'flex-col'} items-center justify-center gap-8 font-poppins text-lg p-4 bg-white  rounded-xl shadow-lg border border-gray-200`}>
+    <div className={`flex ${listVisible ? '' : 'flex-col'} items-center justify-evenly gap-8 font-poppins text-lg p-4 bg-white  rounded-xl shadow-lg border border-gray-200`}>
       {/* Distancia */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <RiPinDistanceFill className="text-3xl text-blue-500" />
