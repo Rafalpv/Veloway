@@ -36,7 +36,7 @@ const Map = () => {
   const [selectedUbication, setSelectedUbication] = useState(null)
   const [searchResults, setSearchResults] = useState([])
 
-  const { listVisible, setListVisible } = useMarkersContext()
+  const { listVisible, setListVisible, elevationSiderVisible, setElevationSiderVisible } = useMarkersContext()
 
   const handleSearch = async () => {
     if (!city.trim()) return
@@ -74,7 +74,7 @@ const Map = () => {
 
   return (
     <div className='map relative m-4 border-2 border-black transition-all duration-300 overflow-hidden w-full'>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-[410]">
+      <div className='absolute top-4 right-1/2 translate-x-1/2 flex gap-4 z-[410]'>
         <MarkersMangmentButton option={'changeOrder'} color={'slate'} />
         <MarkersMangmentButton option={'roundTrip'} color={'emerald'} />
         <MarkersMangmentButton option={'deleteAll'} color={'red'} />
@@ -120,12 +120,25 @@ const Map = () => {
       </div>
       <div className="absolute top-1/2 left-2 z-[500] transform -translate-y-1/2">
         <button
-          className="bg-white border-2 border-gray-700 shadow-lg rounded-full p-2 transition-transform duration-300 hover:bg-gray-200 active:scale-95"
+          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-2 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
           onClick={() => setListVisible(!listVisible)}
         >
           <IoMdArrowDropleft
             size={30}
             className={`text-gray-700 transition-transform duration-300 ${listVisible ? 'rotate-0' : 'rotate-180'
+              }`}
+          />
+        </button>
+      </div>
+
+      <div className="absolute left-1/2 bottom-2 z-[500] transform -translate-x-1/2">
+        <button
+          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-2 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
+          onClick={() => setElevationSiderVisible(!elevationSiderVisible)}
+        >
+          <IoMdArrowDropleft
+            size={30}
+            className={`text-gray-700 transition-transform duration-300 ${elevationSiderVisible ? '-rotate-90' : 'rotate-90'
               }`}
           />
         </button>

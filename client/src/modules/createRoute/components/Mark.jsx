@@ -16,11 +16,6 @@ const Mark = ({ marker, index }) => {
     transform: CSS.Transform.toString(transform)
   }
 
-  const handleClick = () => {
-    setMoreInfoMark(!moreInfoMark)
-    if (!moreInfoMark) { setPosition(marker.position) }
-  }
-
   return (
     <div className="flex items-center w-full">
       <div

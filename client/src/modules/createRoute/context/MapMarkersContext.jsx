@@ -13,6 +13,7 @@ export const MapMarkersProvider = ({ children }) => {
   const [position, setPosition] = useState([37.18817, -3.60667])
   const [totalKms, setTotalKms] = useState(0)
   const [totalTime, setTotalTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
+  const [elevations, setElevations] = useState([])
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
@@ -134,6 +135,21 @@ export const MapMarkersProvider = ({ children }) => {
     setTotalTime({ seconds, minutes, hours })
   }
 
+  const fetchElevationsShape = async () => {
+    try {
+      // Solo enviamos un array de arrays con lat y lng
+      const positions = markers.map(marker => marker.position)
+
+      const response = await axiosInstance.get('/routes/elevation', {
+        params: { positions: JSON.stringify(positions) }
+      })
+
+      setElevations(response.data.elevations)
+    } catch (error) {
+      console.error('Error al obtener elevaciones:', error)
+    }
+  }
+
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
@@ -162,7 +178,9 @@ export const MapMarkersProvider = ({ children }) => {
         position,
         setPosition,
         totalKms,
-        totalTime
+        totalTime,
+        fetchElevationsShape,
+        elevations
       }}
     >
       {children}

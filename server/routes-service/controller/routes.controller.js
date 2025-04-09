@@ -55,7 +55,43 @@ const getLocations = async (req, res) => {
   }
 }
 
+const getElevation = async (req, res) => {
+  const { positions, samples = 100 } = req.query
+
+  try {
+    if (!positions) {
+      return res.status(400).json({ error: 'Debes enviar un array de coordenadas' })
+    }
+
+    const parsedPositions = JSON.parse(positions)
+
+    // Transformamos a formato "lat,lng|lat2,lng2..."
+    const locations = parsedPositions
+      .map(([lat, lng]) => `${lat},${lng}`)
+      .join('|')
+
+    const response = await axios.get('https://maps.googleapis.com/maps/api/elevation/json', {
+      params: {
+        path: locations,
+        samples,
+        key: process.env.GOOGLE_API_KEY
+      }
+    })
+
+    if (response.data.status !== 'OK') {
+      return res.status(500).json({ error: 'Error al obtener elevación', detalles: response.data })
+    }
+
+    const elevations = response.data.results.map(result => result.elevation)
+    return res.json({ elevations }) // Solo enviamos el array de elevaciones
+  } catch (error) {
+    console.error('Error en getElevation:', error)
+    res.status(500).json({ error: error.message })
+  }
+}
+
 export default {
   calculateRoute,
-  getLocations
+  getLocations,
+  getElevation
 }
