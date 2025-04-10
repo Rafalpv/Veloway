@@ -72,3 +72,9 @@
   --tw-bg-opacity: 1;
   background-color: rgb(5 150 105 / var(--tw-bg-opacity, 1));
 }
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}

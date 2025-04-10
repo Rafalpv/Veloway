@@ -81,6 +81,9 @@ export const MapMarkersProvider = ({ children }) => {
     setMarkers([])
     setLegs([])
     setRoutesPolyline([])
+    setTotalKms(0)
+    setTotalTime({ seconds: 0, minutes: 0, hours: 0 })
+    setElevations([])
   }
 
   // Función para obtener la ruta desde el backend
@@ -136,6 +139,8 @@ export const MapMarkersProvider = ({ children }) => {
   }
 
   const fetchElevationsShape = async () => {
+    if (markers.length < 2) return
+
     try {
       // Solo enviamos un array de arrays con lat y lng
       const positions = markers.map(marker => marker.position)
@@ -155,6 +160,7 @@ export const MapMarkersProvider = ({ children }) => {
     fetchRoute()
     getTotalKms()
     getTotalTime()
+    fetchElevationsShape()
   }, [])
 
   return (

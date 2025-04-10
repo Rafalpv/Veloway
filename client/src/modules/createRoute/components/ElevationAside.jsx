@@ -1,16 +1,91 @@
+import { useRef, useEffect } from 'react'
+import { Line } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler } from 'chart.js'
 import { useMapMarkers } from '../context/MapMarkersContext'
 import { useMarkersContext } from '../pages/CreateRoute'
 
-const ElevationAside = () => {
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler)
+
+const ElevationChart = () => {
+  const chartRef = useRef(null)
+  const { elevations } = useMapMarkers()
   const { elevationSiderVisible } = useMarkersContext()
-  const { fetchElevationsShape } = useMapMarkers()
+
+  const minElevation = Math.min(...elevations)
+  const maxElevation = Math.max(...elevations)
+  const yMin = Math.floor(minElevation / 100) * 100
+  const yMax = Math.ceil(maxElevation / 100) * 100
+
+  // Crear degradado al montar el componente
+  useEffect(() => {
+    const chart = chartRef.current
+    if (!chart) return
+    const ctx = chart.ctx
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400)
+    gradient.addColorStop(0, 'rgba(75, 34, 67, 0.5)')
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+    chart.data.datasets[0].backgroundColor = gradient
+    chart.update()
+  }, [elevations])
+
+  const chartData = {
+    labels: elevations.map((_, index) => index),
+    datasets: [
+      {
+        data: elevations,
+        fill: true,
+        backgroundColor: 'rgba(75, 34, 67, 0.2)', // Será reemplazado por el gradiente
+        borderColor: 'rgba(19, 34, 67, 1)',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0.3
+      }
+    ]
+  }
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    elements: {
+      point: {
+        radius: 0
+      }
+    },
+    scales: {
+      x: {
+        display: false
+      },
+      y: {
+        min: yMin,
+        max: yMax,
+        display: true, // <-- ahora se muestra el eje Y
+        ticks: {
+          stepSize: 100, // ajusta según rango; puedes usar 50 si hay poco espacio
+          callback: (value) => `${value} m`
+        },
+        grid: {
+          drawTicks: true,
+          drawOnChartArea: true, // ahora se dibujan las líneas horizontales también
+          color: 'rgba(0, 0, 0, 0.1)'
+        }
+      }
+
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => `Elevación: ${tooltipItem.raw} m`
+        }
+      }
+    }
+  }
 
   return (
-    <div className={`relative flex justify-center items-center ${elevationSiderVisible ? 'h-1/4' : 'hidden'} bg-neutral-100`}>
-      <button className='m-2 p-2 bg-blue-200 rounded' onClick={fetchElevationsShape}>ELEVATION</button>
+    <div className={`w-full bg-slate-600 transition-all duration-300  ml-4 ${elevationSiderVisible ? 'h-1/4' : 'hidden'}`}>
+      <Line ref={chartRef} data={chartData} options={chartOptions} />
     </div>
-
   )
 }
 
-export default ElevationAside
+export default ElevationChart
