@@ -8,11 +8,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const ElevationChart = () => {
   const chartRef = useRef(null)
-  const { elevations } = useMapMarkers()
+  const { route } = useMapMarkers()
   const { elevationSiderVisible } = useMarkersContext()
 
-  const minElevation = Math.min(...elevations)
-  const maxElevation = Math.max(...elevations)
+  const minElevation = Math.min(...route.elevation)
+  const maxElevation = Math.max(...route.elevation)
   const yMin = Math.floor(minElevation / 100) * 100
   const yMax = Math.ceil(maxElevation / 100) * 100
 
@@ -23,18 +23,18 @@ const ElevationChart = () => {
     const ctx = chart.ctx
     const gradient = ctx.createLinearGradient(0, 0, 0, 400)
     gradient.addColorStop(0, 'rgba(75, 34, 67, 0.5)')
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 1)')
     chart.data.datasets[0].backgroundColor = gradient
     chart.update()
-  }, [elevations])
+  }, [route.elevation])
 
   const chartData = {
-    labels: elevations.map((_, index) => index),
+    labels: route.elevation.map((_, index) => index),
     datasets: [
       {
-        data: elevations,
+        data: route.elevation,
         fill: true,
-        backgroundColor: 'rgba(75, 34, 67, 0.2)', // Será reemplazado por el gradiente
+        backgroundColor: 'rgba(75, 34, 67, 1)', // Será reemplazado por el gradiente
         borderColor: 'rgba(19, 34, 67, 1)',
         borderWidth: 1.5,
         pointRadius: 0,
@@ -66,7 +66,7 @@ const ElevationChart = () => {
         grid: {
           drawTicks: true,
           drawOnChartArea: true, // ahora se dibujan las líneas horizontales también
-          color: 'rgba(0, 0, 0, 0.1)'
+          color: 'rgba(0, 0, 0, 0.4)'
         }
       }
 
@@ -82,7 +82,7 @@ const ElevationChart = () => {
   }
 
   return (
-    <div className={`w-full bg-slate-600 transition-all duration-300  ml-4 ${elevationSiderVisible ? 'h-1/4' : 'hidden'}`}>
+    <div className={`w-full transition-all duration-300  m-2 ${elevationSiderVisible ? 'h-1/4' : 'hidden'}`}>
       <Line ref={chartRef} data={chartData} options={chartOptions} />
     </div>
   )

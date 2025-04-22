@@ -4,7 +4,7 @@ import { TfiExchangeVertical } from 'react-icons/tfi'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
 const MarkersMangmentButton = ({ option, color }) => {
-  const { handleDeleteAll, isRoundTrip, setIsRoundTrip, handleChangeOrder } = useMapMarkers()
+  const { handleDeleteAll, setRoute, handleChangeOrder } = useMapMarkers()
 
   const selectedFunction = () => {
     if (option === 'deleteAll') {
@@ -12,7 +12,10 @@ const MarkersMangmentButton = ({ option, color }) => {
     } else if (option === 'changeOrder') {
       handleChangeOrder()
     } else if (option === 'roundTrip') {
-      setIsRoundTrip(!isRoundTrip)
+      setRoute((prev) => ({
+        ...prev,
+        isRoundTrip: !prev.isRoundTrip
+      }))
     }
   }
 

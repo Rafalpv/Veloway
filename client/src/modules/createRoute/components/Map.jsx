@@ -27,7 +27,7 @@ const ClickHandler = ({ onMapClick }) => {
 }
 
 const Map = () => {
-  const { markers, handleMapClick, routesPolyline, isRoundTrip, handleAddStartPoint, position, setPosition } = useMapMarkers()
+  const { route, handleMapClick, handleAddSearchPoint, position, setPosition } = useMapMarkers()
   const [city, setCity] = useState('')
   const [isMaximized, setIsMaximized] = useState(false)
   const [layer, setLayer] = useState(
@@ -59,7 +59,7 @@ const Map = () => {
 
   const handleAddPoint = (e, type) => {
     e.stopPropagation()
-    handleAddStartPoint(selectedUbication, type)
+    handleAddSearchPoint(selectedUbication, type)
     setSelectedUbication(null)
   }
 
@@ -150,7 +150,7 @@ const Map = () => {
           {layer}
           <MapCenterHandler position={position} />
           <ClickHandler onMapClick={handleMapClick} />
-          {markers.map((marker, index) => (
+          {route.markers.map((marker, index) => (
             <CustomMarker marker={marker} key={marker.markerId} index={index} />
           ))}
 
@@ -161,7 +161,7 @@ const Map = () => {
                   {[
                     { label: 'START POINT', type: 'start', className: 'bg-greenButton' },
                     { label: 'ADD POINT', type: 'add', className: 'bg-blueButton' },
-                    !isRoundTrip && { label: 'END POINT', type: 'end', className: 'bg-red-500' }
+                    !route.isRoundTrip && { label: 'END POINT', type: 'end', className: 'bg-red-500' }
                   ].filter(Boolean).map(({ label, type, className }) => (
                     <button
                       key={type}
@@ -176,7 +176,7 @@ const Map = () => {
             </Marker>
           )}
 
-          {routesPolyline.length > 0 && <Polyline pathOptions={{ color: 'blue', weight: 3, opacity: 0.7 }} positions={routesPolyline} />}
+          {route.polyline.length > 0 && <Polyline pathOptions={{ color: 'blue', weight: 3, opacity: 0.7 }} positions={route.polyline} />}
         </MapContainer>
       </div>
     </div >

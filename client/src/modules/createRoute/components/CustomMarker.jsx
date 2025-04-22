@@ -3,12 +3,12 @@ import { createIcon } from '@user/utils/mapUtils'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
 const CustomMarker = ({ marker, index }) => {
-  const { selectedMarker, updateMarkerPosition, totalMarkers, isRoundTrip } = useMapMarkers() // Agregar función para actualizar posición
+  const { selectedMarker, updateMarkerPosition, totalMarkers, route } = useMapMarkers() // Agregar función para actualizar posición
 
   return (
     <Marker
       position={marker.position}
-      icon={createIcon(index, marker.markerId, selectedMarker, totalMarkers, isRoundTrip)}
+      icon={createIcon(index, marker.markerId, selectedMarker, totalMarkers, route.isRoundTrip)}
       draggable={true} // Hacemos que sea arrastrable
       eventHandlers={{
         dragend: (event) => {

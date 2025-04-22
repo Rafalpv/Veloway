@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { IoAdd, IoClose } from 'react-icons/io5'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
-import TimeDistanceInfo from './TimeDistanceInfo'
 
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -45,10 +44,10 @@ const ResumeStepsByLeg = ({ leg, index }) => {
 const SaveRouteButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [routeName, setRouteName] = useState('')
-  const { legs } = useMapMarkers()
+  const { legs, markers, totalKms, totalTime, routesPolyline, elevations, isRoundTrip } = useMapMarkers()
 
   const handleSave = () => {
-    console.log('Legs:', legs)
+    console.log('INFO DE UNA RUTA: ', markers, legs, totalKms, totalTime, routesPolyline, elevations, isRoundTrip)
     setIsModalOpen(false)
     setRouteName('')
   }
@@ -82,6 +81,10 @@ const SaveRouteButton = () => {
               {legs.map((leg, index) => (
                 <ResumeStepsByLeg leg={leg} key={index} />
               ))}
+            </div>
+            <div className="flex justify-evenly mb-6 bg-gray-100 p-4 rounded-lg shadow-md">
+              <span className="text-lg text-blue-500">Distancia - <span className="text-xl font-bold text-gray-800">{totalKms} km</span></span>
+              <span className="text-lg text-green-500">Tiempo - <span className="text-lg font-bold text-gray-800">{totalTime.hours}h {totalTime.minutes}min</span></span>
             </div>
             <button
               className='w-full bg-greenButton text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700'

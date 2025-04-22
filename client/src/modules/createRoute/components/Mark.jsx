@@ -7,7 +7,7 @@ import { TiDelete } from 'react-icons/ti'
 
 const Mark = ({ marker, index }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: marker.markerId })
-  const { selectedMarker, setSelectedMarker, legs, totalMarkers, isRoundTrip, setPosition, handleDeleteMark } = useMapMarkers()
+  const { route, selectedMarker, setSelectedMarker, totalMarkers, handleDeleteMark } = useMapMarkers()
   const { listVisible } = useMarkersContext()
   const [moreInfoMark, setMoreInfoMark] = useState(false)
 
@@ -36,10 +36,10 @@ const Mark = ({ marker, index }) => {
         >
           <span className={'flex-1 flex items-center justify-center text-sm font-semibold px-5'}>
             {index === 0
-              ? `► ${listVisible ? legs[index]?.start_address : ''}`
-              : (index === totalMarkers && !isRoundTrip)
-                  ? `► ${listVisible ? legs[totalMarkers - 1]?.end_address : ''}`
-                  : `${listVisible ? legs[index]?.start_address : index}`}
+              ? `► ${listVisible ? route.steps[index]?.start_address : ''}`
+              : (index === totalMarkers && !route.isRoundTrip)
+                  ? `► ${listVisible ? route.steps[totalMarkers - 1]?.end_address : ''}`
+                  : `${listVisible ? route.steps[index]?.start_address : index}`}
           </span>
         </div>
       </div>

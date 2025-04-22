@@ -5,19 +5,25 @@ import { decode } from '@googlemaps/polyline-codec'
 const MapMarkersContext = createContext()
 
 export const MapMarkersProvider = ({ children }) => {
-  const [markers, setMarkers] = useState([])
   const [selectedMarker, setSelectedMarker] = useState(null)
-  const [routesPolyline, setRoutesPolyline] = useState([]) // Estado para almacenar la ruta calculada
-  const [legs, setLegs] = useState([])
-  const [isRoundTrip, setIsRoundTrip] = useState(false)
   const [position, setPosition] = useState([37.18817, -3.60667])
-  const [totalKms, setTotalKms] = useState(0)
-  const [totalTime, setTotalTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
-  const [elevations, setElevations] = useState([])
+
+  const [route, setRoute] = useState({
+    markers: [],
+    distance: 0,
+    time: 0,
+    steps: [],
+    polyline: [],
+    elevation: [],
+    isRoundTrip: false
+  })
 
   const handleMapClick = (event) => {
     const { lat, lng } = event.latlng
-    setMarkers((prev) => [...prev, { markerId: Date.now(), position: [lat, lng] }])
+    setRoute((prev) => ({
+      ...prev,
+      markers: [...prev.markers, { markerId: Date.now(), position: [lat, lng] }]
+    }))
   }
 
   const handleDragEnd = (event) => {
@@ -25,80 +31,98 @@ export const MapMarkersProvider = ({ children }) => {
 
     if (!over || active.id === over.id) return
 
-    setMarkers((prev) => {
-      const oldIndex = prev.findIndex((m) => m.markerId === active.id)
-      const newIndex = prev.findIndex((m) => m.markerId === over.id)
+    setRoute((prev) => {
+      const oldIndex = prev.markers.findIndex((m) => m.markerId === active.id)
+      const newIndex = prev.markers.findIndex((m) => m.markerId === over.id)
 
       if (oldIndex === -1 || newIndex === -1) return prev
 
-      const updatedMarkers = [...prev]
+      const updatedMarkers = [...prev.markers]
       const [movedMarker] = updatedMarkers.splice(oldIndex, 1)
       updatedMarkers.splice(newIndex, 0, movedMarker)
 
-      return updatedMarkers
+      return {
+        ...prev,
+        markers: updatedMarkers
+      }
     })
   }
 
   const handleChangeOrder = () => {
-    setMarkers((prev) => {
-      const updatedMarkers = [...prev]
-      updatedMarkers.reverse()
-      return updatedMarkers
+    setRoute((prev) => {
+      const updatedMarkers = [...prev.markers].reverse()
+      return {
+        ...prev,
+        markers: updatedMarkers
+      }
     })
   }
 
   const updateMarkerPosition = (id, newPos) => {
-    setMarkers((prev) =>
-      prev.map((marker) =>
-        marker.markerId === id ? { ...marker, position: [newPos.lat, newPos.lng] } : marker
+    setRoute((prev) => {
+      const updatedMarkers = prev.markers.map((marker) =>
+        marker.markerId === id
+          ? { ...marker, position: [newPos.lat, newPos.lng] }
+          : marker
       )
-    )
+      return {
+        ...prev,
+        markers: updatedMarkers
+      }
+    })
   }
 
-  const handleAddStartPoint = (markerPosition, option) => {
-    switch (option) {
-      case 'start':
-        setMarkers((prev) => [{ markerId: Date.now(), position: markerPosition }, ...prev.slice(1)])
-        break
-      case 'end':
-        setMarkers((prev) => [...prev, { markerId: Date.now(), position: markerPosition }])
-        break
-      default:
-        setMarkers((prev) => [
-          ...prev.slice(0, prev.length - 1),
-          { markerId: Date.now(), position: markerPosition },
-          prev[prev.length - 1]
-        ])
-        break
+  const handleAddSearchPoint = (markerPosition, option) => {
+    const newMarker = { markerId: Date.now(), position: markerPosition }
+
+    const updateByOption = {
+      start: [newMarker, ...route.markers.slice(1)],
+      end: [...route.markers, newMarker],
+      default: [
+        ...route.markers.slice(0, -1),
+        newMarker,
+        route.markers[route.markers.length - 1]
+      ]
     }
+
+    setRoute((prev) => ({
+      ...prev,
+      markers: updateByOption[option] || updateByOption.default
+    }))
   }
 
   const handleDeleteMark = (id) => {
-    setMarkers((prev) => prev.filter((marker) => marker.markerId !== id))
+    setRoute((prev) => ({
+      ...prev,
+      markers: prev.markers.filter((marker) => marker.markerId !== id)
+    }))
   }
 
   const handleDeleteAll = () => {
-    setMarkers([])
-    setLegs([])
-    setRoutesPolyline([])
-    setTotalKms(0)
-    setTotalTime({ seconds: 0, minutes: 0, hours: 0 })
-    setElevations([])
+    setRoute((prev) => ({
+      ...prev,
+      markers: [],
+      distance: 0,
+      time: 0,
+      steps: [],
+      polyline: [],
+      elevation: []
+    }))
   }
 
   // Función para obtener la ruta desde el backend
   const fetchRoute = async () => {
-    if (markers.length < 2) return
+    if (route.markers.length < 2) return
 
     try {
-      const origin = `${markers[0].position[0]},${markers[0].position[1]}`
-      let waypointsArray = markers.slice(1, markers.length - 1) // Puntos intermedios
+      const origin = `${route.markers[0].position[0]},${route.markers[0].position[1]}`
+      let waypointsArray = route.markers.slice(1, route.markers.length - 1) // Puntos intermedios
 
-      let destination = `${markers[markers.length - 1].position[0]},${markers[markers.length - 1].position[1]}`
+      let destination = `${route.markers[route.markers.length - 1].position[0]},${route.markers[route.markers.length - 1].position[1]}`
 
-      if (isRoundTrip) {
+      if (route.isRoundTrip) {
         // Si es ida y vuelta, el último punto se convierte en un waypoint
-        waypointsArray = [...waypointsArray, { position: markers[markers.length - 1].position }]
+        waypointsArray = [...waypointsArray, { position: route.markers[route.markers.length - 1].position }]
         destination = origin // El destino vuelve a ser el punto de origen
       }
 
@@ -110,46 +134,42 @@ export const MapMarkersProvider = ({ children }) => {
         params: { origin, destination, waypoints: waypointsString }
       })
 
-      setLegs(response.data.routes[0].legs)
+      const infoRoute = response.data.routes[0]
+      console.log('infoRoute', infoRoute)
+      const distance = getTotalKms(infoRoute.legs)
+      const time = getTotalTime(infoRoute.legs)
+      fetchElevationsShape()
 
-      const dataDecode = decode(response.data.routes[0].overview_polyline.points)
-      setRoutesPolyline(dataDecode)
+      setRoute((prev) => ({
+        ...prev,
+        distance,
+        time,
+        steps: infoRoute.legs,
+        polyline: decode(infoRoute.overview_polyline.points)
+      }))
     } catch (error) {
       console.error('Error fetching route:', error)
     }
   }
 
-  const getTotalKms = () => {
-    let total = 0
-    legs.forEach(leg => {
-      total += parseFloat(leg.distance.value) / 1000
-    })
-    setTotalKms(total.toFixed(2))
-  }
-
-  const getTotalTime = () => {
-    let totalSeconds = 0
-    legs.forEach(leg => {
-      totalSeconds += parseFloat(leg.duration.value)
-    })
-    const hours = Math.floor(totalSeconds / 3600)
-    const minutes = Math.floor((totalSeconds % 3600) / 60)
-    const seconds = totalSeconds % 60
-    setTotalTime({ seconds, minutes, hours })
-  }
+  const getTotalKms = (legs) => legs.reduce((total, leg) => total + leg.distance.value, 0)
+  const getTotalTime = (legs) => legs.reduce((total, leg) => total + leg.duration.value, 0)
 
   const fetchElevationsShape = async () => {
-    if (markers.length < 2) return
+    if (route.markers.length < 2) return
 
     try {
       // Solo enviamos un array de arrays con lat y lng
-      const positions = markers.map(marker => marker.position)
+      const positions = route.markers.map(marker => marker.position)
 
       const response = await axiosInstance.get('/routes/elevation', {
         params: { positions: JSON.stringify(positions) }
       })
 
-      setElevations(response.data.elevations)
+      setRoute((prev) => ({
+        ...prev,
+        elevation: response.data.elevations
+      }))
     } catch (error) {
       console.error('Error al obtener elevaciones:', error)
     }
@@ -157,36 +177,28 @@ export const MapMarkersProvider = ({ children }) => {
 
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
-    fetchRoute()
-    getTotalKms()
-    getTotalTime()
-    fetchElevationsShape()
-  }, [])
+    if (route.markers.length >= 2) {
+      fetchRoute()
+    }
+  }, [route.markers])
 
   return (
     <MapMarkersContext.Provider
       value={{
-        markers,
+        route,
+        setRoute,
         selectedMarker,
         setSelectedMarker,
-        totalMarkers: markers.length - 1,
-        legs,
-        routesPolyline,
+        totalMarkers: route.markers.length - 1,
         handleMapClick,
         handleDragEnd,
         handleDeleteMark,
         handleChangeOrder,
         updateMarkerPosition,
         handleDeleteAll,
-        isRoundTrip,
-        setIsRoundTrip,
-        handleAddStartPoint,
+        handleAddSearchPoint,
         position,
-        setPosition,
-        totalKms,
-        totalTime,
-        fetchElevationsShape,
-        elevations
+        setPosition
       }}
     >
       {children}

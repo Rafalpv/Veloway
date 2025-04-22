@@ -4,18 +4,18 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { DndContext, closestCorners } from '@dnd-kit/core'
 
 const ListMarkers = ({ listVisible }) => {
-  const { markers, legs, handleDragEnd } = useMapMarkers()
+  const { route, handleDragEnd } = useMapMarkers()
 
   return (
     <>
       <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
-        {markers.length > 0 && (
+        {route.markers.length > 0 && (
           <div className='bg-backgraound-admin p-2 overflow-auto mb-6 max-h-[60vh] border-2 border-black rounded-xl font-poppins text-lg'>
-            <SortableContext items={markers.map(marker => marker.markerId)} strategy={verticalListSortingStrategy}>
-              {markers.map((marker, index) => (
+            <SortableContext items={route.markers.map(marker => marker.markerId)} strategy={verticalListSortingStrategy}>
+              {route.markers.map((marker, index) => (
                 <div key={marker.markerId} className='flex flex-col justify-center items-center'>
                   <Mark marker={marker} index={index} />
-                  {listVisible ? (markers.length > 1 && index !== markers.length - 1) ? legs[index] && legs[index].distance.text + ' | ' + legs[index].duration.text : '' : ''}
+                  {listVisible ? (route.markers.length > 1 && index !== route.markers.length - 1) ? route.steps[index] && route.steps[index].distance.text + ' | ' + route.steps[index].duration.text : '' : ''}
                 </div>
               ))}
             </SortableContext>
