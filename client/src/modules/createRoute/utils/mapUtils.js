@@ -1,21 +1,21 @@
 import L from 'leaflet'
 
-export const createIcon = (index, markerId, selectedMarker) => {
+export const createIcon = (index, markerId, selectedMarker, totalMarkers, isRoundTrip) => {
   return L.divIcon({
     html: `<div style="
-      background-color: ${index === 0 ? 'green' : 'blue'};
+      background-color: ${index === 0 ? 'green' : (index === totalMarkers && !isRoundTrip) ? 'red' : 'blue'};
       color: white; 
-      width: 25px; 
-      height: 25px; 
+      width: 20px; 
+      height: 20px; 
       border-radius: 50%; 
-      ${selectedMarker === markerId ? 'padding: 15px; border: 3px solid black; font-size: 20px;' : 'font-size: 13px;'}
+      ${selectedMarker === markerId ? 'padding: 10px; border: 2px solid black; font-size: 15px;' : 'font-size: 13px;'}
       display: flex; 
       align-items: center; 
       justify-content: center;
       font-weight: bold;"
-    >${index === 0 ? '&#9658;' : index}</div>`,
+    >${index === 0 ? '&#9658;' : (index === totalMarkers && !isRoundTrip) ? 'F' : index}</div>`,
     className: '',
-    iconSize: [15, 15],
-    iconAnchor: [15, 15]
+    iconSize: [10, 10],
+    iconAnchor: [10, 10]
   })
 }

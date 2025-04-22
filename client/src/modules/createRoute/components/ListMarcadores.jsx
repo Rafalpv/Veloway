@@ -1,16 +1,16 @@
-import { useMapMarkers } from '@user/context/MapMarkersContext'
-import { DndContext, closestCorners } from '@dnd-kit/core'
-import MarketsSwapy from './MarketsSwapy'
+import TimeDistanceInfo from './TimeDistanceInfo'
+import ListMarkers from './ListMarkers'
+import { useMarkersContext } from '../pages/CreateRoute'
 
 const ListMarcadores = () => {
-  const { markers, handleDragEnd } = useMapMarkers()
+  const { listVisible } = useMarkersContext()
 
   return (
-    <>
-      <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
-        <MarketsSwapy markers={markers} />
-      </DndContext>
-    </>
+    <div className={`relative flex flex-col justify-start ${listVisible ? 'w-1/3' : 'hidden'} bg-neutral-100 border-2 p-4 h-screen`}>
+      <ListMarkers listVisible={listVisible} />
+      <TimeDistanceInfo />
+    </div>
+
   )
 }
 

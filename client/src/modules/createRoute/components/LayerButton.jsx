@@ -2,31 +2,30 @@ import { useState } from 'react'
 import { FiLayers } from 'react-icons/fi'
 import { TileLayer } from 'react-leaflet'
 
-const LayerButton = ({ layer, setLayer }) => {
+const LayerButton = ({ setLayer }) => {
   const [isLayerVisible, setIsLayerVisible] = useState(false)
 
   const Layers = [
     { id: 1, image: '/img/layer1.png', TitleLayer: <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributor" /> },
     { id: 2, image: '/img/layer2.png', TitleLayer: <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; Carto" /> },
-    { id: 3, image: '/img/layer3.png', TitleLayer: <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="&copy; Esri" /> }
+    { id: 3, image: '/img/layer3.png', TitleLayer: <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="&copy; Esri" /> },
+    { id: 4, image: '/img/layer4.png', TitleLayer: <TileLayer url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png' attribution="&copy; OpenStreetMap contributor" /> }
   ]
 
   const handleLayerVisibility = (id) => {
     const selectedLayer = Layers.find(layer => layer.id === id)
+    setIsLayerVisible(!isLayerVisible)
+
     if (selectedLayer) {
       setLayer(selectedLayer.TitleLayer)
     }
-  }
-
-  const toggleLayerVisibility = () => {
-    setIsLayerVisible(!isLayerVisible)
   }
 
   return (
     <div className="relative">
       <button
         className="bg-white rounded-full shadow-lg p-4 hover:bg-gray-200 transition"
-        onClick={toggleLayerVisibility}
+        onClick={() => setIsLayerVisible(!isLayerVisible)}
       >
         <FiLayers size={24} />
       </button>
