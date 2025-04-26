@@ -118,6 +118,33 @@ const getRoutes = async (req, res) => {
   }
 }
 
+const getRoutesById = async (req, res) => {
+  try {
+    const { id } = req.params
+    const routes = await Route.find({ creatorID: id }) // `Route` es el modelo de tus rutas
+
+    // Verificar si no se encuentran rutas
+    if (routes.length === 0) {
+      return res.status(404).json({
+        message: 'No se encontraron rutas'
+      })
+    }
+
+    // Responder con las rutas encontradas
+    res.status(200).json({
+      message: 'Rutas obtenidas correctamente',
+      routes
+    })
+  } catch (error) {
+    // Manejar el error
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al obtener las rutas',
+      error: error.message
+    })
+  }
+}
+
 const addRoute = async (req, res) => {
   try {
     const { route, routeName, userId } = req.body
@@ -158,5 +185,6 @@ export default {
   getLocations,
   getElevation,
   addRoute,
-  getRoutes
+  getRoutes,
+  getRoutesById
 }

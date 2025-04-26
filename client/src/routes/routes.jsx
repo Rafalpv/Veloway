@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, Outlet } from 'react-router'
 import Auth from '@auth/pages/Auth'
 import Dashboard from '@admin/pages/Dashboard'
 import DashboardUsers from '@admin/pages/DashboardUsers'
@@ -7,35 +7,46 @@ import CreateRoute from '@user/pages/CreateRoute'
 import UserRoute from '@userRoutes/pages/UserRoutes'
 import ProtectedRoute from './ProtectedRoute'
 
+const ProtectedLayout = () => (
+  <ProtectedRoute>
+    <Outlet />
+  </ProtectedRoute>
+)
+
 const router = createBrowserRouter([
   {
     path: '',
     element: <Auth />
   },
   {
-    path: 'routes',
+    element: <ProtectedLayout />, // Ahora ProtectedRoute envuelve a todo
     children: [
       {
-        index: true,
-        element: <UserRoute />
+        path: 'routes',
+        children: [
+          {
+            index: true,
+            element: <UserRoute />
+          },
+          {
+            path: 'create',
+            element: <CreateRoute />
+          }
+        ]
       },
       {
-        path: 'create',
-        element: <CreateRoute />
-      }
-    ]
-  },
-  {
-    path: 'admin',
-    element: <AdminLayout />, // Layout común para las rutas de admin
-    children: [
-      {
-        index: true, // Se accede en `/admin`
-        element: <Dashboard />
-      },
-      {
-        path: 'users', // Se accede en `/admin/users`
-        element: <DashboardUsers />
+        path: 'admin',
+        element: <AdminLayout />, // Admin también dentro de la ruta protegida
+        children: [
+          {
+            index: true,
+            element: <Dashboard />
+          },
+          {
+            path: 'users',
+            element: <DashboardUsers />
+          }
+        ]
       }
     ]
   }

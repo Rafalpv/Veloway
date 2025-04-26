@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { IoAdd, IoClose } from 'react-icons/io5'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import axiosInstance from '@api/axiosInstance'
+import { useAuth } from '@auth/context/AuthContext'
 
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -46,21 +47,20 @@ const SaveRouteButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [routeName, setRouteName] = useState('')
   const { route } = useMapMarkers()
+  const { authState } = useAuth()
 
-  const handleSave = () => {
-    setIsModalOpen(false)
-    axiosInstance.post('/routes', { // Enviar los datos directamente en el body
-      route, // Datos de la ruta
-      routeName, // Nombre de la ruta
-      userId: 3 // ID del usuario
-    })
-      .then(response => {
-        console.log('Ruta guardada:', response.data)
+  const handleSave = async () => {
+    try {
+      setIsModalOpen(false)
+      await axiosInstance.post('/routes', { // Enviar los datos directamente en el body
+        route, // Datos de la ruta
+        routeName, // Nombre de la ruta
+        userId: authState.user.id_user // ID del usuario
       })
-      .catch(error => {
-        console.error('Error al guardar la ruta:', error)
-      })
-    setRouteName('')
+      setRouteName('')
+    } catch (error) {
+      console.error('Error al guardar la ruta:', error)
+    }
   }
 
   return (
