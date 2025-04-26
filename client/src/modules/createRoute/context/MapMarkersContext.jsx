@@ -130,12 +130,11 @@ export const MapMarkersProvider = ({ children }) => {
         .map(marker => `${marker.position[0]},${marker.position[1]}`)
         .join('|')
 
-      const response = await axiosInstance.get('/routes', {
+      const response = await axiosInstance.get('/routes/calculate', {
         params: { origin, destination, waypoints: waypointsString }
       })
 
       const infoRoute = response.data.routes[0]
-      console.log('infoRoute', infoRoute)
       const distance = getTotalKms(infoRoute.legs)
       const time = getTotalTime(infoRoute.legs)
       fetchElevationsShape()
