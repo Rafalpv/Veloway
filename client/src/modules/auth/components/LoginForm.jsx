@@ -34,7 +34,7 @@ const LoginForm = ({ handleToggle }) => {
         user: response.data.user
       })
 
-      response.data.user.role === 'admin' ? navigate('/admin') : navigate('/user')
+      response.data.user.role === 'admin' ? navigate('/admin') : navigate('/routes')
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
       console.error('Detalles del error:', err.response?.data || err.message)

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // const response = await axiosInstance.get('/auth/check-auth')
+        const response = await axiosInstance.get('/auth/check-auth')
         setAuthState({
           auth: true,
           user: response.data.user,

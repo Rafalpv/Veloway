@@ -6,10 +6,7 @@ console.log(process.env.MONGODB_URI)
 
 const connectDB = async () => {
   try {
-    await moongose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    await moongose.connect(process.env.MONGODB_URI)
   } catch (error) {
     console.error('Unable to connect to the database:', error)
   }

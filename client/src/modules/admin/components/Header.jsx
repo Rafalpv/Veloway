@@ -1,5 +1,4 @@
 import LogoutButton from './LogoutButton'
-import { FiMenu } from 'react-icons/fi'
 import { MdOutlineDarkMode } from 'react-icons/md'
 import { NavLink } from 'react-router'
 
