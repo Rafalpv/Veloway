@@ -130,12 +130,11 @@ export const MapMarkersProvider = ({ children }) => {
         .map(marker => `${marker.position[0]},${marker.position[1]}`)
         .join('|')
 
-      const response = await axiosInstance.get('/routes', {
+      const response = await axiosInstance.get('/routes/calculate', {
         params: { origin, destination, waypoints: waypointsString }
       })
 
       const infoRoute = response.data.routes[0]
-      console.log('infoRoute', infoRoute)
       const distance = getTotalKms(infoRoute.legs)
       const time = getTotalTime(infoRoute.legs)
       fetchElevationsShape()
@@ -148,7 +147,7 @@ export const MapMarkersProvider = ({ children }) => {
         polyline: decode(infoRoute.overview_polyline.points)
       }))
     } catch (error) {
-      console.error('Error fetching route:', error)
+      console.error('Error al calcular la ruta', error)
     }
   }
 
@@ -177,9 +176,7 @@ export const MapMarkersProvider = ({ children }) => {
 
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
-    if (route.markers.length >= 2) {
-      fetchRoute()
-    }
+    fetchRoute()
   }, [route.markers])
 
   return (

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { IoAdd, IoClose } from 'react-icons/io5'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import axiosInstance from '@api/axiosInstance'
+import { useAuth } from '@auth/context/AuthContext'
 
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -44,22 +46,31 @@ const ResumeStepsByLeg = ({ leg, index }) => {
 const SaveRouteButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [routeName, setRouteName] = useState('')
-  const { legs, markers, totalKms, totalTime, routesPolyline, elevations, isRoundTrip } = useMapMarkers()
+  const { route } = useMapMarkers()
+  const { authState } = useAuth()
 
-  const handleSave = () => {
-    console.log('INFO DE UNA RUTA: ', markers, legs, totalKms, totalTime, routesPolyline, elevations, isRoundTrip)
-    setIsModalOpen(false)
-    setRouteName('')
+  const handleSave = async () => {
+    try {
+      setIsModalOpen(false)
+      await axiosInstance.post('/routes', { // Enviar los datos directamente en el body
+        route, // Datos de la ruta
+        routeName, // Nombre de la ruta
+        userId: authState.user.id_user // ID del usuario
+      })
+      setRouteName('')
+    } catch (error) {
+      console.error('Error al guardar la ruta:', error)
+    }
   }
 
   return (
     <>
       <div className='absolute top-4 right-4 flex gap-2 z-[500]'>
         <button
-          className='border-2 border-black rounded-full p-2 bg-greenButton'
+          className='border-2 border-black rounded-xl p-2 bg-[#73b5ba] hover:scale-105'
           onClick={() => setIsModalOpen(true)}
         >
-          <IoAdd size={38} />
+          <IoAdd size={40} className='text-extrabold' />
         </button>
       </div>
 
@@ -78,13 +89,13 @@ const SaveRouteButton = () => {
               onChange={(e) => setRouteName(e.target.value)}
             />
             <div className='mb-6 space-y-4'>
-              {legs.map((leg, index) => (
+              {route.steps.map((leg, index) => (
                 <ResumeStepsByLeg leg={leg} key={index} />
               ))}
             </div>
             <div className="flex justify-evenly mb-6 bg-gray-100 p-4 rounded-lg shadow-md">
-              <span className="text-lg text-blue-500">Distancia - <span className="text-xl font-bold text-gray-800">{totalKms} km</span></span>
-              <span className="text-lg text-green-500">Tiempo - <span className="text-lg font-bold text-gray-800">{totalTime.hours}h {totalTime.minutes}min</span></span>
+              <span className="text-lg text-blue-500">Distancia - <span className="text-xl font-bold text-gray-800">{route.distance}km</span></span>
+              <span className="text-lg text-green-500">Tiempo - <span className="text-lg font-bold text-gray-800">{route.time}h</span></span>
             </div>
             <button
               className='w-full bg-greenButton text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700'
