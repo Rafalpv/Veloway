@@ -17,10 +17,10 @@ const Mark = ({ marker, index }) => {
   }
 
   return (
-    <div className="flex items-center w-full">
+    <div className='flex items-center w-full'>
       <div
         ref={setNodeRef} {...attributes} {...listeners} style={style}
-        className="m-2 flex-1"
+        className='m-2 flex-1'
       >
         <div
           className={`
@@ -28,34 +28,31 @@ const Mark = ({ marker, index }) => {
           ${listVisible ? 'w-full rounded-lg' : 'w-14 aspect-square rounded-full'}
           flex items-center justify-center border-2 border-black shadow-lg 
           hover:scale-105
-          ${index === 0 ? 'bg-green-500 font-bold' : 'bg-white'}
+          ${index === 0 ? 'bg-[#C8D7AB]' : 'bg-[#EEF0D5]'}
+          ${index === totalMarkers && route.isRoundTrip ? 'bg-[#abc969]' : ''}
           ${selectedMarker === marker.markerId ? 'border-yellow-400' : ''}
           `}
           onMouseEnter={() => setSelectedMarker(marker.markerId)}
           onMouseLeave={() => setSelectedMarker(null)}
         >
-          <span className={'flex-1 flex items-center justify-center text-sm font-semibold px-5'}>
+          <span className={'flex-1 flex items-center justify-center text-sm font-extrabold px-5'}>
+            {listVisible ? `${index + 1}.` : ''}
             {index === 0
-              ? `► ${listVisible ? route.steps[index]?.start_address : ''}`
+              ? `${listVisible ? route.steps[index]?.start_address : ''}`
               : (index === totalMarkers && !route.isRoundTrip)
-                  ? `► ${listVisible ? route.steps[totalMarkers - 1]?.end_address : ''}`
+                  ? `${listVisible ? route.steps[totalMarkers - 1]?.end_address : ''}`
                   : `${listVisible ? route.steps[index]?.start_address : index}`}
           </span>
         </div>
       </div>
-      {/* {listVisible && (
-        <button className="ml-2 transition-transform duration-300" onClick={handleClick}>
-          <MdOutlineKeyboardArrowDown size={30} className={`${moreInfoMark ? 'rotate-180' : 'rotate-0'}`} />
-        </button>
-      )} */}
       {listVisible && <button
-        className='ml-3'
+        className=''
         onClick={(e) => {
           e.stopPropagation()
           handleDeleteMark(marker.markerId)
         }}
       >
-        <TiDelete size={30} />
+        <TiDelete size={30} className='ml-1 hover:scale-110 hover:text-red-500' />
       </button>}
     </div>
   )

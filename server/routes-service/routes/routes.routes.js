@@ -5,9 +5,9 @@ const router = express.Router()
 
 router.get('/', routesController.getRoutes)
 router.post('/', routesController.addRoute)
-router.get('/:id', routesController.getRoutesById)
 router.get('/calculate', routesController.calculateRoute)
 router.get('/locations', routesController.getLocations)
 router.get('/elevation', routesController.getElevation)
+router.get('/:id', routesController.getRoutesById)
 
 export default router

@@ -147,7 +147,7 @@ export const MapMarkersProvider = ({ children }) => {
         polyline: decode(infoRoute.overview_polyline.points)
       }))
     } catch (error) {
-      console.error('Error fetching route:', error)
+      console.error('Error al calcular la ruta', error)
     }
   }
 
@@ -176,9 +176,7 @@ export const MapMarkersProvider = ({ children }) => {
 
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
-    if (route.markers.length >= 2) {
-      fetchRoute()
-    }
+    fetchRoute()
   }, [route.markers])
 
   return (

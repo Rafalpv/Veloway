@@ -74,7 +74,7 @@ const Map = () => {
 
   return (
     <div className='map relative m-4 border-2 border-black transition-all duration-300 overflow-hidden w-full'>
-      <div className='absolute top-4 right-1/2 translate-x-1/2 flex gap-4 z-[410]'>
+      <div className='absolute top-4 right-1/2 bg-[#5ed791] p-2 border-2 border-black rounded-full translate-x-1/2 flex gap-4 z-[410]'>
         <MarkersMangmentButton option={'changeOrder'} color={'slate'} />
         <MarkersMangmentButton option={'roundTrip'} color={'emerald'} />
         <MarkersMangmentButton option={'deleteAll'} color={'red'} />
@@ -103,7 +103,7 @@ const Map = () => {
             placeholder='Introduce una ciudad'
             className='border p-2 rounded-3xl w-64'
           />
-          <button onClick={handleSearch} className='bg-white px-4 py-2 ml-2 rounded-full shadow-lg'>
+          <button onClick={handleSearch} className='bg-white px-4 py-2 ml-2 rounded-full shadow-lg hover:bg-gray-200  '>
             <IoSearchOutline size={24} />
           </button>
           {/* Lista de sugerencias */}
