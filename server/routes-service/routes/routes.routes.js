@@ -9,5 +9,6 @@ router.get('/calculate', routesController.calculateRoute)
 router.get('/locations', routesController.getLocations)
 router.get('/elevation', routesController.getElevation)
 router.get('/:id', routesController.getRoutesById)
+router.post('/chat', routesController.talkToChat)
 
 export default router

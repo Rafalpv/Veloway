@@ -6,7 +6,7 @@ const ListMarcadores = () => {
   const { listVisible } = useMarkersContext()
 
   return (
-    <div className={`relative flex flex-col justify-start ${listVisible ? 'w-1/3' : 'hidden'} bg-neutral-200 border-2 border-r-black p-4 h-screen`}>
+    <div className={`relative flex flex-col justify-start  ${listVisible ? 'w-1/3' : 'hidden'} bg-neutral-200 border-2 h-auto border-r-black p-4 `}>
       <ListMarkers listVisible={listVisible} />
       <TimeDistanceInfo />
     </div>

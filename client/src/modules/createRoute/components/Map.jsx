@@ -7,10 +7,9 @@ import { useMapMarkers } from '@user/context/MapMarkersContext'
 import { useMarkersContext } from '../pages/CreateRoute'
 import CustomMarker from './CustomMarker'
 import LayerButton from './LayerButton'
-import MarkersMangmentButton from './MarkersManagmentButton'
+import MarkersManagementMenu from './MarkersManagementeMenu'
 import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
-import ListMarkers from './ListMarkers'
 import { IoMdArrowDropleft } from 'react-icons/io'
 
 const MapCenterHandler = ({ position }) => {
@@ -36,7 +35,7 @@ const Map = () => {
   const [selectedUbication, setSelectedUbication] = useState(null)
   const [searchResults, setSearchResults] = useState([])
 
-  const { listVisible, setListVisible, elevationSiderVisible, setElevationSiderVisible } = useMarkersContext()
+  const { listVisible, setListVisible, elevationSiderVisible, setElevationSiderVisible, chatVisible, setChatVisible } = useMarkersContext()
 
   const handleSearch = async () => {
     if (!city.trim()) return
@@ -74,18 +73,8 @@ const Map = () => {
 
   return (
     <div className='map relative m-4 border-2 border-black transition-all duration-300 overflow-hidden w-full'>
-      <div className='absolute top-4 right-1/2 bg-[#5ed791] p-2 border-2 border-black rounded-full translate-x-1/2 flex gap-4 z-[410]'>
-        <MarkersMangmentButton option={'changeOrder'} color={'slate'} />
-        <MarkersMangmentButton option={'roundTrip'} color={'emerald'} />
-        <MarkersMangmentButton option={'deleteAll'} color={'red'} />
-      </div>
-
+      <MarkersManagementMenu />
       <SaveRouteButton />
-
-      {!listVisible &&
-        <div className='absolute top-1/2 -translate-y-1/2 right-5 z-[500]'>
-          <ListMarkers />
-        </div>}
 
       {/* Controles */}
       <div className='absolute bottom-4 left-4 flex gap-2 z-[500]'>
@@ -120,7 +109,7 @@ const Map = () => {
       </div>
       <div className="absolute top-1/2 left-2 z-[500] transform -translate-y-1/2">
         <button
-          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-2 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
+          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-0.5 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
           onClick={() => setListVisible(!listVisible)}
         >
           <IoMdArrowDropleft
@@ -131,9 +120,22 @@ const Map = () => {
         </button>
       </div>
 
+      <div className="absolute top-1/2 right-2 z-[500] transform -translate-y-1/2">
+        <button
+          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-0.5 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
+          onClick={() => setChatVisible(!chatVisible)}
+        >
+          <IoMdArrowDropleft
+            size={30}
+            className={`text-gray-700 transition-transform duration-300 ${chatVisible ? '-rotate-180' : 'rotate-0'
+              }`}
+          />
+        </button>
+      </div>
+
       <div className="absolute left-1/2 bottom-2 z-[500] transform -translate-x-1/2">
         <button
-          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-2 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
+          className='bg-white border-2 border-gray-700 shadow-lg rounded-full p-0.5 transition-transform duration-300 hover:bg-gray-200 active:scale-95'
           onClick={() => setElevationSiderVisible(!elevationSiderVisible)}
         >
           <IoMdArrowDropleft

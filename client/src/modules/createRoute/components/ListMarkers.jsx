@@ -10,7 +10,7 @@ const ListMarkers = ({ listVisible }) => {
     <>
       <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
         {route.markers.length > 0 && (
-          <div className='bg-backgraound-admin p-2 overflow-auto mb-6 max-h-[60vh] border-2 border-black rounded-xl font-poppins text-lg'>
+          <div className='bg-backgraound-admin p-2 overflow-auto mb-6 border-2 border-black rounded-xl font-poppins text-lg'>
             <SortableContext items={route.markers.map(marker => marker.markerId)} strategy={verticalListSortingStrategy}>
               {route.markers.map((marker, index) => (
                 <div key={marker.markerId} className='flex flex-col justify-center items-center'>

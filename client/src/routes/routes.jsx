@@ -6,6 +6,7 @@ import AdminLayout from '@admin/layout/AdminLayout'
 import CreateRoute from '@user/pages/CreateRoute'
 import UserRoute from '@userRoutes/pages/UserRoutes'
 import ProtectedRoute from './ProtectedRoute'
+import RouteDetails from '../modules/user/pages/RouteDetails'
 
 const ProtectedLayout = () => (
   <ProtectedRoute>
@@ -19,10 +20,10 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    element: <ProtectedLayout />, // Ahora ProtectedRoute envuelve a todo
+    element: '', // Ahora ProtectedRoute envuelve a todo
     children: [
       {
-        path: 'routes',
+        path: '/:nickname',
         children: [
           {
             index: true,
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <CreateRoute />
+          },
+          {
+            path: ':id',
+            element: <RouteDetails />
           }
         ]
       },

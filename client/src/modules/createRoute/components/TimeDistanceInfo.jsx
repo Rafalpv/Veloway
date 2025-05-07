@@ -28,7 +28,7 @@ const TimeDistanceInfo = () => {
   }
 
   return (
-    <div className={`flex ${listVisible ? '' : 'flex-col'} items-center justify-evenly gap-8 font-poppins text-lg p-4 bg-white  rounded-xl shadow-lg border border-gray-200`}>
+    <div className={'grid grid-cols-2 gap-5 font-poppins text-lg p-4 bg-white rounded-xl shadow-lg border border-gray-200'}>
       {/* Distancia */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <RiPinDistanceFill className="text-2xl text-blue-500" />
@@ -38,23 +38,22 @@ const TimeDistanceInfo = () => {
       {/* Tiempo */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <FcClock className="text-2xl" />
-        <span className="text-green-600 text-xl">
-          {route.time}
-        </span>
+        <span className="text-green-600 text-xl">{route.time}</span>
       </span>
 
+      {/* Desnivel positivo */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <GoArrowUpRight className="text-2xl" />
         <span className="text-green-600 text-xl">
-         {calcularDesnivel(route.elevation).desnivelPositivo}m
+          {calcularDesnivel(route.elevation).desnivelPositivo}m
         </span>
       </span>
 
+      {/* Desnivel negativo */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <GoArrowDownRight className="text-2xl" />
         <span className="text-green-600 text-xl">
-        {calcularDesnivel(route.elevation).desnivelNegativo}m
-
+          {calcularDesnivel(route.elevation).desnivelNegativo}m
         </span>
       </span>
     </div>

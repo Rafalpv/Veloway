@@ -178,11 +178,26 @@ const addRoute = async (req, res) => {
   }
 }
 
+const talkToChat = async (req, res) => {
+  const { message } = req.body
+
+  try {
+    // Aquí en el futuro iría la llamada real a OpenAI
+    res.status(200).json({
+      reply: 'Hola, soy el asistente de rutas. ¿En qué puedo ayudarte?'
+    })
+  } catch (error) {
+    console.error('Error en talkToChat:', error)
+    res.status(500).json({ error: error.message })
+  }
+}
+
 export default {
   calculateRoute,
   getLocations,
   getElevation,
   addRoute,
   getRoutes,
-  getRoutesById
+  getRoutesById,
+  talkToChat
 }
