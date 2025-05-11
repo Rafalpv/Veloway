@@ -69,7 +69,7 @@ const ChatAside = () => {
                 ? 'bg-[#d1e8ff]'
                 : msg.role === 'assistant'
                 ? 'bg-slate-400 self-start text-left border border-gray-200'
-                : 'bg-red-200 self-start text-left border border-gray-200'
+                : 'bg-red-100 self-start text-left border border-red-500'
             }`}
           >
             {msg.content}

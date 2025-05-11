@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { MapMarkersProvider } from '@user/context/MapMarkersContext'
 import Map from '@user/components/Map'
-import ListMarcadores from '@user/components/ListMarcadores'
+import MarkersAside from '@user/components/MarkersAside'
 import ElevationAside from '@user/components/ElevationAside'
 import ChatAside from '../components/ChatAside'
 
@@ -19,7 +19,7 @@ const CreateRoute = () => {
       <MarkersContext.Provider value={{ listVisible, setListVisible, elevationSiderVisible, setElevationSiderVisible, chatVisible, setChatVisible }}>
         <div className='flex flex-col h-screen font-poppins'>
           <div className='flex flex-1 overflow-hidden'>
-            <ListMarcadores />
+            <MarkersAside />
             <Map />
             <ChatAside />
           </div>

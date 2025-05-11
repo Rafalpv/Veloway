@@ -82,7 +82,7 @@ const ElevationChart = () => {
   }
 
   return (
-    <div className={`w-full transition-all duration-300 border-2 border-t-black bg-slate-200 ${elevationSiderVisible ? 'h-1/4' : 'hidden'}`}>
+    <div className={`w-full transition-all duration-300 border-2 border-t-black bg-slate-200 ${elevationSiderVisible ? 'h-1/5' : 'hidden'}`}>
       <Line ref={chartRef} data={chartData} options={chartOptions} />
     </div>
   )
