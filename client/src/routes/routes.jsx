@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    element: '', // Ahora ProtectedRoute envuelve a todo
+    element: <ProtectedLayout />, // Ahora ProtectedLayout envuelve a todo
     children: [
       {
         path: '/:nickname',

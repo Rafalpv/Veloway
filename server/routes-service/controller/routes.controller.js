@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import axios from 'axios'
 import Route from '../models/Route.js'
+import OpenAI from 'openai'
 dotenv.config({ path: './routes-service/.env' })
 
 const calculateRoute = async (req, res) => {
@@ -181,11 +182,23 @@ const addRoute = async (req, res) => {
 const talkToChat = async (req, res) => {
   const { message } = req.body
 
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+
   try {
-    // Aquí en el futuro iría la llamada real a OpenAI
-    res.status(200).json({
-      reply: 'Hola, soy el asistente de rutas. ¿En qué puedo ayudarte?'
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: 'system', content: 'Eres un asistente experto en ciclismo. Ayudas a los usuarios a planificar rutas ciclistas seguras, interesantes. Ofreces recomendaciones sobre distancia, tipo de terreno, desnivel, puntos de interés, seguridad y clima. Sé claro y conciso' },
+        { role: 'system', content: 'Si tienes que devolver lugares de la ruta, responde con un objeto JSON que incluya la latitud y la longitud de cada lugar.' },
+        { role: 'user', content: message }
+      ],
+      temperature: 0.7,
+      presence_penalty: 0.3,
+      frequency_penalty: 0.2
     })
+
+    const answer = response.choices[0]?.message?.content || 'No se recibió respuesta'
+    res.status(200).json({ reply: answer })
   } catch (error) {
     console.error('Error en talkToChat:', error)
     res.status(500).json({ error: error.message })
