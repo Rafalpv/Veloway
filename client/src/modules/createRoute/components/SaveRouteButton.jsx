@@ -67,10 +67,10 @@ const SaveRouteButton = () => {
     <>
       <div className='absolute top-4 right-4 flex gap-2 z-[500]'>
         <button
-          className='border-2 border-black rounded-xl p-2 bg-[#73b5ba] hover:scale-105'
+          className='border-2 border-black rounded-full p-2 bg-[#73b5ba] hover:scale-105'
           onClick={() => setIsModalOpen(true)}
         >
-          <IoAdd size={40} className='text-extrabold' />
+          <IoAdd size={35} className='text-extrabold' />
         </button>
       </div>
 

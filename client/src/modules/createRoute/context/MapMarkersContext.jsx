@@ -18,8 +18,7 @@ export const MapMarkersProvider = ({ children }) => {
     isRoundTrip: false
   })
 
-  const handleMapClick = (event) => {
-    const { lat, lng } = event.latlng
+  const handleMapClick = (lat, lng) => {
     setRoute((prev) => ({
       ...prev,
       markers: [...prev.markers, { markerId: Date.now(), position: [lat, lng] }]

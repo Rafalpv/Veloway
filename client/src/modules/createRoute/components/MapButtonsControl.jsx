@@ -4,7 +4,7 @@ import { IoSearchOutline } from 'react-icons/io5'
 import LayerButton from './LayerButton'
 import axiosInstance from '@api/axiosInstance'
 
-const MapButtonsControl = ({ setPosition, setLayer, setSelectedUbication }) => {
+const MapButtonsControl = ({ setPosition, setSelectedUbication }) => {
   const [searchResults, setSearchResults] = useState([])
   const [city, setCity] = useState('')
   const [isMaximized, setIsMaximized] = useState(false)
@@ -42,7 +42,6 @@ const MapButtonsControl = ({ setPosition, setLayer, setSelectedUbication }) => {
       <button className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition' onClick={toggleFullscreen}>
         {isMaximized ? <FiMinimize2 size={24} /> : <FiMaximize2 size={24} />}
       </button>
-      <LayerButton setLayer={setLayer} />
 
       {/* Barra de búsqueda */}
       <div className='relative flex'>

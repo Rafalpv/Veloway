@@ -728,10 +728,6 @@ video {
   margin: 0.5rem;
 }
 
-.m-4{
-  margin: 1rem;
-}
-
 .mx-6{
   margin-left: 1.5rem;
   margin-right: 1.5rem;
@@ -798,6 +794,10 @@ video {
   margin-top: auto;
 }
 
+.ml-3{
+  margin-left: 0.75rem;
+}
+
 .block{
   display: block;
 }
@@ -826,8 +826,8 @@ video {
   aspect-ratio: 1 / 1;
 }
 
-.h-1\/4{
-  height: 25%;
+.h-1\/5{
+  height: 20%;
 }
 
 .h-12{
@@ -856,10 +856,6 @@ video {
 
 .h-screen{
   height: 100vh;
-}
-
-.h-1\/5{
-  height: 20%;
 }
 
 .max-h-60{
@@ -950,11 +946,6 @@ video {
 
 .translate-x-1\/2{
   --tw-translate-x: 50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-rotate-180{
-  --tw-rotate: -180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1222,10 +1213,6 @@ video {
   border-top-width: 1px;
 }
 
-.border-t-2{
-  border-top-width: 2px;
-}
-
 .border-black{
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
@@ -1316,11 +1303,6 @@ video {
   background-color: rgb(63 81 181 / var(--tw-bg-opacity, 1));
 }
 
-.bg-blueButton{
-  --tw-bg-opacity: 1;
-  background-color: rgb(187 152 242 / var(--tw-bg-opacity, 1));
-}
-
 .bg-gold-dark{
   --tw-bg-opacity: 1;
   background-color: rgb(255 160 0 / var(--tw-bg-opacity, 1));
@@ -1361,9 +1343,9 @@ video {
   background-color: rgb(229 229 229 / var(--tw-bg-opacity, 1));
 }
 
-.bg-red-200{
+.bg-red-100{
   --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity, 1));
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
 }
 
 .bg-red-500{
@@ -1398,11 +1380,6 @@ video {
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
-.bg-red-100{
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-50{
@@ -1447,6 +1424,10 @@ video {
 
 .p-8{
   padding: 2rem;
+}
+
+.p-1{
+  padding: 0.25rem;
 }
 
 .px-1{
