@@ -25,7 +25,7 @@ const Map = () => {
       <DisplayAsideButton isVisible={chatVisible} setIsVisible={setChatVisible} position={'top-1/2 right-2 -translate-y-1/2'} direction={'left'} />
       <DisplayAsideButton isVisible={elevationSiderVisible} setIsVisible={setElevationSiderVisible} position={'left-1/2 bottom-2 -translate-x-1/2'} direction={'up'} />
 
-      <GoogleMapComponent selectedUbication={selectedUbication} setSelectedUbication={setSelectedUbication}/>
+      <GoogleMapComponent />
     </div >
   )
 }

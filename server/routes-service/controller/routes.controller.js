@@ -7,8 +7,6 @@ dotenv.config({ path: './routes-service/.env' })
 const calculateRoute = async (req, res) => {
   const { origin, destination, waypoints } = req.query
 
-  console.log('Origin:', origin)
-
   try {
     const response = await axios.get('https://maps.googleapis.com/maps/api/directions/json', {
       params: {

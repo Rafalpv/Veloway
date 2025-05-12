@@ -21,7 +21,7 @@ export const MapMarkersProvider = ({ children }) => {
   const handleMapClick = (lat, lng) => {
     setRoute((prev) => ({
       ...prev,
-      markers: [...prev.markers, { markerId: Date.now(), position: [lat, lng] }]
+      markers: [...prev.markers, { markerId: Date.now(), position: { lat, lng } }]
     }))
   }
 
@@ -61,7 +61,7 @@ export const MapMarkersProvider = ({ children }) => {
     setRoute((prev) => {
       const updatedMarkers = prev.markers.map((marker) =>
         marker.markerId === id
-          ? { ...marker, position: [newPos.lat, newPos.lng] }
+          ? { ...marker, position: { lat: newPos.lat, lng: newPos.lng } }
           : marker
       )
       return {
@@ -114,10 +114,10 @@ export const MapMarkersProvider = ({ children }) => {
     if (route.markers.length < 2) return
 
     try {
-      const origin = `${route.markers[0].position[0]},${route.markers[0].position[1]}`
+      const origin = `${route.markers[0].position.lat},${route.markers[0].position.lng}`
       let waypointsArray = route.markers.slice(1, route.markers.length - 1) // Puntos intermedios
 
-      let destination = `${route.markers[route.markers.length - 1].position[0]},${route.markers[route.markers.length - 1].position[1]}`
+      let destination = `${route.markers[route.markers.length - 1].position.lat},${route.markers[route.markers.length - 1].position.lng}`
 
       if (route.isRoundTrip) {
         // Si es ida y vuelta, el último punto se convierte en un waypoint
@@ -126,7 +126,7 @@ export const MapMarkersProvider = ({ children }) => {
       }
 
       const waypointsString = waypointsArray
-        .map(marker => `${marker.position[0]},${marker.position[1]}`)
+        .map(marker => `${marker.position.lat},${marker.position.lng}`)
         .join('|')
 
       const response = await axiosInstance.get('/routes/calculate', {
@@ -136,7 +136,7 @@ export const MapMarkersProvider = ({ children }) => {
       const infoRoute = response.data.routes[0]
       const distance = getTotalKms(infoRoute.legs)
       const time = getTotalTime(infoRoute.legs)
-      fetchElevationsShape()
+      // fetchElevationsShape()
 
       setRoute((prev) => ({
         ...prev,
@@ -176,7 +176,7 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [])
+  }, [route.markers])
 
   return (
     <MapMarkersContext.Provider
