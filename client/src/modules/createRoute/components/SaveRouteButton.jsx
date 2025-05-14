@@ -3,6 +3,7 @@ import { IoAdd, IoClose } from 'react-icons/io5'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import axiosInstance from '@api/axiosInstance'
 import { useAuth } from '@auth/context/AuthContext'
+import { formatearDistancia, formatearTiempo } from '../../utils/functions'
 
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -94,8 +95,8 @@ const SaveRouteButton = () => {
               ))}
             </div>
             <div className="flex justify-evenly mb-6 bg-gray-100 p-4 rounded-lg shadow-md">
-              <span className="text-lg text-blue-500">Distancia - <span className="text-xl font-bold text-gray-800">{route.distance}km</span></span>
-              <span className="text-lg text-green-500">Tiempo - <span className="text-lg font-bold text-gray-800">{route.time}h</span></span>
+              <span className="text-lg text-blue-500">Distancia - <span className="text-xl font-bold text-gray-800">{formatearDistancia(route.distance)}</span></span>
+              <span className="text-lg text-green-500">Tiempo - <span className="text-lg font-bold text-gray-800">{formatearTiempo(route.time)}</span></span>
             </div>
             <button
               className='w-full bg-greenButton text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700'

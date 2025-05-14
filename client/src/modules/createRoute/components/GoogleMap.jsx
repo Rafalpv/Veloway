@@ -1,4 +1,4 @@
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
+import { GoogleMap, useLoadScript, Marker, Polyline } from '@react-google-maps/api'
 import { useCallback, useRef } from 'react'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -72,6 +72,15 @@ const GoogleMapComponent = () => {
           />
         )
       })}
+
+      <Polyline
+        path={route.polyline}
+        options={{
+          strokeColor: '#0000FF',
+          strokeOpacity: 0.8,
+          strokeWeight: 7
+        }}
+      />
 
     </GoogleMap>
   )

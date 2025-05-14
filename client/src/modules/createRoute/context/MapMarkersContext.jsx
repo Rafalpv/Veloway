@@ -136,14 +136,16 @@ export const MapMarkersProvider = ({ children }) => {
       const infoRoute = response.data.routes[0]
       const distance = getTotalKms(infoRoute.legs)
       const time = getTotalTime(infoRoute.legs)
-      // fetchElevationsShape()
+      const polyline = decode(infoRoute.overview_polyline.points)
+
+      fetchElevationsShape()
 
       setRoute((prev) => ({
         ...prev,
         distance,
         time,
         steps: infoRoute.legs,
-        polyline: decode(infoRoute.overview_polyline.points)
+        polyline: convertToLatLngObjects(polyline)
       }))
     } catch (error) {
       console.error('Error al calcular la ruta', error)
@@ -152,13 +154,15 @@ export const MapMarkersProvider = ({ children }) => {
 
   const getTotalKms = (legs) => legs.reduce((total, leg) => total + leg.distance.value, 0)
   const getTotalTime = (legs) => legs.reduce((total, leg) => total + leg.duration.value, 0)
+  const convertToLatLngObjects = coordsArray =>
+    coordsArray.map(([lat, lng]) => ({ lat, lng }))
 
   const fetchElevationsShape = async () => {
     if (route.markers.length < 2) return
 
     try {
       // Solo enviamos un array de arrays con lat y lng
-      const positions = route.markers.map(marker => marker.position)
+      const positions = route.markers.map(marker => Object.values(marker.position))
 
       const response = await axiosInstance.get('/routes/elevation', {
         params: { positions: JSON.stringify(positions) }

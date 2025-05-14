@@ -3,10 +3,10 @@ import { useMarkersContext } from '../pages/CreateRoute'
 import { RiPinDistanceFill } from 'react-icons/ri'
 import { FcClock } from 'react-icons/fc'
 import { GoArrowUpRight, GoArrowDownRight } from 'react-icons/go'
+import { formatearDistancia, formatearTiempo } from '../../utils/functions'
 
 const TimeDistanceInfo = () => {
   const { route } = useMapMarkers()
-  const { listVisible } = useMarkersContext()
 
   function calcularDesnivel(elevations) {
     let desnivelPositivo = 0
@@ -32,13 +32,13 @@ const TimeDistanceInfo = () => {
       {/* Distancia */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <RiPinDistanceFill className="text-2xl text-blue-500" />
-        <span className="text-blue-600 text-xl">{route.distance} km</span>
+        <span className="text-blue-600 text-xl">{formatearDistancia(route.distance)}</span>
       </span>
 
       {/* Tiempo */}
       <span className="flex flex-col items-center font-semibold text-gray-700">
         <FcClock className="text-2xl" />
-        <span className="text-green-600 text-xl">{route.time}</span>
+        <span className="text-green-600 text-xl">{formatearTiempo(route.time)}</span>
       </span>
 
       {/* Desnivel positivo */}
