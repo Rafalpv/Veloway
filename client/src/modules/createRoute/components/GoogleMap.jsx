@@ -39,7 +39,7 @@ const GoogleMapComponent = () => {
       mapContainerStyle={containerStyle}
       center={centerDefault}
       zoom={12}
-      onClick={handleClick}
+      onClick=''
       onLoad={onLoad}
       options={{
         fullscreenControl: false

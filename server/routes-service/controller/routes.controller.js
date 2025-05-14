@@ -186,8 +186,18 @@ const talkToChat = async (req, res) => {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'Eres un asistente experto en ciclismo. Ayudas a los usuarios a planificar rutas ciclistas seguras, interesantes. Ofreces recomendaciones sobre distancia, tipo de terreno, desnivel, puntos de interés, seguridad y clima. Sé claro y conciso' },
-        { role: 'system', content: 'Si tienes que devolver lugares de la ruta, responde con un objeto JSON que incluya la latitud y la longitud de cada lugar.' },
+        {
+          role: 'system',
+          content: `Eres un asistente experto en ciclismo. Tu respuesta debe estar en formato JSON con esta estructura:
+          {
+            "message": "Respuesta que se mostrará al usuario",
+            "locations": [
+              { "lat": 37.1761, "lng": -3.5976 },
+              ...
+            ]
+          }
+          Si no hay ubicaciones, "locations" será un array vacío. Sé claro y conciso.`
+        },
         { role: 'user', content: message }
       ],
       temperature: 0.7,
@@ -195,8 +205,18 @@ const talkToChat = async (req, res) => {
       frequency_penalty: 0.2
     })
 
-    const answer = response.choices[0]?.message?.content || 'No se recibió respuesta'
-    res.status(200).json({ reply: answer })
+    const raw = response.choices[0]?.message?.content || '{}'
+
+    let parsed
+    try {
+      parsed = JSON.parse(raw)
+    } catch (err) {
+      console.warn('La respuesta no es JSON válido. Enviando texto crudo.')
+      return res.status(200).json({ reply: raw, locations: [] })
+    }
+
+    const { message: reply, locations } = parsed
+    res.status(200).json({ reply, locations })
   } catch (error) {
     console.error('Error en talkToChat:', error)
     res.status(500).json({ error: error.message })

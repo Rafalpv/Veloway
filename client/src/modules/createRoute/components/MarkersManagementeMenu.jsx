@@ -10,9 +10,9 @@ const MarkersManagementMenu = () => {
       <div className='relative'>
         <button
           onClick={() => setOpen(!open)}
-          className='bg-[#73b5ba] p-3 border-2 border-black rounded-full shadow-lg'
+          className='bg-[#73b5ba] p-2 border-2 border-black rounded-full shadow-lg'
         >
-          <FaEllipsisH size={25} className='text-black text-xl' />
+          <FaEllipsisH size={20} className='text-black text-xl' />
         </button>
 
         <div

@@ -109,7 +109,16 @@ export const MapMarkersProvider = ({ children }) => {
     }))
   }
 
-  // Función para obtener la ruta desde el backend
+  const handleRouteByChat = (routeData) => {
+    setRoute((prev) => ({
+      ...prev,
+      markers: routeData.map((marker, index) => ({
+        markerId: `${Date.now()}-${index}`,
+        position: marker
+      }))
+    }))
+  }
+
   const fetchRoute = async () => {
     if (route.markers.length < 2) return
 
@@ -180,7 +189,7 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [route.markers])
+  }, [])
 
   return (
     <MapMarkersContext.Provider
@@ -197,6 +206,7 @@ export const MapMarkersProvider = ({ children }) => {
         updateMarkerPosition,
         handleDeleteAll,
         handleAddSearchPoint,
+        handleRouteByChat,
         position,
         setPosition
       }}

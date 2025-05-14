@@ -1,48 +1,51 @@
 import { useState } from 'react'
 import { useMarkersContext } from '../pages/CreateRoute'
 import axiosInstance from '@api/axiosInstance'
+import { useMapMarkers } from '../context/MapMarkersContext'
 
 const ChatAside = () => {
   const { chatVisible } = useMarkersContext()
+  const { handleRouteByChat } = useMapMarkers()
 
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false) // Estado de carga
 
   const handleSend = async () => {
-    // Verifica si el mensaje no está vacío
     if (input.trim() === '') return
 
-    // Agregar el mensaje del usuario a la lista de mensajes
     const newMessage = { role: 'user', content: input }
     setMessages(prev => [...prev, newMessage])
-
-    // Mostrar un indicador de carga
     setIsLoading(true)
 
     try {
-      // Enviar el mensaje al backend
       const response = await axiosInstance.post('/routes/chat', {
         message: input
       })
 
-      // Verificar si se recibió una respuesta válida
-      if (response?.data?.reply) {
-        const assistantMessage = { role: 'assistant', content: response.data.reply }
+      const replyText = response?.data?.reply
+      const coordinates = response?.data?.locations
 
-        // Agregar la respuesta del asistente a la lista de mensajes
+      if (replyText) {
+        const assistantMessage = { role: 'assistant', content: replyText }
         setMessages(prev => [...prev, assistantMessage])
       } else {
         console.error('No se recibió respuesta válida del asistente.')
       }
+
+      if (coordinates && Array.isArray(coordinates) && coordinates.length > 0) {
+        handleRouteByChat(coordinates) // ✅ Tu función para insertar los marcadores
+      }
     } catch (error) {
-      // Manejo de errores
       console.error('Error al obtener respuesta del asistente:', error)
-      const errorMessage = { role: 'assistant error', content: 'Hubo un error al procesar tu solicitud. Intenta nuevamente.' }
+      const errorMessage = {
+        role: 'assistant error',
+        content: 'Hubo un error al procesar tu solicitud. Intenta nuevamente.'
+      }
       setMessages(prev => [...prev, errorMessage])
     } finally {
-      setInput('') // Limpiar el campo de entrada
-      setIsLoading(false) // Ocultar el indicador de carga
+      setInput('')
+      setIsLoading(false)
     }
   }
 
@@ -64,13 +67,12 @@ const ChatAside = () => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`px-4 py-3 rounded-xl shadow-sm overflow-x-auto ${
-              msg.role === 'user'
-                ? 'bg-[#d1e8ff]'
-                : msg.role === 'assistant'
+            className={`px-4 py-3 rounded-xl shadow-sm overflow-x-auto ${msg.role === 'user'
+              ? 'bg-[#d1e8ff]'
+              : msg.role === 'assistant'
                 ? 'bg-slate-400 self-start text-left border border-gray-200'
                 : 'bg-red-100 self-start text-left border border-red-500'
-            }`}
+              }`}
           >
             {msg.content}
           </div>
