@@ -40,7 +40,7 @@ const MapButtonsControl = ({ setPosition, setSelectedUbication }) => {
   return (
     <div className='absolute bottom-4 left-4 flex gap-2 z-[500]'>
       <button className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition' onClick={toggleFullscreen}>
-        {isMaximized ? <FiMinimize2 size={24} /> : <FiMaximize2 size={24} />}
+        {isMaximized ? <FiMinimize2 size={20} /> : <FiMaximize2 size={20} />}
       </button>
 
       {/* Barra de búsqueda */}
@@ -49,11 +49,11 @@ const MapButtonsControl = ({ setPosition, setSelectedUbication }) => {
           type='text'
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          placeholder='Introduce una ciudad'
+          placeholder='Introduce una ubicacion'
           className='border p-2 rounded-3xl w-64'
         />
         <button onClick={handleSearch} className='bg-white px-4 py-2 ml-2 rounded-full shadow-lg hover:bg-gray-200  '>
-          <IoSearchOutline size={24} />
+          <IoSearchOutline size={20} />
         </button>
         {/* Lista de sugerencias */}
         {searchResults.length > 0 && (

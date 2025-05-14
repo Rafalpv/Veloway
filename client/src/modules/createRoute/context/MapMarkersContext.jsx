@@ -18,13 +18,6 @@ export const MapMarkersProvider = ({ children }) => {
     isRoundTrip: false
   })
 
-  const handleMapClick = (lat, lng) => {
-    setRoute((prev) => ({
-      ...prev,
-      markers: [...prev.markers, { markerId: Date.now(), position: { lat, lng } }]
-    }))
-  }
-
   const handleDragEnd = (event) => {
     const { active, over } = event
 
@@ -71,7 +64,7 @@ export const MapMarkersProvider = ({ children }) => {
     })
   }
 
-  const handleAddSearchPoint = (markerPosition, option) => {
+  const handleAddPoint = (markerPosition, option) => {
     const newMarker = { markerId: Date.now(), position: markerPosition }
 
     const updateByOption = {
@@ -198,17 +191,13 @@ export const MapMarkersProvider = ({ children }) => {
         setRoute,
         selectedMarker,
         setSelectedMarker,
-        totalMarkers: route.markers.length - 1,
-        handleMapClick,
         handleDragEnd,
         handleDeleteMark,
         handleChangeOrder,
         updateMarkerPosition,
         handleDeleteAll,
-        handleAddSearchPoint,
-        handleRouteByChat,
-        position,
-        setPosition
+        handleAddPoint,
+        handleRouteByChat
       }}
     >
       {children}

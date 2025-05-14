@@ -71,7 +71,7 @@ const SaveRouteButton = () => {
           className='border-2 border-black rounded-full p-2 bg-[#73b5ba] hover:scale-105'
           onClick={() => setIsModalOpen(true)}
         >
-          <IoAdd size={35} className='text-extrabold' />
+          <IoAdd size={25} className='text-extrabold' />
         </button>
       </div>
 

@@ -1,5 +1,5 @@
-import { GoogleMap, useLoadScript, Marker, Polyline } from '@react-google-maps/api'
-import { useCallback, useRef } from 'react'
+import { GoogleMap, useLoadScript, Marker, Polyline, InfoWindow } from '@react-google-maps/api'
+import { useCallback, useRef, useState } from 'react'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
 const containerStyle = {
@@ -17,7 +17,8 @@ const GoogleMapComponent = () => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
   })
 
-  const { route, handleMapClick, updateMarkerPosition } = useMapMarkers()
+  const { route, updateMarkerPosition, handleAddPoint } = useMapMarkers()
+  const [previewMarker, setPreviewMarker] = useState(null)
 
   const mapRef = useRef()
 
@@ -26,9 +27,16 @@ const GoogleMapComponent = () => {
   }, [])
 
   const handleClick = (e) => {
-    const lat = e.latLng.lat()
-    const lng = e.latLng.lng()
-    handleMapClick(lat, lng)
+    // Ignora si es un POI
+    if (e.placeId) { return }
+
+    const newPos = {
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng()
+    }
+
+    // Coloca marcador de previsualización
+    setPreviewMarker(newPos)
   }
 
   if (loadError) return <div>Error cargando el mapa</div>
@@ -39,39 +47,111 @@ const GoogleMapComponent = () => {
       mapContainerStyle={containerStyle}
       center={centerDefault}
       zoom={12}
-      onClick=''
+      onClick={handleClick}
       onLoad={onLoad}
       options={{
-        fullscreenControl: false
+        fullscreenControl: false,
+        draggableCursor: 'crosshair',
+        draggingCursor: 'grabbing'
       }}
     >
 
-      {route.markers.map((marker, index) => {
-        return (
-          <Marker
-            position={marker.position}
-            key={`${marker.markerId}`}
-            title={`${marker.position.lat} - ${marker.position.lng}`}
-            draggable={true}
-            onDragEnd={(e) => {
-              const newPos = {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng()
-              }
-              updateMarkerPosition(marker.markerId, newPos)
-            }}
-            icon={{
-              url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+      {previewMarker && (
+        <Marker position={previewMarker}
+          icon={{
+            url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+            <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="16" fill="#FFD700" stroke="#333" stroke-width="2"/>
+            </svg>
+          `)}`,
+            scaledSize: new window.google.maps.Size(24, 24),
+            anchor: new window.google.maps.Point(12, 12)
+          }}
+
+        >
+          <InfoWindow
+            position={previewMarker}
+            onCloseClick={() => setPreviewMarker(null)}
+          >
+            <div className="w-56 bg-white rounded-lg shadow-lg p-2 text-sm font-sans">
+              <div className="border-b pb-2 mb-2 font-semibold text-gray-700">Acciones disponibles</div>
+
+              <ul className="space-y-1">
+                <li>
+                  <button
+                    onClick={() => {
+                      // Tu lógica para punto de inicio
+                      handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, 'start')
+
+                      setPreviewMarker(null)
+                    }}
+                    className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                  >
+                    ➤ Añadir como punto de inicio
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      // Lógica para punto intermedio
+                      handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, '')
+
+                      setPreviewMarker(null)
+                    }}
+                    className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                  >
+                    ➕ Añadir como punto intermedio
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      // Lógica para punto final
+                      handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, 'end')
+                      setPreviewMarker(null)
+                    }}
+                    className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                  >
+                    🏁 Añadir como punto final
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </InfoWindow>
+
+        </Marker>
+      )
+      }
+
+      {
+        route.markers.map((marker, index) => {
+          return (
+            <Marker
+              position={marker.position}
+              key={`${marker.markerId}`}
+              title={`${marker.position.lat} - ${marker.position.lng}`}
+              draggable={true}
+              onDragEnd={(e) => {
+                const newPos = {
+                  lat: e.latLng.lat(),
+                  lng: e.latLng.lng()
+                }
+                updateMarkerPosition(marker.markerId, newPos)
+              }}
+              icon={{
+                url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
                 <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="20" cy="20" r="16" fill="#28a745" stroke="black" stroke-width="2"/>
                   <text x="20" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="white" font-family="Arial">${index + 1}</text>
                 </svg>
               `)}`,
-              scaledSize: new window.google.maps.Size(40, 40)
-            }}
-          />
-        )
-      })}
+                scaledSize: new window.google.maps.Size(30, 30), // Tamaño final del icono
+                anchor: new window.google.maps.Point(15, 15) // Punto central del icono (la mitad de 30x30)
+              }}
+            />
+          )
+        })
+      }
 
       <Polyline
         path={route.polyline}
@@ -82,7 +162,7 @@ const GoogleMapComponent = () => {
         }}
       />
 
-    </GoogleMap>
+    </GoogleMap >
   )
 }
 
