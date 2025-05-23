@@ -90,19 +90,21 @@ const GoogleMapComponent = () => {
                     ➤ Añadir como punto de inicio
                   </button>
                 </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      // Lógica para punto intermedio
-                      handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, '')
+                {route.markers.length > 0 && (
+                  <li>
+                    <button
+                      onClick={() => {
+                        // Lógica para punto intermedio
+                        handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, '')
 
-                      setPreviewMarker(null)
-                    }}
-                    className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
-                  >
-                    ➕ Añadir como punto intermedio
-                  </button>
-                </li>
+                        setPreviewMarker(null)
+                      }}
+                      className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                    >
+                      ➕ Añadir como punto intermedio
+                    </button>
+                  </li>
+                )}
                 <li>
                   <button
                     onClick={() => {

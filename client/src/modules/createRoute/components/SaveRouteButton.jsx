@@ -4,6 +4,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import axiosInstance from '@api/axiosInstance'
 import { useAuth } from '@auth/context/AuthContext'
 import { formatearDistancia, formatearTiempo } from '../../utils/functions'
+import { useNavigate } from 'react-router'
 
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
@@ -49,6 +50,7 @@ const SaveRouteButton = () => {
   const [routeName, setRouteName] = useState('')
   const { route } = useMapMarkers()
   const { authState } = useAuth()
+  const navigate = useNavigate()
 
   const handleSave = async () => {
     try {
@@ -59,6 +61,7 @@ const SaveRouteButton = () => {
         userId: authState.user.id_user // ID del usuario
       })
       setRouteName('')
+      navigate(`/${authState.user.nickname}`)
     } catch (error) {
       console.error('Error al guardar la ruta:', error)
     }

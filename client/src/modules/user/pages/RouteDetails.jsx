@@ -1,8 +1,9 @@
+import MapGoogleMaps from '../../utils/components/MapGoogleMaps'
+
 const RouteDetails = () => {
   return (
-    <div>
-      <h1>Route Details</h1>
-      {/* Add your route details content here */}
+    <div style={{ height: '100vh' }}>
+      <MapGoogleMaps />
     </div>
   )
 }

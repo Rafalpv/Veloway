@@ -13,7 +13,7 @@ const UserRoutes = () => {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const response = await axiosInstance.get(`/routes/${authState.user.id_user}`)
+        const response = await axiosInstance.get(`/routes/user/${authState.user.id_user}`)
         setUserRoutes(response.data.routes ? response.data.routes : [])
       } catch (error) {
         console.error('Error fetching user routes', error)
@@ -22,6 +22,15 @@ const UserRoutes = () => {
 
     fetchRoutes()
   }, [])
+
+  const handleDeleteRoute = async (id) => {
+    try {
+      await axiosInstance.delete(`/routes/${id}`)
+      setUserRoutes((prevRoutes) => prevRoutes.filter((route) => route._id !== id))
+    } catch (error) {
+      console.error('Error deleting route', error)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -80,6 +89,12 @@ const UserRoutes = () => {
                   } className='mt-auto bg-greenButton font-semibold px-4 py-2 rounded-xl hover:bg-green-600 transition'>
                     Ver Detalles
                   </button>
+
+                  <button className='mt-auto bg-red-400 font-semibold px-4 py-2 rounded-xl hover:bg-green-600 transition'
+                    onClick={() => handleDeleteRoute(route._id)}>
+                    Eliminar
+                  </button>
+
                 </div>
               ))}
             </div>)}

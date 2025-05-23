@@ -7,11 +7,13 @@ const MarkerSchema = new mongoose.Schema({
     unique: true // Si quieres garantizar que no se repitan IDs
   },
   position: {
-    type: [Number],
-    required: true,
-    validate: {
-      validator: arr => arr.length === 2,
-      message: 'Position must be an array of two numbers: [lat, lng]'
+    lat: {
+      type: Number,
+      required: true
+    },
+    lng: {
+      type: Number,
+      required: true
     }
   }
 }, { _id: false })
@@ -69,7 +71,21 @@ const RouteSchema = new mongoose.Schema({
   markers: [MarkerSchema],
   distance: { type: Number, required: true }, // en metros
   time: { type: Number, required: true }, // en segundos
-  polyline: { type: [[Number]], required: true },
+  polyline: {
+    type: [
+      {
+        lat: {
+          type: Number,
+          required: true
+        },
+        lng: {
+          type: Number,
+          required: true
+        }
+      }
+    ],
+    required: true
+  },
   elevation: {
     type: [Number],
     default: []

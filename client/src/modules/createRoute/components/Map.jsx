@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { TileLayer } from 'react-leaflet'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 import { useMarkersContext } from '../pages/CreateRoute'
 import SaveRouteButton from './SaveRouteButton'
@@ -12,7 +11,7 @@ const Map = () => {
   const { setPosition } = useMapMarkers()
   const { listVisible, setListVisible, elevationSiderVisible, setElevationSiderVisible, chatVisible, setChatVisible } = useMarkersContext()
 
-  const [selectedUbication, setSelectedUbication] = useState(null)
+  const [setSelectedUbication] = useState(null)
 
   return (
     <div className='map relative transition-all duration-300 overflow-hidden w-full m-2 border-2 border-black'>

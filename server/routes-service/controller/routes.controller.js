@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import axios from 'axios'
 import Route from '../models/Route.js'
 import OpenAI from 'openai'
+import mongoose from 'mongoose'
 dotenv.config({ path: './routes-service/.env' })
 
 const calculateRoute = async (req, res) => {
@@ -119,7 +120,7 @@ const getRoutes = async (req, res) => {
   }
 }
 
-const getRoutesById = async (req, res) => {
+const getRoutesPerUser = async (req, res) => {
   try {
     const { id } = req.params
 
@@ -132,6 +133,34 @@ const getRoutesById = async (req, res) => {
     return res.status(200).json({
       message: routes.length ? 'Rutas encontradas' : 'No tienes rutas creadas todavía',
       routes
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al obtener la ruta por su ID',
+      error: error.message
+    })
+  }
+}
+
+const getRoutesById = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    // Validar que el id sea un ObjectId válido
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'ID no válido' })
+    }
+
+    const route = await Route.findById(id)
+
+    if (!route) {
+      return res.status(404).json({ message: 'Ruta no encontrada' })
+    }
+
+    return res.status(200).json({
+      message: 'Ruta encontrada',
+      route
     })
   } catch (error) {
     console.error(error)
@@ -172,6 +201,34 @@ const addRoute = async (req, res) => {
     console.error(error)
     res.status(500).json({
       message: 'Hubo un error al guardar la ruta',
+      error: error.message
+    })
+  }
+}
+
+const deleteRoute = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    // Validar que el id sea un ObjectId válido
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'ID no válido' })
+    }
+
+    const deletedRoute = await Route.findByIdAndDelete(id)
+
+    if (!deletedRoute) {
+      return res.status(404).json({ message: 'Ruta no encontrada' })
+    }
+
+    return res.status(200).json({
+      message: 'Ruta eliminada correctamente',
+      route: deletedRoute
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al eliminar la ruta',
       error: error.message
     })
   }
@@ -228,7 +285,9 @@ export default {
   getLocations,
   getElevation,
   addRoute,
+  deleteRoute,
   getRoutes,
+  getRoutesPerUser,
   getRoutesById,
   talkToChat
 }
