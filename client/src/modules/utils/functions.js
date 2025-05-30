@@ -15,3 +15,22 @@ export const formatearDistancia = (metros) => {
   const kilometros = (metros / 1000).toFixed(2)
   return `${kilometros} km`
 }
+
+export function calcularDesnivel(elevations) {
+  let desnivelPositivo = 0
+  let desnivelNegativo = 0
+
+  for (let i = 1; i < elevations.length; i++) {
+    const delta = elevations[i] - elevations[i - 1]
+    if (delta > 0) {
+      desnivelPositivo += delta
+    } else {
+      desnivelNegativo += Math.abs(delta)
+    }
+  }
+
+  return {
+    desnivelPositivo: Math.round(desnivelPositivo) + 'm',
+    desnivelNegativo: Math.round(desnivelNegativo) + 'm'
+  }
+}

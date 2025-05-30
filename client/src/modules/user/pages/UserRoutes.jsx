@@ -2,8 +2,9 @@ import { NavLink, useNavigate } from 'react-router'
 import { IoAdd } from 'react-icons/io5'
 import { useAuth } from '@auth/context/AuthContext'
 import { useEffect, useState } from 'react'
+import { calcularDesnivel, formatearDistancia, formatearTiempo } from '../../utils/functions'
 import axiosInstance from '@api/axiosInstance'
-import { formatearDistancia, formatearTiempo } from '../../utils/functions'
+import ThemeButton from '../../utils/components/ThemeButton'
 
 const UserRoutes = () => {
   const { authState, logout } = useAuth()
@@ -33,73 +34,82 @@ const UserRoutes = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className='min-h-screen p-6 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors font-poppins'>
+
       {/* Header */}
-      <header className="flex justify-between items-center mb-10">
-        <h1 className="text-3xl font-bold text-green-600">
-          Bienvenido, {authState.user.nickname} 👋
+      <header className='flex flex-wrap justify-between items-center mb-10 pb-5 gap-4 border-b-2 border-black dark:border-white'>
+        <h1 className="text-5xl font-bold text-primary-light dark:text-primary-dark">
+          {authState.user.nickname} 👋
         </h1>
-        <NavLink
-          to="create"
-          className='flex items-center gap-2 bg-greenButton px-4 py-2 rounded-2xl border-2 border-black hover:bg-green-600 transition-all shadow-md'
-        >
-          <IoAdd size={28} />
-          <span>Crear Ruta</span>
-        </NavLink>
-        <button
-          onClick={logout}
-          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl shadow-md transition-all"
-        >
-          Cerrar Sesión
-        </button>
+
+        <div className='flex items-center gap-4'>
+          <NavLink
+            to="create"
+            className="flex items-center gap-2 bg-button-light dark:bg-button-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl shadow transition-all"
+          >
+            <IoAdd size={24} />
+            <span>Crear Ruta</span>
+          </NavLink>
+
+          <button
+            onClick={logout}
+            className="flex items-center gap-2 bg-danger-light dark:bg-danger-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl shadow transition-all"
+          >
+            Cerrar Sesión
+          </button>
+
+          <ThemeButton />
+        </div>
       </header>
 
       {/* Zona de rutas */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6 text-gray-700">Tus Rutas</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-secondary-light dark:text-secondary-dark">Tus Rutas</h2>
 
-        {/* Aquí irán las tarjetas */}
         {userRoutes.length === 0
           ? (
-            <p className="text-gray-500">No tienes rutas creadas aún.</p>)
+            <p className="text-gray-500 dark:text-gray-400">No tienes rutas creadas aún.</p>)
           : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
               {userRoutes.map((route, index) => (
                 <div
                   key={index}
-                  className='flex flex-col bg-slate-200 rounded-2xl shadow-md p-5 hover:shadow-xl transition-all border border-black'
+                  className="flex flex-col bg-surface-light dark:bg-surface-dark rounded-2xl shadow-md p-5 hover:shadow-xl transition-all border border-gray-300 dark:border-gray-600"
                 >
-                  {/* Título de la ruta */}
-                  <h3 className="text-2xl font-bold text-green-700 mb-3">{route.name}</h3>
+                  {/* Título */}
+                  <h3 className="text-3xl font-bold text-primary-light dark:text-primary-dark mb-2">{route.name}</h3>
 
-                  {/* Info extra */}
-                  <div className="flex flex-col gap-2 text-gray-600 mb-4">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold">Duración:</span>
-                      <span>{formatearTiempo(route.time) || ''}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold">Distancia:</span>
-                      <span>{formatearDistancia(route.distance) || ''}</span>
-                    </div>
+                  {/* Info */}
+                  <div className="flex gap-1 text-text-light dark:text-text-dark mb-4 text-sm">
+                    <span>{formatearTiempo(route.time) || ''}</span>
+                    <p> - </p>
+                    <span>{formatearDistancia(route.distance) || ''}</span>
+                    <p> - </p>
+                    <span>{calcularDesnivel(route.elevation).desnivelPositivo || ''}</span>
+
                   </div>
 
-                  {/* Botón de ver detalles */}
-                  <button onClick={() => navigate(`${userRoutes[index]._id}`)
-                  } className='mt-auto bg-greenButton font-semibold px-4 py-2 rounded-xl hover:bg-green-600 transition'>
-                    Ver Detalles
-                  </button>
+                  {/* Botones */}
+                  <div className='flex gap-2 justify-end'>
+                    <button
+                      onClick={() => navigate(`${userRoutes[index]._id}`)}
+                      className="bg-button-light dark:bg-button-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition"
+                    >
+                      Ver Detalles
+                    </button>
 
-                  <button className='mt-auto bg-red-400 font-semibold px-4 py-2 rounded-xl hover:bg-green-600 transition'
-                    onClick={() => handleDeleteRoute(route._id)}>
-                    Eliminar
-                  </button>
-
+                    <button
+                      onClick={() => handleDeleteRoute(route._id)}
+                      className="bg-danger-light dark:bg-danger-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>)}
-      </section >
-    </div >
+      </section>
+    </div>
   )
 }
 

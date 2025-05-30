@@ -5,7 +5,7 @@ const SignupForm = ({ handleToggle }) => {
     <>
       <p className='absolute top-3 right-3 text-m'>
         ¿Ya tienes cuenta? &nbsp;
-        <button className='text-gold font-bold underline' onClick={handleToggle}>Inicio de Sesión</button>
+        <button className='text-accent-dark font-bold underline' onClick={handleToggle}>Inicio de Sesión</button>
       </p>
       <NewUserForm />
     </>

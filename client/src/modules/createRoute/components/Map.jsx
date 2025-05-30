@@ -6,6 +6,7 @@ import MarkersManagementMenu from './MarkersManagementeMenu'
 import DisplayAsideButton from './DisplayButton'
 import MapButtonsControl from './MapButtonsControl'
 import GoogleMapComponent from './GoogleMap'
+import LevelRecomendation from './LevelRecomendation'
 
 const Map = () => {
   const { setPosition } = useMapMarkers()
@@ -25,6 +26,9 @@ const Map = () => {
       <DisplayAsideButton isVisible={elevationSiderVisible} setIsVisible={setElevationSiderVisible} position={'left-1/2 bottom-2 -translate-x-1/2'} direction={'up'} />
 
       <GoogleMapComponent />
+
+      <LevelRecomendation />
+
     </div >
   )
 }
