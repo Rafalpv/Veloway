@@ -71,6 +71,11 @@ const RouteSchema = new mongoose.Schema({
   markers: [MarkerSchema],
   distance: { type: Number, required: true }, // en metros
   time: { type: Number, required: true }, // en segundos
+  privacity: {
+    type: String,
+    enum: ['public', 'private'],
+    default: 'public'
+  },
   polyline: {
     type: [
       {

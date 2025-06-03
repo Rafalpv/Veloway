@@ -934,6 +934,14 @@ video {
   width: 100%;
 }
 
+.w-2\/3{
+  width: 66.666667%;
+}
+
+.w-3\/4{
+  width: 75%;
+}
+
 .min-w-48{
   min-width: 12rem;
 }
@@ -1209,6 +1217,10 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded-sm{
+  border-radius: 0.125rem;
+}
+
 .rounded-l-2xl{
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -1420,8 +1432,50 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
+.bg-secondary-light{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 119 182 / var(--tw-bg-opacity, 1));
+}
+
+.bg-primary-light{
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 106 79 / var(--tw-bg-opacity, 1));
+}
+
+.bg-primary-dark{
+  --tw-bg-opacity: 1;
+  background-color: rgb(144 236 111 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-800{
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 27 27 / var(--tw-bg-opacity, 1));
+}
+
+.bg-accent-light{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 183 3 / var(--tw-bg-opacity, 1));
+}
+
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
+}
+
+.bg-opacity-30{
+  --tw-bg-opacity: 0.3;
+}
+
+.bg-opacity-60{
+  --tw-bg-opacity: 0.6;
+}
+
+.bg-opacity-70{
+  --tw-bg-opacity: 0.7;
 }
 
 .bg-\[url\(\'\/img\/ciclista-fondo\.jpg\'\)\]{
@@ -1434,6 +1488,10 @@ video {
 
 .bg-center{
   background-position: center;
+}
+
+.stroke-background-blue{
+  stroke: #4270BE;
 }
 
 .p-0\.5{
@@ -1462,6 +1520,10 @@ video {
 
 .p-8{
   padding: 2rem;
+}
+
+.p-1{
+  padding: 0.25rem;
 }
 
 .px-1{
@@ -1517,6 +1579,11 @@ video {
 .py-4{
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-0\.5{
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }
 
 .pb-2{
@@ -2042,6 +2109,11 @@ video {
 .dark\:bg-theme-light:is(.dark *){
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-secondary-dark:is(.dark *){
+  --tw-bg-opacity: 1;
+  background-color: rgb(187 152 242 / var(--tw-bg-opacity, 1));
 }
 
 .dark\:text-gray-400:is(.dark *){

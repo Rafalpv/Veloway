@@ -7,6 +7,7 @@ import CreateRoute from '@user/pages/CreateRoute'
 import UserRoute from '@userRoutes/pages/UserRoutes'
 import ProtectedRoute from './ProtectedRoute'
 import RouteDetails from '../modules/user/pages/RouteDetails'
+import CommunityRoutes from '../modules/user/pages/CommunityRoutes'
 
 const ProtectedLayout = () => (
   <ProtectedRoute>
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
           {
             path: ':id',
             element: <RouteDetails />
+          },
+          {
+            path: 'community',
+            element: <CommunityRoutes />
           }
         ]
       },

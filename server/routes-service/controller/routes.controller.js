@@ -174,7 +174,7 @@ const getRoutesById = async (req, res) => {
 
 const addRoute = async (req, res) => {
   try {
-    const { route, routeName, userId } = req.body
+    const { route, routeName, privacity, userId } = req.body
 
     // Crear una nueva ruta usando la información del objeto `route`
     const newRoute = new Route({
@@ -182,6 +182,7 @@ const addRoute = async (req, res) => {
       markers: route.markers, // Marcadores de la ruta
       distance: route.distance, // Distancia
       time: route.time, // Tiempo
+      privacity: privacity || 'public', // Privacidad, por defecto 'public'
       steps: route.steps, // Pasos de la ruta
       polyline: route.polyline, // Línea codificada de la ruta
       elevation: route.elevation, // Elevación

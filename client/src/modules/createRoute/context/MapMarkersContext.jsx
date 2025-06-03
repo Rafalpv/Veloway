@@ -6,7 +6,6 @@ const MapMarkersContext = createContext()
 
 export const MapMarkersProvider = ({ children }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
-  const [position, setPosition] = useState([37.18817, -3.60667])
 
   const [route, setRoute] = useState({
     markers: [],

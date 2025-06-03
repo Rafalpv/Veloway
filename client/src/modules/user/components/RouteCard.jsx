@@ -26,7 +26,7 @@
 
 import { calcularDesnivel, formatearDistancia, formatearTiempo } from '../../utils/functions'
 import { useNavigate } from 'react-router'
-import { CiBookmark } from 'react-icons/ci'
+import { CiBookmark, CiTrash } from 'react-icons/ci'
 import { FaBookmark } from 'react-icons/fa'
 import { useState } from 'react'
 import axiosInstance from '@api/axiosInstance'
@@ -89,6 +89,10 @@ const RouteCard = (props) => {
 
       </div>
 
+      <div>
+        <span className={`${route.privacity === 'public' ? 'bg-primary-light' : 'bg-danger-light'} py-0.5 px-2 bg-opacity-70 font-semibold rounded-lg`}>{route.privacity === 'public' ? 'Pública' : 'Privada'}</span>
+      </div>
+
       {/* Botones */}
       <div className='flex gap-2 justify-end'>
         <button
@@ -102,11 +106,11 @@ const RouteCard = (props) => {
           onClick={() => handleDeleteRoute(route._id)}
           className='bg-danger-light dark:bg-danger-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition'
         >
-          Eliminar
+          <CiTrash size={25}/>
         </button>
 
       </div>
-    </div>)
+    </div >)
 }
 
 export default RouteCard

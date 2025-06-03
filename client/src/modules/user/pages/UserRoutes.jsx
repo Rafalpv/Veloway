@@ -1,4 +1,4 @@
-import { IoAdd } from 'react-icons/io5'
+import { IoAdd, IoShareSocial } from 'react-icons/io5'
 import { useAuth } from '@auth/context/AuthContext'
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router'
@@ -37,6 +37,15 @@ const UserRoutes = () => {
         </h1>
 
         <div className='flex items-center gap-4'>
+
+          <NavLink
+            to="community"
+            className="flex items-center gap-2 bg--light dark:bg-secondary-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl shadow transition-all"
+          >
+            <IoShareSocial size={24} />
+            <span>Comunidad</span>
+          </NavLink>
+
           <NavLink
             to="create"
             className="flex items-center gap-2 bg-button-light dark:bg-button-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl shadow transition-all"

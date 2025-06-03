@@ -48,6 +48,7 @@ const ResumeStepsByLeg = ({ leg, index }) => {
 const SaveRouteButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [routeName, setRouteName] = useState('')
+  const [privacity, setPrivacy] = useState('public') // Estado para la privacidad
   const { route } = useMapMarkers()
   const { authState } = useAuth()
   const navigate = useNavigate()
@@ -57,10 +58,12 @@ const SaveRouteButton = () => {
       setIsModalOpen(false)
       await axiosInstance.post('/routes', { // Enviar los datos directamente en el body
         route, // Datos de la ruta
-        routeName, // Nombre de la ruta
+        routeName, // Nombre de la ruta,
+        privacity, // Privacidad de la ruta
         userId: authState.user.id_user // ID del usuario
       })
       setRouteName('')
+      setPrivacy('public')
       navigate(`/${authState.user.nickname}`)
     } catch (error) {
       console.error('Error al guardar la ruta:', error)
@@ -85,24 +88,39 @@ const SaveRouteButton = () => {
               <IoClose size={24} />
             </button>
             <h2 className='text-2xl font-bold mb-6 text-center'>Guardar Ruta</h2>
-            <input
-              type='text'
-              placeholder='Nombre de la ruta'
-              className='w-full border p-3 rounded-lg mb-6 text-md'
-              value={routeName}
-              onChange={(e) => setRouteName(e.target.value)}
-            />
+            <div className='flex gap-5 w-full'>
+              <input
+                type='text'
+                placeholder='Nombre de la ruta'
+                className='w-3/4 border p-3 rounded-lg mb-6 text-md'
+                value={routeName}
+                onChange={(e) => setRouteName(e.target.value)}
+              />
+
+              {/* Select de privacidad */}
+              <select
+                className='w-1/4 border p-3 rounded-lg mb-6 text-md bg-primary-dark font-semibold'
+                value={privacity}
+                onChange={(e) => setPrivacy(e.target.value)}
+              >
+                <option value='public'>Pública</option>
+                <option value='private'>Privada</option>
+              </select>
+            </div>
+
             <div className='mb-6 space-y-4'>
               {route.steps.map((leg, index) => (
                 <ResumeStepsByLeg leg={leg} key={index} />
               ))}
             </div>
+
             <div className="flex justify-evenly mb-6 bg-gray-100 p-4 rounded-lg shadow-md">
               <span className="text-lg text-blue-500">Distancia - <span className="text-xl font-bold text-gray-800">{formatearDistancia(route.distance)}</span></span>
               <span className="text-lg text-green-500">Tiempo - <span className="text-lg font-bold text-gray-800">{formatearTiempo(route.time)}</span></span>
             </div>
+
             <button
-              className='w-full bg-greenButton text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700'
+              className='w-full bg-greenButton py-3 rounded-lg text-lg font-semibold hover:bg-green-700'
               onClick={handleSave}
             >
               Guardar
@@ -110,6 +128,7 @@ const SaveRouteButton = () => {
           </div>
         </div>
       )}
+
     </>
   )
 }
