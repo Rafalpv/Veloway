@@ -128,6 +128,7 @@ const getRoutesPerUser = async (req, res) => {
       return res.status(400).json({ message: 'ID de creador no válido' })
     }
 
+    // 1. Obtener rutas creadas por el usuario
     const routes = await Route.find({ creatorID: Number(id) })
 
     return res.status(200).json({

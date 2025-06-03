@@ -44,4 +44,8 @@ const Users = sequelize.define(
   }
 )
 
+Users.associate = (models) => {
+  models.Users.hasMany(models.FavRoutes, { foreignKey: 'id_user' })
+}
+
 export default Users

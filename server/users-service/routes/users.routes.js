@@ -327,4 +327,10 @@ router.post('/validate', usersController.validetaUser)
  */
 router.delete('/:nickname', usersController.deleteUser)
 
+router.post('/favRoutes/new', usersController.addFavRoute)
+
+router.delete('/favRoutes/remove', usersController.removeFavouriteRoute)
+
+router.get('/favRoutes/:idUser', usersController.getFavouriteRoutesByUser)
+
 export default router

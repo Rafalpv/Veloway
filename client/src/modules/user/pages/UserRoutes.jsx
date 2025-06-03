@@ -1,21 +1,24 @@
-import { NavLink, useNavigate } from 'react-router'
 import { IoAdd } from 'react-icons/io5'
 import { useAuth } from '@auth/context/AuthContext'
 import { useEffect, useState } from 'react'
-import { calcularDesnivel, formatearDistancia, formatearTiempo } from '../../utils/functions'
+import { NavLink } from 'react-router'
 import axiosInstance from '@api/axiosInstance'
 import ThemeButton from '../../utils/components/ThemeButton'
+import RouteCard from '../components/RouteCard'
 
 const UserRoutes = () => {
   const { authState, logout } = useAuth()
   const [userRoutes, setUserRoutes] = useState([])
-  const navigate = useNavigate()
+  const [userFavRoutes, setUserFavRoutes] = useState([])
 
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const response = await axiosInstance.get(`/routes/user/${authState.user.id_user}`)
-        setUserRoutes(response.data.routes ? response.data.routes : [])
+        const responseRoutes = await axiosInstance.get(`/routes/user/${authState.user.id_user}`)
+        setUserRoutes(responseRoutes.data.routes ? responseRoutes.data.routes : [])
+
+        const responseFavRoutes = await axiosInstance.get(`/users/favRoutes/${authState.user.id_user}`)
+        setUserFavRoutes(responseFavRoutes.data.routes ? responseFavRoutes.data.routes : [])
       } catch (error) {
         console.error('Error fetching user routes', error)
       }
@@ -23,15 +26,6 @@ const UserRoutes = () => {
 
     fetchRoutes()
   }, [])
-
-  const handleDeleteRoute = async (id) => {
-    try {
-      await axiosInstance.delete(`/routes/${id}`)
-      setUserRoutes((prevRoutes) => prevRoutes.filter((route) => route._id !== id))
-    } catch (error) {
-      console.error('Error deleting route', error)
-    }
-  }
 
   return (
     <div className='min-h-screen p-6 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors font-poppins'>
@@ -62,7 +56,20 @@ const UserRoutes = () => {
         </div>
       </header>
 
-      {/* Zona de rutas */}
+      {/* Zona de rutas  Favoritas */}
+      <section className='mb-7'>
+        <h2 className='text-2xl font-semibold mb-6 text-secondary-light dark:text-secondary-dark'>Rutas Guardads</h2>
+
+        {userFavRoutes.length === 0
+          ? (
+            <p className="text-gray-500 dark:text-gray-400">No tienes rutas guardadas.</p>)
+          : (
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+              {userFavRoutes.map((route, index) => (
+                <RouteCard route={route} idUser={authState.user.id_user} index={index} userRoutes={userRoutes} setUserRoutes={setUserRoutes} key={route._id} />
+              ))}
+            </div>)}
+      </section>
       <section>
         <h2 className="text-2xl font-semibold mb-6 text-secondary-light dark:text-secondary-dark">Tus Rutas</h2>
 
@@ -72,40 +79,7 @@ const UserRoutes = () => {
           : (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
               {userRoutes.map((route, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col bg-surface-light dark:bg-surface-dark rounded-2xl shadow-md p-5 hover:shadow-xl transition-all border border-gray-300 dark:border-gray-600"
-                >
-                  {/* Título */}
-                  <h3 className="text-3xl font-bold text-primary-light dark:text-primary-dark mb-2">{route.name}</h3>
-
-                  {/* Info */}
-                  <div className="flex gap-1 text-text-light dark:text-text-dark mb-4 text-sm">
-                    <span>{formatearTiempo(route.time) || ''}</span>
-                    <p> - </p>
-                    <span>{formatearDistancia(route.distance) || ''}</span>
-                    <p> - </p>
-                    <span>{calcularDesnivel(route.elevation).desnivelPositivo || ''}</span>
-
-                  </div>
-
-                  {/* Botones */}
-                  <div className='flex gap-2 justify-end'>
-                    <button
-                      onClick={() => navigate(`${userRoutes[index]._id}`)}
-                      className="bg-button-light dark:bg-button-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition"
-                    >
-                      Ver Detalles
-                    </button>
-
-                    <button
-                      onClick={() => handleDeleteRoute(route._id)}
-                      className="bg-danger-light dark:bg-danger-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
+                <RouteCard route={route} idUser={authState.user.id_user} index={index} userRoutes={userRoutes} setUserRoutes={setUserRoutes} key={route._id} />
               ))}
             </div>)}
       </section>
