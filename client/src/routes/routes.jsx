@@ -8,6 +8,7 @@ import UserRoute from '@userRoutes/pages/UserRoutes'
 import ProtectedRoute from './ProtectedRoute'
 import RouteDetails from '../modules/user/pages/RouteDetails'
 import CommunityRoutes from '../modules/user/pages/CommunityRoutes'
+import UserLayout from '../modules/user/layout/UserLayout'
 
 const ProtectedLayout = () => (
   <ProtectedRoute>
@@ -27,20 +28,27 @@ const router = createBrowserRouter([
         path: '/:nickname',
         children: [
           {
-            index: true,
-            element: <UserRoute />
-          },
-          {
             path: 'create',
             element: <CreateRoute />
           },
+
           {
-            path: ':id',
-            element: <RouteDetails />
-          },
-          {
-            path: 'community',
-            element: <CommunityRoutes />
+            path: '',
+            element: <UserLayout />,
+            children: [
+              {
+                index: true,
+                element: <UserRoute />
+              },
+              {
+                path: ':id',
+                element: <RouteDetails />
+              },
+              {
+                path: 'community',
+                element: <CommunityRoutes />
+              }
+            ]
           }
         ]
       },

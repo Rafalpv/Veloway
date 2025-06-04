@@ -1,15 +1,14 @@
 import { Outlet } from 'react-router'
-import Header from '@admin/components/Header'
+import { RoutesProvider } from '../context/RoutesContext'
+import Header from '../components/Header'
 
 const UserLayout = () => {
   return (
-    <div className='flex flex-col h-screen bg-backgraound-admin font-poppins'>
+    <div className='min-h-screen p-5 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors font-poppins'>
       <Header />
-      <main className='flex-1 overflow-auto'>
-        <UsersProvider>
-          <Outlet />
-        </UsersProvider>
-      </main>
+      <RoutesProvider>
+        <Outlet />
+      </RoutesProvider>
     </div>
   )
 }
