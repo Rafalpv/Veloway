@@ -129,7 +129,7 @@ const getRoutesPerUser = async (req, res) => {
     }
 
     // 1. Obtener rutas creadas por el usuario
-    const routes = await Route.find({ creatorID: Number(id) })
+    const routes = await Route.find({ 'owner.creatorID': Number(id) })
 
     return res.status(200).json({
       message: routes.length ? 'Rutas encontradas' : 'No tienes rutas creadas todavía',
@@ -174,7 +174,9 @@ const getRoutesById = async (req, res) => {
 
 const addRoute = async (req, res) => {
   try {
-    const { route, routeName, privacity, userId } = req.body
+    const { route, routeName, privacity, owner } = req.body
+
+    console.log(owner)
 
     // Crear una nueva ruta usando la información del objeto `route`
     const newRoute = new Route({
@@ -187,7 +189,7 @@ const addRoute = async (req, res) => {
       polyline: route.polyline, // Línea codificada de la ruta
       elevation: route.elevation, // Elevación
       isRoundTrip: route.isRoundTrip, // Si la ruta es de ida y vuelta
-      creatorID: userId
+      owner
     })
 
     // Guardar la nueva ruta en la base de datos

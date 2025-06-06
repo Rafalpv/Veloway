@@ -102,7 +102,10 @@ const RouteSchema = new mongoose.Schema({
   steps: [LegSchema],
   traffic_speed_entry: { type: [String], default: [] }, // traffic_speed_entry vacío
   via_waypoint: { type: [String], default: [] }, // via_waypoint vacío
-  creatorID: { type: Number, required: true },
+  owner: {
+    creatorID: { type: Number, required: true },
+    nickname: { type: String, required: true }
+  },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 })

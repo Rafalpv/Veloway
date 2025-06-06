@@ -133,7 +133,7 @@ const deleteUser = ('/user/:nickname', async (req, res) => {
 })
 
 // FAV ROUTES ADD
-// http://localhost:3000/users/favRoutes/new -> http://localhost:4000/favRoutes/new
+// http://localhost:3000/users/favRoutes -> http://localhost:4000/favRoutes
 const addFavRoute = async (req, res) => {
   const { idUser, idRoute } = req.body
 
@@ -148,7 +148,7 @@ const addFavRoute = async (req, res) => {
 
     res.status(201).json(favRoute)
   } catch (error) {
-    res.status(500).json({ message: 'Error al añadir la ruta' })
+    res.status(500).json({ message: 'Error al añadir la ruta', error })
   }
 }
 

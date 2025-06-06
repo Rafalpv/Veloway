@@ -25,14 +25,15 @@
 import { calcularDesnivel, formatearDistancia, formatearTiempo } from '../../utils/functions'
 import { useNavigate } from 'react-router'
 import { CiBookmark, CiTrash } from 'react-icons/ci'
+import { FaBookmark } from 'react-icons/fa'
 import { RoutesContext } from '../context/RoutesContext'
 import { useContext } from 'react'
 import { useAuth } from '@auth/context/AuthContext'
 
-const RouteCard = ({ isComunnity = false, ...props }) => {
+const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
   const navigate = useNavigate()
   const { route } = props
-  const { deleteRoute } = useContext(RoutesContext)
+  const { deleteRoute, addFavRoute, deleteFavRoute } = useContext(RoutesContext)
   const { authState } = useAuth()
   const userNickname = authState.user.nickname
 
@@ -44,8 +45,8 @@ const RouteCard = ({ isComunnity = false, ...props }) => {
         <h3 className='text-3xl font-bold text-primary-light dark:text-primary-dark mb-2'>{route.name}</h3>
 
         {isComunnity &&
-          <button>
-            <CiBookmark size={27} className="text-yellow-400" />
+          <button onClick={isFav ? () => deleteFavRoute(route._id) : () => addFavRoute(route._id)}>
+            {isFav ? <FaBookmark size={27} className='text-yellow-400' /> : <CiBookmark size={27} className="text-yellow-400" />}
           </button>
         }
       </div>
@@ -59,8 +60,18 @@ const RouteCard = ({ isComunnity = false, ...props }) => {
         <span>{calcularDesnivel(route.elevation).desnivelPositivo || ''}</span>
       </div>
 
-      <div>
-        <span className={`${route.privacity === 'public' ? 'bg-primary-light' : 'bg-danger-light'} py-0.5 px-2 bg-opacity-70 font-semibold rounded-lg`}>{route.privacity === 'public' ? 'Pública' : 'Privada'}</span>
+      <div className='flex items-center gap-2'>
+        <span
+          className={`${route.privacity === 'public' ? 'bg-primary-light' : 'bg-danger-light'} py-0.5 px-2 bg-opacity-70 font-semibold rounded-lg`}
+        >
+          {route.privacity === 'public' ? 'Pública' : 'Privada'}
+        </span>
+
+        {(isComunnity || isFav) && (
+          <span className='text-sm italic'>
+            por <span className='font-semibold text-black dark:text-white'>{route.owner ? route.owner.nickname : ''}</span>
+          </span>
+        )}
       </div>
 
       {/* Botones */}

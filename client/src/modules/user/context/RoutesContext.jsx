@@ -11,7 +11,16 @@ export const routesReducer = (state, action) => {
         favRoutes: action.payload.favRoutes,
         allRoutes: action.payload.allRoutes
       }
-
+    case 'ADD_FAV_ROUTE':
+      return {
+        ...state,
+        favRoutes: [...state.favRoutes, action.payload]
+      }
+    case 'DELETE_FAV_ROUTE':
+      return {
+        ...state,
+        favRoutes: state.favRoutes.filter(route => route._id !== action.payload)
+      }
     case 'DELETE_ROUTE':
       return {
         ...state,
@@ -55,14 +64,49 @@ export const RoutesProvider = ({ children }) => {
     }
 
     fetchRoutes()
-  }, [])
+  }, [initialState])
 
   const deleteRoute = async (id) => {
     try {
       await axiosInstance.delete(`/routes/${id}`)
       dispatch({ type: 'DELETE_ROUTE', payload: id })
     } catch (error) {
-      console.error('Error deleting route', error)
+      console.error('Error eliminando ruta')
+    }
+  }
+
+  const addFavRoute = async (routeId) => {
+    try {
+      const response = await axiosInstance.post('/users/favRoutes', {
+        idUser: authState.user.id_user,
+        idRoute: routeId
+      })
+      dispatch({
+        type: 'ADD_FAV_ROUTE',
+        payload: {
+          ...state,
+          favRoutes: [...state.favRoutes, response.data.route]
+        }
+      })
+    } catch (error) {
+      console.error('Error añadiendo ruta a favoritos', error)
+    }
+  }
+
+  const deleteFavRoute = async (routeId) => {
+    try {
+      await axiosInstance.delete('/users/favRoutes/remove', {
+        data: {
+          idUser: authState.user.id_user,
+          idRoute: routeId
+        }
+      })
+      dispatch({
+        type: 'DELETE_FAV_ROUTE',
+        payload: routeId
+      })
+    } catch (error) {
+      console.error('Error eliminando ruta de favoritos', error)
     }
   }
 
@@ -71,7 +115,9 @@ export const RoutesProvider = ({ children }) => {
       routes: state.routes,
       favRoutes: state.favRoutes,
       allRoutes: state.allRoutes,
-      deleteRoute
+      deleteRoute,
+      addFavRoute,
+      deleteFavRoute
     }}>
       {children}
     </RoutesContext.Provider>

@@ -29,7 +29,7 @@ const UserRoutes = () => {
           : (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
               {favRoutes.map((route) => (
-                <RouteCard route={route} key={route._id} isComunnity={true} />
+                <RouteCard route={route} key={route._id} isComunnity={true} isFav={true}/>
               ))}
             </div>)}
       </section>

@@ -4,7 +4,6 @@ import { RoutesContext } from '../context/RoutesContext'
 
 const CommunityRoutes = () => {
   const { allRoutes } = useContext(RoutesContext)
-  console.log('allRoutes', allRoutes)
   return (
     <section className='mb-10'>
       <h2 className="text-2xl font-semibold mb-6 text-secondary-light dark:text-secondary-dark">Rutas de la Comunidad</h2>

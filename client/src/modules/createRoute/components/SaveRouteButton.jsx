@@ -60,7 +60,7 @@ const SaveRouteButton = () => {
         route, // Datos de la ruta
         routeName, // Nombre de la ruta,
         privacity, // Privacidad de la ruta
-        userId: authState.user.id_user // ID del usuario
+        owner: { creatorID: authState.user.id_user, nickname: authState.user.nickname } // Info del usuario
       })
       setRouteName('')
       setPrivacy('public')
