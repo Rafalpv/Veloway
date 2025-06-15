@@ -9,7 +9,7 @@ export const routesReducer = (state, action) => {
         ...state,
         routes: action.payload.routes,
         favRoutes: action.payload.favRoutes,
-        allRoutes: action.payload.allRoutes
+        communityRoutesRes: action.payload.communityRoutesRes
       }
     case 'ADD_FAV_ROUTE':
       return {
@@ -35,7 +35,7 @@ export const RoutesProvider = ({ children }) => {
   const initialState = {
     routes: [],
     favRoutes: [],
-    allRoutes: []
+    communityRoutesRes: []
   }
 
   const [state, dispatch] = useReducer(routesReducer, initialState)
@@ -44,10 +44,10 @@ export const RoutesProvider = ({ children }) => {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const [userRoutesRes, favRoutesRes, allRoutesRes] = await Promise.all([
+        const [userRoutesRes, favRoutesRes, communityRoutesRes] = await Promise.all([
           axiosInstance.get(`/routes/user/${authState.user.id_user}`),
           axiosInstance.get(`/users/favRoutes/${authState.user.id_user}`),
-          axiosInstance.get('/routes')
+          axiosInstance.get(`/routes/community/${authState.user.id_user}`)
         ])
 
         dispatch({
@@ -55,7 +55,7 @@ export const RoutesProvider = ({ children }) => {
           payload: {
             routes: userRoutesRes.data.routes,
             favRoutes: favRoutesRes.data.routes,
-            allRoutes: allRoutesRes.data.routes
+            communityRoutesRes: communityRoutesRes.data.routes
           }
         })
       } catch (error) {
@@ -64,7 +64,7 @@ export const RoutesProvider = ({ children }) => {
     }
 
     fetchRoutes()
-  }, [initialState])
+  }, [])
 
   const deleteRoute = async (id) => {
     try {
@@ -114,7 +114,7 @@ export const RoutesProvider = ({ children }) => {
     <RoutesContext.Provider value={{
       routes: state.routes,
       favRoutes: state.favRoutes,
-      allRoutes: state.allRoutes,
+      communityRoutesRes: state.communityRoutesRes,
       deleteRoute,
       addFavRoute,
       deleteFavRoute

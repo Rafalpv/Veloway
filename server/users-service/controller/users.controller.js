@@ -189,11 +189,11 @@ const getFavouriteRoutesByUser = async (req, res) => {
     }
 
     // Realiza varias peticiones individuales
-    const promises = routeIds.map(id =>
-      axios.get(`http://localhost:3000/routes/${id}`).then(res => res.data.route)
-    )
+    const response = await axios.post('http://localhost:3000/routes/multiple', {
+      ids: routeIds // array de IDs
+    })
 
-    const routes = await Promise.all(promises)
+    const routes = response.data.routes
 
     return res.status(200).json({ message: 'Rutas favoritas encontradas', routes })
   } catch (error) {

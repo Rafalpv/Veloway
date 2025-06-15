@@ -1,0 +1,35 @@
+services:
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    environment:
+      URL_BASE_AUTH_SERVICE: "http://auth:5000"
+      URL_BASE_USERS_SERVICE: "http://users:4000"
+      URL_BASE_ROUTES_SERVICE: "http://routes:5001"
+    depends_on:
+      - auth
+      - users
+      - routes
+
+  auth:
+    build: ./auth-service
+    expose:
+      - "5000"
+
+  users:
+    build: ./users-service
+    expose:
+      - "4000"
+
+  routes:
+    build: ./routes-service
+    expose:
+      - "5001"
+
+  # frontend:
+  #   build: ./client
+  #   ports:
+  #     - "5173"
+

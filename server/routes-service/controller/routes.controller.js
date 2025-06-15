@@ -93,7 +93,7 @@ const getElevation = async (req, res) => {
   }
 }
 
-const getRoutes = async (req, res) => {
+const getRoutes = async (res) => {
   try {
     // Obtener todas las rutas de la base de datos
     const routes = await Route.find() // `Route` es el modelo de tus rutas
@@ -120,6 +120,20 @@ const getRoutes = async (req, res) => {
   }
 }
 
+const getCommunityRoutes = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const communityRoutes = await Route.find({
+      'owner.creatorID': { $ne: Number(id) }
+    })
+
+    res.status(200).json({ routes: communityRoutes })
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener rutas de la comunidad', error })
+  }
+}
+
 const getRoutesPerUser = async (req, res) => {
   try {
     const { id } = req.params
@@ -128,7 +142,6 @@ const getRoutesPerUser = async (req, res) => {
       return res.status(400).json({ message: 'ID de creador no válido' })
     }
 
-    // 1. Obtener rutas creadas por el usuario
     const routes = await Route.find({ 'owner.creatorID': Number(id) })
 
     return res.status(200).json({
@@ -167,6 +180,37 @@ const getRoutesById = async (req, res) => {
     console.error(error)
     res.status(500).json({
       message: 'Hubo un error al obtener la ruta por su ID',
+      error: error.message
+    })
+  }
+}
+
+const getRoutesByIds = async (req, res) => {
+  try {
+    const { ids } = req.body
+
+    // Validar que sea un array no vacío
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ message: 'Se requiere un array de IDs' })
+    }
+
+    // Validar que todos los IDs sean ObjectId válidos
+    const invalidIds = ids.filter(id => !mongoose.Types.ObjectId.isValid(id))
+    if (invalidIds.length > 0) {
+      return res.status(400).json({ message: `IDs no válidos: ${invalidIds.join(', ')}` })
+    }
+
+    // Buscar todas las rutas cuyos IDs estén en el array
+    const routes = await Route.find({ _id: { $in: ids } })
+
+    return res.status(200).json({
+      message: 'Rutas encontradas',
+      routes
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al obtener las rutas por sus IDs',
       error: error.message
     })
   }
@@ -293,5 +337,7 @@ export default {
   getRoutes,
   getRoutesPerUser,
   getRoutesById,
-  talkToChat
+  getRoutesByIds,
+  talkToChat,
+  getCommunityRoutes
 }
