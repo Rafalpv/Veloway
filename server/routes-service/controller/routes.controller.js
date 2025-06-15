@@ -125,7 +125,8 @@ const getCommunityRoutes = async (req, res) => {
 
   try {
     const communityRoutes = await Route.find({
-      'owner.creatorID': { $ne: Number(id) }
+      'owner.creatorID': { $ne: Number(id) },
+      privacity: 'public'
     })
 
     res.status(200).json({ routes: communityRoutes })

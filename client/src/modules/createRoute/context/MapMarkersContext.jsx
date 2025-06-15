@@ -6,6 +6,10 @@ const MapMarkersContext = createContext()
 
 export const MapMarkersProvider = ({ children }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
+  const [ubication, setUbication] = useState({
+    lat: 37.1769, // Granada, España
+    lng: -3.5976
+  })
 
   const [route, setRoute] = useState({
     markers: [],
@@ -181,15 +185,18 @@ export const MapMarkersProvider = ({ children }) => {
   // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
   useEffect(() => {
     fetchRoute()
-  }, [route.markers])
+  }, [route.markers, route.isRoundTrip])
 
   return (
     <MapMarkersContext.Provider
       value={{
         route,
         setRoute,
+        totalMarkers: route.markers.length - 1,
         selectedMarker,
         setSelectedMarker,
+        ubication,
+        setUbication,
         handleDragEnd,
         handleDeleteMark,
         handleChangeOrder,

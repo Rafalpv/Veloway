@@ -1,14 +1,12 @@
 import { useState } from 'react'
 import { useMapMarkers } from '../context/MapMarkersContext'
 import { useSortable } from '@dnd-kit/sortable'
-import { useMarkersContext } from '../pages/CreateRoute'
 import { CSS } from '@dnd-kit/utilities'
 import { TiDelete } from 'react-icons/ti'
 
 const Mark = ({ marker, index }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: marker.markerId })
   const { route, selectedMarker, setSelectedMarker, totalMarkers, handleDeleteMark } = useMapMarkers()
-  const { listVisible } = useMarkersContext()
   const [moreInfoMark, setMoreInfoMark] = useState(false)
 
   const style = {
@@ -24,8 +22,8 @@ const Mark = ({ marker, index }) => {
       >
         <div
           className={`
-          ${(moreInfoMark && listVisible) ? 'h-40' : 'h-14'} 
-          ${listVisible ? 'w-full rounded-lg' : 'w-14 aspect-square rounded-full'}
+          ${(moreInfoMark) ? 'h-40' : 'min-h-14 h-auto'} 
+          w-full rounded-lg
           flex items-center justify-center border-2 border-black shadow-lg 
           hover:scale-105
           ${index === 0 ? 'bg-[#C8D7AB]' : 'bg-[#EEF0D5]'}
@@ -35,17 +33,16 @@ const Mark = ({ marker, index }) => {
           onMouseEnter={() => setSelectedMarker(marker.markerId)}
           onMouseLeave={() => setSelectedMarker(null)}
         >
-          <span className={'flex-1 flex items-center justify-center text-sm font-extrabold px-5'}>
-            {listVisible ? `${index + 1}.` : ''}
+          <span className={'flex-1 flex items-center justify-center text-sm font-extrabold ml-2'}>
             {index === 0
-              ? `${listVisible ? route.steps[index]?.start_address : ''}`
+              ? route.steps[index]?.start_address
               : (index === totalMarkers && !route.isRoundTrip)
-                  ? `${listVisible ? route.steps[totalMarkers - 1]?.end_address : ''}`
-                  : `${listVisible ? route.steps[index]?.start_address : index}`}
+                  ? route.steps[totalMarkers - 1]?.end_address
+                  : route.steps[index]?.start_address}
           </span>
         </div>
       </div>
-      {listVisible && <button
+      <button
         className=''
         onClick={(e) => {
           e.stopPropagation()
@@ -53,7 +50,7 @@ const Mark = ({ marker, index }) => {
         }}
       >
         <TiDelete size={30} className='ml-1 hover:scale-110 hover:text-red-500' />
-      </button>}
+      </button>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { FiMaximize2, FiMinimize2 } from 'react-icons/fi'
 import { IoSearchOutline } from 'react-icons/io5'
-import LayerButton from './LayerButton'
 import axiosInstance from '@api/axiosInstance'
 
 const MapButtonsControl = ({ setPosition, setSelectedUbication }) => {
@@ -21,15 +20,6 @@ const MapButtonsControl = ({ setPosition, setSelectedUbication }) => {
     }
   }
 
-  const toggleFullscreen = () => {
-    if (!isMaximized) {
-      document.querySelector('.map')?.requestFullscreen()
-    } else {
-      document.exitFullscreen()
-    }
-    setIsMaximized(!isMaximized)
-  }
-
   const handleSelectCity = (selectedCity) => {
     setPosition([selectedCity.lat, selectedCity.lon])
     setSelectedUbication([selectedCity.lat, selectedCity.lon])
@@ -39,9 +29,6 @@ const MapButtonsControl = ({ setPosition, setSelectedUbication }) => {
 
   return (
     <div className='absolute bottom-4 left-4 flex gap-2 z-[500]'>
-      <button className='bg-white p-4 rounded-full shadow-lg hover:bg-gray-200 transition' onClick={toggleFullscreen}>
-        {isMaximized ? <FiMinimize2 size={20} /> : <FiMaximize2 size={20} />}
-      </button>
 
       {/* Barra de búsqueda */}
       <div className='relative flex'>

@@ -1,23 +1,17 @@
 import { GoogleMap, useLoadScript, Marker, Polyline, InfoWindow } from '@react-google-maps/api'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useMapMarkers } from '@user/context/MapMarkersContext'
 
 const containerStyle = {
   width: '100%',
   height: '100%'
 }
-
-const centerDefault = {
-  lat: 37.1761, // Granada, España
-  lng: -3.5976
-}
-
 const GoogleMapComponent = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
   })
 
-  const { route, updateMarkerPosition, handleAddPoint } = useMapMarkers()
+  const { route, updateMarkerPosition, handleAddPoint, ubication } = useMapMarkers()
   const [previewMarker, setPreviewMarker] = useState(null)
 
   const mapRef = useRef()
@@ -25,6 +19,14 @@ const GoogleMapComponent = () => {
   const onLoad = useCallback((map) => {
     mapRef.current = map
   }, [])
+
+  useEffect(() => {
+    const previewMarkerPosition = () => {
+      setPreviewMarker(ubication)
+    }
+
+    previewMarkerPosition()
+  }, [ubication])
 
   const handleClick = (e) => {
     // Ignora si es un POI
@@ -35,7 +37,6 @@ const GoogleMapComponent = () => {
       lng: e.latLng.lng()
     }
 
-    // Coloca marcador de previsualización
     setPreviewMarker(newPos)
   }
 
@@ -45,7 +46,7 @@ const GoogleMapComponent = () => {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={centerDefault}
+      center={ubication}
       zoom={12}
       onClick={handleClick}
       onLoad={onLoad}
@@ -74,7 +75,6 @@ const GoogleMapComponent = () => {
             onCloseClick={() => setPreviewMarker(null)}
           >
             <div className="w-56 bg-white rounded-lg shadow-lg p-2 text-sm font-sans">
-              <div className="border-b pb-2 mb-2 font-semibold text-gray-700">Acciones disponibles</div>
 
               <ul className="space-y-1">
                 <li>
