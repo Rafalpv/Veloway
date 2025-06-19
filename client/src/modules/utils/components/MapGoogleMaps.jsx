@@ -8,11 +8,6 @@ const containerStyle = {
   height: '100%'
 }
 
-const centerDefault = {
-  lat: 37.1761, // Granada, España
-  lng: -3.5976
-}
-
 const MapGoogleMaps = () => {
   const { id } = useParams()
 
@@ -22,12 +17,14 @@ const MapGoogleMaps = () => {
 
   const mapRef = useRef()
   const [route, setRoute] = useState({})
+  const [center, setCenter] = useState()
 
   useEffect(() => {
     const fetchRoute = async () => {
       try {
         const response = await axiosInstance.get(`/routes/${id}`)
         setRoute(response.data.route)
+        setCenter(response.data.route.markers[0].position)
       } catch (error) {
         console.error('Error fetching route', error)
       }
@@ -45,9 +42,9 @@ const MapGoogleMaps = () => {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={centerDefault}
-      zoom={12}
       onLoad={onLoad}
+      zoom={13}
+      center={center}
       options={{
         fullscreenControl: false,
         draggableCursor: 'crosshair',

@@ -290,19 +290,25 @@ const talkToChat = async (req, res) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o',
       messages: [
         {
           role: 'system',
-          content: `Eres un asistente experto en ciclismo. Tu respuesta debe estar en formato JSON con esta estructura:
-          {
-            "message": "Respuesta que se mostrará al usuario",
-            "locations": [
-              { "lat": 37.1761, "lng": -3.5976 },
-              ...
-            ]
-          }
-          Si no hay ubicaciones, "locations" será un array vacío. Sé claro y conciso.`
+          content:
+            `Eres un asistente experto en ciclismo y planificación de rutas. Tu tarea es generar rutas para ciclistas en formato JSON con esta estructura:
+              {
+                "message": "Texto con la explicación o respuesta para el usuario",
+                "locations": [
+                  { "lat": 37.1761, "lng": -3.5976 },
+                  ...
+                ],
+                "routeInfo": {
+                  "difficulty": "principiante|intermedio|avanzado",
+                  "distanceKm": 15.4,
+                  "estimatedTimeMin": 60
+                }
+              }
+            Si no tienes ubicaciones para mostrar, el array "locations" debe estar vacío. Sé claro, conciso y ofrece consejos útiles para el ciclista.`
         },
         { role: 'user', content: message }
       ],

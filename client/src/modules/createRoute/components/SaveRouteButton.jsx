@@ -93,13 +93,14 @@ const SaveRouteButton = () => {
                 type='text'
                 placeholder='Nombre de la ruta'
                 className='w-3/4 border p-3 rounded-lg mb-6 text-md'
+                required
                 value={routeName}
                 onChange={(e) => setRouteName(e.target.value)}
               />
 
               {/* Select de privacidad */}
               <select
-                className='w-1/4 border p-3 rounded-lg mb-6 text-md bg-primary-dark font-semibold'
+                className={`w-1/4 border p-3 rounded-lg mb-6 text-md ${privacity === 'public' ? 'bg-primary-dark' : 'bg-danger-dark'}  font-semibold`}
                 value={privacity}
                 onChange={(e) => setPrivacy(e.target.value)}
               >

@@ -72,6 +72,7 @@ const GoogleMapComponent = () => {
 
         >
           <InfoWindow
+            options={{ headerContent: 'Añadir Punto' }}
             position={previewMarker}
             onCloseClick={() => setPreviewMarker(null)}
           >
@@ -81,9 +82,7 @@ const GoogleMapComponent = () => {
                 <li>
                   <button
                     onClick={() => {
-                      // Tu lógica para punto de inicio
                       handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, 'start')
-
                       setPreviewMarker(null)
                     }}
                     className='w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition'
