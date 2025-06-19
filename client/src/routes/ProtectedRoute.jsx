@@ -7,14 +7,14 @@ const ProtectedRoute = ({ children }) => {
 
   if (authState.loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <IoIosBicycle className="animate-spin text-blue-500" size={50} />
+      <div className='flex justify-center items-center h-screen'>
+        <IoIosBicycle className='animate-spin text-blue-500' size={50} />
       </div>
     )
   }
 
   if (!authState.auth) {
-    return <Navigate to="/" replace />
+    return <Navigate to='/' replace />
   }
 
   return children

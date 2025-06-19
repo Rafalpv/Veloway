@@ -58,7 +58,8 @@ const GoogleMapComponent = () => {
     >
 
       {previewMarker && (
-        <Marker position={previewMarker}
+        <Marker
+          position={previewMarker}
           icon={{
             url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
@@ -74,9 +75,9 @@ const GoogleMapComponent = () => {
             position={previewMarker}
             onCloseClick={() => setPreviewMarker(null)}
           >
-            <div className="w-56 bg-white rounded-lg shadow-lg p-2 text-sm font-sans">
+            <div className='w-56 bg-white rounded-lg shadow-lg p-2 text-sm font-sans'>
 
-              <ul className="space-y-1">
+              <ul className='space-y-1'>
                 <li>
                   <button
                     onClick={() => {
@@ -85,7 +86,7 @@ const GoogleMapComponent = () => {
 
                       setPreviewMarker(null)
                     }}
-                    className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                    className='w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition'
                   >
                     ➤ Añadir como punto de inicio
                   </button>
@@ -99,7 +100,7 @@ const GoogleMapComponent = () => {
 
                         setPreviewMarker(null)
                       }}
-                      className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                      className='w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition'
                     >
                       ➕ Añadir como punto intermedio
                     </button>
@@ -112,7 +113,7 @@ const GoogleMapComponent = () => {
                       handleAddPoint({ lat: previewMarker.lat, lng: previewMarker.lng }, 'end')
                       setPreviewMarker(null)
                     }}
-                    className="w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition"
+                    className='w-full text-left px-3 py-1 rounded hover:bg-blue-100 transition'
                   >
                     🏁 Añadir como punto final
                   </button>
@@ -122,8 +123,7 @@ const GoogleMapComponent = () => {
           </InfoWindow>
 
         </Marker>
-      )
-      }
+      )}
 
       {
         route.markers.map((marker, index) => {
@@ -132,7 +132,7 @@ const GoogleMapComponent = () => {
               position={marker.position}
               key={`${marker.markerId}`}
               title={`${marker.position.lat} - ${marker.position.lng}`}
-              draggable={true}
+              draggable
               onDragEnd={(e) => {
                 const newPos = {
                   lat: e.latLng.lat(),
@@ -164,7 +164,7 @@ const GoogleMapComponent = () => {
         }}
       />
 
-    </GoogleMap >
+    </GoogleMap>
   )
 }
 

@@ -8,7 +8,7 @@ const InfoRoute = () => {
   const { route } = useMapMarkers()
 
   return (
-    <div className={'grid grid-cols-2 gap-5 font-poppins text-lg p-4 bg-white rounded-xl shadow-lg border border-gray-200'}>
+    <div className='grid grid-cols-2 gap-5 font-poppins text-lg p-4 bg-white rounded-xl shadow-lg border border-gray-200'>
       {/* Distancia */}
       <span className='flex flex-col items-center font-semibold text-gray-700'>
         <RiPinDistanceFill className='text-2xl text-background-blue' />

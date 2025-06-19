@@ -1,7 +1,7 @@
 import Users from './Users'
 import FavRoutes from './FavRoutes'
 
-export default function initAssociations() {
+export default function initAssociations () {
   // Asociación uno a muchos entre Users y FavRoutes
   Users.hasMany(FavRoutes, {
     foreignKey: 'id_user',

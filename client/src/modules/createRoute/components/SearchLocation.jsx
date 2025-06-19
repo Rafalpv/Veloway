@@ -82,8 +82,7 @@ const SearchLocation = () => {
                 } else {
                   console.error('Geolocation no soportada')
                 }
-              }
-              }
+              }}
               className='p-2 mb-1 font-semibold text-blue-600 rounded-md transition hover:bg-blue-100 cursor-pointer'
             >
               🌍 Usar ubicación actual
@@ -103,10 +102,9 @@ const SearchLocation = () => {
               </li>)
             )}
 
-          </ul>)
-        }
+          </ul>)}
       </div>
-    </div >
+    </div>
 
   )
 }

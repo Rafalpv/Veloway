@@ -24,7 +24,7 @@ const ListMarkers = () => {
           : (<p className='dark:text text-center'>
             Añade puntos a tu ruta seleccionando en el mapa o buscando una ubicación
           </p>)}
-      </DndContext >
+      </DndContext>
     </>
 
   )

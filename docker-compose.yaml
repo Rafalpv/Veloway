@@ -1,35 +1,42 @@
 services:
-
-  gateway:
-    build: ./gateway
+  frontend:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: veloway-frontend
     ports:
-      - "3000:3000"
-    environment:
-      URL_BASE_AUTH_SERVICE: "http://auth:5000"
-      URL_BASE_USERS_SERVICE: "http://users:4000"
-      URL_BASE_ROUTES_SERVICE: "http://routes:5001"
+      - "5137:80"
     depends_on:
+      - gateway
       - auth
-      - users
-      - routes
-
-  auth:
-    build: ./auth-service
-    expose:
-      - "5000"
-
-  users:
-    build: ./users-service
-    expose:
-      - "4000"
-
-  routes:
-    build: ./routes-service
-    expose:
-      - "5001"
-
-  # frontend:
-  #   build: ./client
+  gateway :
+      build:
+        context: .
+        dockerfile: server/Dockerfile
+      container_name: veloway-gateway
+      ports:
+        - "3000:3000"
+      env_file:
+        - ./server/.env
+      restart: unless-stopped
+  # usuarios:
+  #   build:
+  #     context: .
+  #     dockerfile: server/users-service/Dockerfile
+  #   container_name: veloway-users
   #   ports:
-  #     - "5173"
-
+  #     - "4000:4000"
+  #   env_file:
+  #     - ./server/users-service/.env
+  #   restart: unless-stopped
+  auth:
+    build:
+      context: .
+      dockerfile: server/auth-service/Dockerfile
+    container_name: veloway-auth
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/auth-service/.env
+    restart: unless-stopped
+  

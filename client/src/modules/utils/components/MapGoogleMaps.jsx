@@ -72,7 +72,7 @@ const MapGoogleMaps = () => {
         }}
       />
 
-    </GoogleMap >
+    </GoogleMap>
   )
 }
 

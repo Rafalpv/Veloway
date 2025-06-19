@@ -22,7 +22,7 @@ const CellUser = ({ user }) => {
       </td>
       <td className='p-4 text-lg'>{user.level}</td>
       <td className='p-4 text-center'>{user.createdAt}</td>
-      <td></td>
+      <td />
       <td className='p-4 text-center'>
         <EditUser nickname={user.nickname} />
       </td>
@@ -56,7 +56,7 @@ const TableUsers = () => {
             <th className='text-left p-4 w-1/12'>Nivel <FilterButtonLevel showMenu={showMenu} setShowMenu={setShowMenu} /></th>
             <th className='text-cente p-4 w-1/3'>Fecha inicio</th>
             <th className='py-4 w-1/5'><FilterButton /></th>
-            <th ><ResetButton setShowMenu={setShowMenu} /></th>
+            <th><ResetButton setShowMenu={setShowMenu} /></th>
             <th className='w-20'><AddUsersButton /></th>
           </tr>
         </thead>

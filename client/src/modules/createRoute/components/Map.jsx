@@ -31,13 +31,13 @@ const Map = () => {
         {isMaximized ? <FiMinimize2 size={20} /> : <FiMaximize2 size={20} />}
       </button>
 
-      <DisplayAsideButton isVisible={listVisible} setIsVisible={setListVisible} position={'top-1/2 left-2  -translate-y-1/2'} direction={'right'} />
-      <DisplayAsideButton isVisible={chatVisible} setIsVisible={setChatVisible} position={'top-1/2 right-2 -translate-y-1/2'} direction={'left'} />
-      <DisplayAsideButton isVisible={elevationSiderVisible} setIsVisible={setElevationSiderVisible} position={'left-1/2 bottom-2 -translate-x-1/2'} direction={'up'} />
+      <DisplayAsideButton isVisible={listVisible} setIsVisible={setListVisible} position='top-1/2 left-2  -translate-y-1/2' direction='right' />
+      <DisplayAsideButton isVisible={chatVisible} setIsVisible={setChatVisible} position='top-1/2 right-2 -translate-y-1/2' direction='left' />
+      <DisplayAsideButton isVisible={elevationSiderVisible} setIsVisible={setElevationSiderVisible} position='left-1/2 bottom-2 -translate-x-1/2' direction='up' />
 
       <LevelRecomendation />
 
-    </div >
+    </div>
   )
 }
 

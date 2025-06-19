@@ -22,7 +22,7 @@ const MarkersMangmentButton = ({ option, color }) => {
 
   return (
     <div>
-      <button className={'border-2 border-black rounded-full p-3 bg-white hover:bg-slate-300 transition-colors duration-500'} onClick={selectedFunction}>
+      <button className='border-2 border-black rounded-full p-3 bg-white hover:bg-slate-300 transition-colors duration-500' onClick={selectedFunction}>
         {option === 'deleteAll' && <TbHttpDelete size={20} />}
         {option === 'changeOrder' && <TbExchange size={20} />}
         {option === 'roundTrip' && <TfiExchangeVertical size={20} />}
@@ -48,9 +48,9 @@ const MarkersManagementMenu = () => {
           className={`absolute left-full top-1/2 -translate-y-1/2 ml-3 flex gap-2 transition-all duration-500 ease-in-out ${open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
             }`}
         >
-          <MarkersMangmentButton option={'changeOrder'} color={'slate'} />
-          <MarkersMangmentButton option={'roundTrip'} color={'emerald'} />
-          <MarkersMangmentButton option={'deleteAll'} color={'red'} />
+          <MarkersMangmentButton option='changeOrder' color='slate' />
+          <MarkersMangmentButton option='roundTrip' color='emerald' />
+          <MarkersMangmentButton option='deleteAll' color='red' />
         </div>
       </div>
     </div>

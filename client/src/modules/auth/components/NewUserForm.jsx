@@ -135,7 +135,7 @@ const NewUserForm = ({ isAdmin = false, customStyles = {}, onSuccess }) => {
       <button className={`text-surface-dark font-bold text-xl bg-accent-dark rounded-2xl shadow-boton p-3 w-[70%] ${customStyles.button}`} type='submit'>
         {isAdmin ? 'Añadir Usuario' : 'Registrar'}
       </button>
-    </form >
+    </form>
   )
 }
 

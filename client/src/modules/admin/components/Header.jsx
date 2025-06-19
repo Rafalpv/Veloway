@@ -37,16 +37,16 @@ const Header = () => {
           </NavLink>
         </nav>
 
-      </div >
+      </div>
 
       {/* Botones de accesibilidad y logout */}
-      < div className="flex items-center space-x-4" >
-        <button className="border border-black p-2 rounded-full hover:bg-gray-400 transition">
-          <MdOutlineDarkMode className="text-xl" />
+      <div className='flex items-center space-x-4'>
+        <button className='border border-black p-2 rounded-full hover:bg-gray-400 transition'>
+          <MdOutlineDarkMode className='text-xl' />
         </button>
         <LogoutButton />
-      </div >
-    </header >
+      </div>
+    </header>
   )
 }
 

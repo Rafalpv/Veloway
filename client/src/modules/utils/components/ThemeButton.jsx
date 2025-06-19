@@ -31,7 +31,7 @@ const ThemeButton = () => {
       aria-label='Cambiar tema'
       className='p-2  rounded-full bg-theme-dark dark:bg-theme-light text-black dark:text-white shadow transition-colors'
     >
-      {!isDark ? <CiDark size={25} className='text-accent-dark'/> : <CiLight size={25} className='text-background-dark'/>}
+      {!isDark ? <CiDark size={25} className='text-accent-dark' /> : <CiLight size={25} className='text-background-dark' />}
     </button>
   )
 }

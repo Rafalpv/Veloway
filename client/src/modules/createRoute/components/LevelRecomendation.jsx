@@ -60,13 +60,13 @@ const LevelRecomendation = () => {
           {criterios.map((criterio, index) =>
             !criterio.dentroDeLimite && (
               <p key={index} className='flex items-center gap-2 mt-1 font-bold text-red-600'>
-                <CiCircleAlert size={30}/>
+                <CiCircleAlert size={30} />
                 {criterio.msgWarning}
               </p>
             )
           )}
         </div>
-      </div >
+      </div>
     )
   )
 }

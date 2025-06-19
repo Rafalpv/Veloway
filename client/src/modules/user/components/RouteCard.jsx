@@ -76,12 +76,11 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
         {isComunnity &&
           <button onClick={isFav ? () => unsaveCommunityRoute(route._id) : () => saveComunnityRoute(route._id)}>
             {isFav ? <FaBookmark size={27} className='text-yellow-400' /> : <span className=''>Guardar</span>}
-          </button>
-        }
+          </button>}
       </div>
 
       {/* Info */}
-      <div className="flex gap-1 text-text-light dark:text-text-dark mb-4 text-sm">
+      <div className='flex gap-1 text-text-light dark:text-text-dark mb-4 text-sm'>
         <span>{formatearTiempo(route.time) || ''}</span>
         <p> - </p>
         <span>{formatearDistancia(route.distance) || ''}</span>
@@ -118,11 +117,11 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
             className='bg-danger-light dark:bg-danger-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition'
           >
             <CiTrash size={25} />
-          </button>
-        }
+          </button>}
 
       </div>
-    </div >)
+    </div>
+  )
 }
 
 export default RouteCard

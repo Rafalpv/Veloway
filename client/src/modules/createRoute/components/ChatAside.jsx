@@ -56,14 +56,14 @@ const ChatAside = () => {
         <h2 className='text-lg font-semibold text-gray-700'>Asistente ciclista</h2>
         <button
           onClick={() => setMessages([])}
-          className="text-sm text-gray-500 hover:text-red-600 transition"
-          title="Limpiar chat"
+          className='text-sm text-gray-500 hover:text-red-600 transition'
+          title='Limpiar chat'
         >
           Limpiar
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 text-sm ">
+      <div className='flex-1 overflow-y-auto p-6 space-y-4 text-sm '>
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -80,7 +80,7 @@ const ChatAside = () => {
 
         {/* Indicador de carga cuando isLoading es verdadero */}
         {isLoading && (
-          <div className="px-4 py-3 rounded-xl text-center text-gray-600">
+          <div className='px-4 py-3 rounded-xl text-center text-gray-600'>
             <span>🌐 Cargando...</span>
             {/* Aquí podrías poner un spinner en lugar del texto si prefieres */}
           </div>
@@ -94,12 +94,12 @@ const ChatAside = () => {
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder='Escribe tu mensaje...'
-            className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className='flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition'
             onKeyDown={e => e.key === 'Enter' && handleSend()}
           />
           <button
             onClick={handleSend}
-            className="bg-gray-800 text-white px-4 py-2 rounded-xl hover:bg-gray-700 transition"
+            className='bg-gray-800 text-white px-4 py-2 rounded-xl hover:bg-gray-700 transition'
           >
             Enviar
           </button>

@@ -138,7 +138,8 @@ export const RoutesProvider = ({ children }) => {
       deleteFavRoute,
       fetchRoutes,
       fetchFavRoutes
-    }}>
+    }}
+    >
       {children}
     </RoutesContext.Provider>
   )

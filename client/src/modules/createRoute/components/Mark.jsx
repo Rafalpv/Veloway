@@ -33,7 +33,7 @@ const Mark = ({ marker, index }) => {
           onMouseEnter={() => setSelectedMarker(marker.markerId)}
           onMouseLeave={() => setSelectedMarker(null)}
         >
-          <span className={'flex-1 flex items-center justify-center text-sm font-extrabold ml-2'}>
+          <span className='flex-1 flex items-center justify-center text-sm font-extrabold ml-2'>
             {index === 0
               ? route.steps[index]?.start_address
               : (index === totalMarkers && !route.isRoundTrip)

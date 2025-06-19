@@ -16,7 +16,7 @@ export const formatearDistancia = (metros) => {
   return `${kilometros} km`
 }
 
-export function calcularDesnivel(elevations) {
+export function calcularDesnivel (elevations) {
   let desnivelPositivo = 0
   let desnivelNegativo = 0
 
