@@ -182,9 +182,10 @@ export const MapMarkersProvider = ({ children }) => {
     }
   }
 
-  // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
+  // Ejecutamos `fetchRoute` cada vez que cambien los marcadores¡
   useEffect(() => {
     fetchRoute()
+    if (route.markers.length === 0) handleDeleteAll()
   }, [route.markers, route.isRoundTrip])
 
   return (

@@ -24,11 +24,12 @@
 
 import { calcularDesnivel, formatearDistancia, formatearTiempo } from '../../utils/functions'
 import { useNavigate } from 'react-router'
-import { CiBookmark, CiTrash } from 'react-icons/ci'
+import { CiTrash } from 'react-icons/ci'
 import { FaBookmark } from 'react-icons/fa'
 import { RoutesContext } from '../context/RoutesContext'
 import { useContext } from 'react'
 import { useAuth } from '@auth/context/AuthContext'
+import toast from 'react-hot-toast'
 
 const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
   const navigate = useNavigate()
@@ -36,6 +37,33 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
   const { deleteRoute, addFavRoute, deleteFavRoute } = useContext(RoutesContext)
   const { authState } = useAuth()
   const userNickname = authState.user.nickname
+
+  const saveComunnityRoute = async (routeId) => {
+    await toast.promise(
+      addFavRoute(routeId),
+      {
+        pending: 'Guardando ruta...',
+        success: 'Ruta guardada con éxito!',
+        error: 'Error al guardar la ruta.'
+      },
+      {
+        position: 'top-center'
+      }
+    )
+  }
+  const unsaveCommunityRoute = async (routeId) => {
+    await toast.promise(
+      deleteFavRoute(routeId),
+      {
+        pending: 'Eliminando ruta...',
+        success: 'Ruta eliminada con éxito!',
+        error: 'Error al eliminar la ruta.'
+      },
+      {
+        position: 'top-center'
+      }
+    )
+  }
 
   return (
     <div
@@ -45,8 +73,8 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
         <h3 className='text-3xl font-bold text-primary-light dark:text-primary-dark mb-2'>{route.name}</h3>
 
         {isComunnity &&
-          <button onClick={isFav ? () => deleteFavRoute(route._id) : () => addFavRoute(route._id)}>
-            {isFav ? <FaBookmark size={27} className='text-yellow-400' /> : <CiBookmark size={27} className="text-yellow-400" />}
+          <button onClick={isFav ? () => unsaveCommunityRoute(route._id) : () => saveComunnityRoute(route._id)}>
+            {isFav ? <FaBookmark size={27} className='text-yellow-400' /> : <span className=''>Guardar</span>}
           </button>
         }
       </div>

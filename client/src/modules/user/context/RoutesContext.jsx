@@ -89,7 +89,8 @@ export const RoutesProvider = ({ children }) => {
         }
       })
     } catch (error) {
-      console.error('Error añadiendo ruta a favoritos', error)
+      console.error('Error añadiendo ruta a favoritos')
+      throw error
     }
   }
 

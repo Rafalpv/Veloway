@@ -9,19 +9,11 @@ const AddUsersButton = () => {
     console.log('Añadir usuario')
   }
 
-  const openPopup = () => {
-    setShowModal(true)
-  }
-
-  const closePopup = () => {
-    setShowModal(false)
-  }
-
   return (
     <>
       <button
         className="justify-between px-6 py-2 border-2 border-black shadow-boton rounded-full hover:bg-gray-400 duration-300"
-        onClick={openPopup}
+        onClick={() => setShowModal(!setShowModal)}
       >
         <IoAddCircleSharp className="text-4xl cursor-pointer" />
       </button>
@@ -29,7 +21,7 @@ const AddUsersButton = () => {
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
           <div className='bg-slate-300 p-6 rounded-lg shadow-lg'>
             <NewUserForm isAdmin={true}/>
-            <button onClick={closePopup} className='ml-4 px-4 py-2 bg-red-500 rounded-full'>
+            <button onClick={() => setShowModal(!setShowModal)} className='ml-4 px-4 py-2 bg-red-500 rounded-full'>
               Cerrar
             </button>
           </div>
