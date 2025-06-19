@@ -11,6 +11,11 @@ export const routesReducer = (state, action) => {
         favRoutes: action.payload.favRoutes,
         communityRoutesRes: action.payload.communityRoutesRes
       }
+    case 'SET_FAV_ROUTES':
+      return {
+        ...state,
+        favRoutes: action.payload
+      }
     case 'ADD_FAV_ROUTE':
       return {
         ...state,
@@ -26,6 +31,8 @@ export const routesReducer = (state, action) => {
         ...state,
         routes: state.routes.filter(route => route._id !== action.payload)
       }
+    default:
+      return state
   }
 }
 
@@ -41,28 +48,40 @@ export const RoutesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(routesReducer, initialState)
   const { authState } = useAuth()
 
-  useEffect(() => {
-    const fetchRoutes = async () => {
-      try {
-        const [userRoutesRes, favRoutesRes, communityRoutesRes] = await Promise.all([
-          axiosInstance.get(`/routes/user/${authState.user.id_user}`),
-          axiosInstance.get(`/users/favRoutes/${authState.user.id_user}`),
-          axiosInstance.get(`/routes/community/${authState.user.id_user}`)
-        ])
+  const fetchRoutes = async () => {
+    try {
+      const [userRoutesRes, favRoutesRes, communityRoutesRes] = await Promise.all([
+        axiosInstance.get(`/routes/user/${authState.user.id_user}`),
+        axiosInstance.get(`/users/favRoutes/${authState.user.id_user}`),
+        axiosInstance.get(`/routes/community/${authState.user.id_user}`)
+      ])
 
-        dispatch({
-          type: 'SET_ALL_ROUTE_DATA',
-          payload: {
-            routes: userRoutesRes.data.routes,
-            favRoutes: favRoutesRes.data.routes,
-            communityRoutesRes: communityRoutesRes.data.routes
-          }
-        })
-      } catch (error) {
-        console.error('Error fetching user routes', error)
-      }
+      dispatch({
+        type: 'SET_ALL_ROUTE_DATA',
+        payload: {
+          routes: userRoutesRes.data.routes,
+          favRoutes: favRoutesRes.data.routes,
+          communityRoutesRes: communityRoutesRes.data.routes
+        }
+      })
+    } catch (error) {
+      console.error('Error fetching user routes', error)
     }
+  }
 
+  const fetchFavRoutes = async () => {
+    try {
+      const favRoutesRes = await axiosInstance.get(`/users/favRoutes/${authState.user.id_user}`)
+      dispatch({
+        type: 'SET_FAV_ROUTES',
+        payload: favRoutesRes.data.routes
+      })
+    } catch (error) {
+      console.error('Error fetching fav routes', error)
+    }
+  }
+
+  useEffect(() => {
     fetchRoutes()
   }, [])
 
@@ -81,15 +100,13 @@ export const RoutesProvider = ({ children }) => {
         idUser: authState.user.id_user,
         idRoute: routeId
       })
+
       dispatch({
         type: 'ADD_FAV_ROUTE',
-        payload: {
-          ...state,
-          favRoutes: [...state.favRoutes, response.data.route]
-        }
+        payload: response.data.route
       })
     } catch (error) {
-      console.error('Error añadiendo ruta a favoritos')
+      console.error('Error añadiendo ruta a favoritos', error)
       throw error
     }
   }
@@ -118,11 +135,11 @@ export const RoutesProvider = ({ children }) => {
       communityRoutesRes: state.communityRoutesRes,
       deleteRoute,
       addFavRoute,
-      deleteFavRoute
+      deleteFavRoute,
+      fetchRoutes,
+      fetchFavRoutes
     }}>
       {children}
     </RoutesContext.Provider>
   )
 }
-
-export default RoutesProvider

@@ -34,7 +34,7 @@ import toast from 'react-hot-toast'
 const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
   const navigate = useNavigate()
   const { route } = props
-  const { deleteRoute, addFavRoute, deleteFavRoute } = useContext(RoutesContext)
+  const { deleteRoute, addFavRoute, deleteFavRoute, fetchFavRoutes } = useContext(RoutesContext)
   const { authState } = useAuth()
   const userNickname = authState.user.nickname
 
@@ -50,6 +50,7 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
         position: 'top-center'
       }
     )
+    fetchFavRoutes() // Refresh the favorite routes after saving
   }
   const unsaveCommunityRoute = async (routeId) => {
     await toast.promise(
