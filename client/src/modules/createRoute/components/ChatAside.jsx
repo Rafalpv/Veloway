@@ -34,7 +34,7 @@ const ChatAside = () => {
       }
 
       if (coordinates && Array.isArray(coordinates) && coordinates.length > 0) {
-        handleRouteByChat(coordinates) // ✅ Tu función para insertar los marcadores
+        handleRouteByChat(coordinates)
       }
     } catch (error) {
       console.error('Error al obtener respuesta del asistente:', error)

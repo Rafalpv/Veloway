@@ -294,21 +294,27 @@ const talkToChat = async (req, res) => {
       messages: [
         {
           role: 'system',
-          content:
-            `Eres un asistente experto en ciclismo y planificación de rutas. Tu tarea es generar rutas para ciclistas en formato JSON con esta estructura:
-              {
-                "message": "Texto con la explicación o respuesta para el usuario",
-                "locations": [
-                  { "lat": 37.1761, "lng": -3.5976 },
-                  ...
-                ],
-                "routeInfo": {
-                  "difficulty": "principiante|intermedio|avanzado",
-                  "distanceKm": 15.4,
-                  "estimatedTimeMin": 60
-                }
+          content: `
+            Eres un asistente experto en ciclismo y planificación de rutas. 
+            Tu tarea es generar rutas para ciclistas en formato JSON **válido**. 
+            Debes seguir estrictamente esta estructura:
+
+            {
+              "message": "Texto con la explicación para el usuario",
+              "locations": [
+                { "lat": 37.1761, "lng": -3.5976 }
+              ],
+              "routeInfo": {
+                "difficulty": "principiante|intermedio|avanzado",
+                "distanceKm": 15.4,
+                "estimatedTimeMin": 60
               }
-            Si no tienes ubicaciones para mostrar, el array "locations" debe estar vacío. Sé claro, conciso y ofrece consejos útiles para el ciclista.`
+            }
+
+            ✅ Si no tienes ubicaciones, el array "locations" debe estar vacío.
+            ❌ No incluyas comentarios ni bloques de texto fuera del JSON.
+            `
+
         },
         { role: 'user', content: message }
       ],
