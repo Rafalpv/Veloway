@@ -68,9 +68,7 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
 
   return (
     <div
-      className='flex flex-col bg-surface-light dark:bg-surface-dark justify-between rounded-2xl shadow-md p-5 hover:shadow-xl transition-all border border-gray-300 dark:border-gray-600'
-      onMouseEnter={() => console.log('Mouse entered route card')}
-    >
+      className='flex flex-col bg-surface-light dark:bg-surface-dark justify-between rounded-2xl shadow-md p-5 hover:shadow-xl transition-all border border-gray-300 dark:border-gray-600'>
       <div className='flex justify-between'>
         <h3 className='text-3xl font-bold text-primary-light dark:text-primary-dark mb-2'>{route.name}</h3>
 

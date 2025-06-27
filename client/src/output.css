@@ -732,10 +732,6 @@ video {
   grid-column: span 1 / span 1;
 }
 
-.row-span-1{
-  grid-row: span 1 / span 1;
-}
-
 .m-2{
   margin: 0.5rem;
 }
@@ -810,10 +806,6 @@ video {
   margin-top: 0.75rem;
 }
 
-.mt-4{
-  margin-top: 1rem;
-}
-
 .block{
   display: block;
 }
@@ -850,6 +842,10 @@ video {
   height: 10rem;
 }
 
+.h-\[85vh\]{
+  height: 85vh;
+}
+
 .h-\[90\%\]{
   height: 90%;
 }
@@ -866,24 +862,16 @@ video {
   height: 100vh;
 }
 
-.h-\[\]{
-  height: ;
+.h-\[100vh\]{
+  height: 100vh;
 }
 
-.h-\[85vh\]{
-  height: 85vh;
+.h-\[80vh\]{
+  height: 80vh;
 }
 
-.h-32{
-  height: 8rem;
-}
-
-.h-\[8\]{
-  height: 8;
-}
-
-.h-\[85\]{
-  height: 85;
+.h-\[87vh\]{
+  height: 87vh;
 }
 
 .max-h-60{
@@ -1061,22 +1049,6 @@ video {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.grid-cols-3{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-rows-\[auto_1fr\]{
-  grid-template-rows: auto 1fr;
-}
-
-.grid-rows-\[auto_2fr\]{
-  grid-template-rows: auto 2fr;
-}
-
-.grid-rows-\[auto_fr\]{
-  grid-template-rows: auto fr;
-}
-
 .grid-rows-\[1fr_auto\]{
   grid-template-rows: 1fr auto;
 }
@@ -1219,12 +1191,20 @@ video {
   overflow: hidden;
 }
 
+.overflow-scroll{
+  overflow: scroll;
+}
+
 .overflow-x-auto{
   overflow-x: auto;
 }
 
 .overflow-y-auto{
   overflow-y: auto;
+}
+
+.overflow-y-scroll{
+  overflow-y: scroll;
 }
 
 .rounded{
@@ -1271,10 +1251,6 @@ video {
 
 .border-2{
   border-width: 2px;
-}
-
-.border-4{
-  border-width: 4px;
 }
 
 .border-b{
@@ -1616,10 +1592,6 @@ video {
 
 .pr-10{
   padding-right: 2.5rem;
-}
-
-.pt-4{
-  padding-top: 1rem;
 }
 
 .text-left{
