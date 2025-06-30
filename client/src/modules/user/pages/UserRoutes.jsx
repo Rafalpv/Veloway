@@ -1,14 +1,28 @@
 import { useContext } from 'react'
 import { RoutesContext } from '../context/RoutesContext'
 import RouteCard from '../components/RouteCard'
+import { IoSearchOutline } from 'react-icons/io5'
 
 const UserRoutes = () => {
-  const { routes, favRoutes } = useContext(RoutesContext)
+  const { routes, favRoutes, searchTerm, filterRoutes } = useContext(RoutesContext)
 
   return (
-    <>
+    <main>
       <section className='mb-10'>
-        <h2 className='text-2xl font-semibold mb-5 text-secondary-light dark:text-secondary-dark'>Tus Rutas</h2>
+        <div className='flex mb-5 gap-5 justify-between items-center'>
+
+          <h2 className='text-3xl font-semibold text-secondary-light dark:text-secondary-dark'>Tus Rutas</h2>
+          <div className='flex items-center gap-2 rounded-full border-2 border-black bg-transparent px-4 py-2 shadow-boton'>
+            <IoSearchOutline className='text-2xl text-black' />
+            <input
+              className='w-full bg-transparent text-xl focus:outline-none'
+              type='text'
+              placeholder='Buscar...'
+              value={searchTerm}
+              onChange={(e) => filterRoutes(e.target.value)}
+            />
+          </div>
+        </div>
 
         {routes.length === 0
           ? (
@@ -21,7 +35,7 @@ const UserRoutes = () => {
             </div>)}
       </section>
       <section>
-        <h2 className='text-2xl font-semibold mb-6 text-secondary-light dark:text-secondary-dark'>Rutas guardadas</h2>
+        <h2 className='text-3xl font-semibold mb-6 text-secondary-light dark:text-secondary-dark'>Rutas guardadas</h2>
 
         {favRoutes.length === 0
           ? (
@@ -33,7 +47,8 @@ const UserRoutes = () => {
               ))}
             </div>)}
       </section>
-    </>
+    </main>
+
   )
 }
 

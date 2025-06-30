@@ -46,11 +46,14 @@ const RouteDetails = () => {
           )}
 
           {/* Distancia y Tiempo */}
-          <div className='flex justify-evenly mb-6 bg-gray-100 p-4 rounded-lg shadow-md'>
-            <span className='text-lg text-blue-500'>Distancia - <span className='text-xl font-bold text-gray-800'>{formatearDistancia(route.distance)}</span></span>
-            <span className='text-lg text-green-500'>Tiempo - <span className='text-lg font-bold text-gray-800'>{formatearTiempo(route.time)}</span></span>
+          <div className='flex justify-evenly mb-6 bg-surface-light dark:bg-surface-dark p-4 rounded-lg shadow-md border border-theme-light dark:border-theme-dark'>
+            <span className='text-lg text-secondary-light dark:text-secondary-dark'>
+              Distancia - <span className='text-xl font-bold text-text-light dark:text-text-dark'>{formatearDistancia(route.distance)}</span>
+            </span>
+            <span className='text-lg text-primary-light dark:text-primary-dark'>
+              Tiempo - <span className='text-lg font-bold text-text-light dark:text-text-dark'>{formatearTiempo(route.time)}</span>
+            </span>
           </div>
-
         </div>
 
       </div>

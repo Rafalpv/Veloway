@@ -8,6 +8,7 @@ export const routesReducer = (state, action) => {
       return {
         ...state,
         routes: action.payload.routes,
+        filterRoutes: action.payload.routes,
         favRoutes: action.payload.favRoutes,
         communityRoutesRes: action.payload.communityRoutesRes
       }
@@ -31,6 +32,26 @@ export const routesReducer = (state, action) => {
         ...state,
         routes: state.routes.filter(route => route._id !== action.payload)
       }
+    case 'SET_SEARCH_TERM':
+      return {
+        ...state,
+        searchTerm: action.payload
+      }
+    case 'APPLY_FILTERS': {
+      const { routes, favRoutes, searchTerm } = state
+
+      const filtered = routes.reduce((acc, route) => {
+        const matchesSearch = searchTerm
+          ? route.name.toLowerCase().includes(searchTerm.toLowerCase())
+          : true
+
+        if (matchesSearch) acc.push(route)
+
+        return acc
+      }, [])
+
+      return { ...state, filterRoutes: filtered }
+    }
     default:
       return state
   }
@@ -41,8 +62,10 @@ export const RoutesContext = createContext()
 export const RoutesProvider = ({ children }) => {
   const initialState = {
     routes: [],
+    filterRoutes: [],
     favRoutes: [],
-    communityRoutesRes: []
+    communityRoutesRes: [],
+    searchTerm: ''
   }
 
   const [state, dispatch] = useReducer(routesReducer, initialState)
@@ -128,16 +151,24 @@ export const RoutesProvider = ({ children }) => {
     }
   }
 
+  const filterRoutes = (searchTerm) => {
+    dispatch({ type: 'SET_SEARCH_TERM', payload: searchTerm })
+    dispatch({ type: 'APPLY_FILTERS' })
+    // Aquí podrías implementar lógica adicional para filtrar las rutas si es necesario
+  }
+
   return (
     <RoutesContext.Provider value={{
-      routes: state.routes,
+      routes: state.filterRoutes,
       favRoutes: state.favRoutes,
       communityRoutesRes: state.communityRoutesRes,
+      searchTerm: state.searchTerm,
       deleteRoute,
       addFavRoute,
       deleteFavRoute,
       fetchRoutes,
-      fetchFavRoutes
+      fetchFavRoutes,
+      filterRoutes
     }}
     >
       {children}

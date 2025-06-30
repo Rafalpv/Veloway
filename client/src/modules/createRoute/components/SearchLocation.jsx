@@ -39,9 +39,11 @@ const SearchLocation = () => {
   }
 
   return (
-    <div className='flex gap-2 z-[500] w-auto rounded-xl shadow-md items-center border mb-4'>
+    <div className='flex gap-2 z-[500] w-auto rounded-xl shadow-md items-center border mb-4 bg-surface-light dark:bg-surface-dark border-theme-light dark:border-theme-dark'>
+
       {/* Barra de búsqueda */}
       <div className='flex-1 relative flex items-center gap-2'>
+
         <input
           type='text'
           onFocus={() => setIsFocused(true)}
@@ -50,19 +52,20 @@ const SearchLocation = () => {
           onChange={(e) => setInputUbication(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           placeholder='Buscar ubicación...'
-          className='flex-1 p-2 pl-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition w-full'
+          className='flex-1 p-2 pl-4 pr-10 rounded-lg border border-theme-light dark:border-theme-dark bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition w-full'
         />
+
         <button
           onClick={handleSearch}
           aria-label='Buscar'
-          className='absolute right-3 p-1 text-gray-500 hover:text-gray-900 transition'
+          className='absolute right-3 p-1 text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark transition'
         >
           <IoSearchOutline size={20} />
         </button>
 
-        {/* Lista de sugerencias */}
+        {/* Lista de sugerencias cuando no hay resultados */}
         {isFocused && searchResults.length === 0 && (
-          <ul className='absolute top-full left-0 w-full mt-2 bg-gray-50 border border-gray-200 shadow-lg rounded-lg max-h-60 overflow-auto z-50 p-2'>
+          <ul className='absolute top-full left-0 w-full mt-2 bg-surface-light dark:bg-surface-dark border border-theme-light dark:border-theme-dark shadow-lg rounded-lg max-h-60 overflow-auto z-50 p-2'>
             <li
               onClick={async () => {
                 if (navigator.geolocation) {
@@ -71,8 +74,6 @@ const SearchLocation = () => {
                       const { latitude, longitude } = position.coords
                       setUbication({ lat: latitude, lng: longitude })
                       setSearchResults([])
-
-                      // Limpia el input también
                       setInputUbication('')
                     },
                     (error) => {
@@ -83,29 +84,29 @@ const SearchLocation = () => {
                   console.error('Geolocation no soportada')
                 }
               }}
-              className='p-2 mb-1 font-semibold text-blue-600 rounded-md transition hover:bg-blue-100 cursor-pointer'
+              className='p-2 mb-1 font-semibold text-primary-light dark:text-primary-dark rounded-md transition hover:bg-accent-light/20 dark:hover:bg-accent-dark/20 cursor-pointer'
             >
               🌍 Usar ubicación actual
             </li>
           </ul>
         )}
 
+        {/* Lista de sugerencias cuando hay resultados */}
         {isFocused && searchResults.length > 0 && (
-          <ul className='absolute top-full left-0 w-full mt-2 bg-gray-50 border border-gray-200 shadow-lg rounded-lg max-h-60 overflow-auto z-50 p-2'>
+          <ul className='absolute top-full left-0 w-full mt-2 bg-surface-light dark:bg-surface-dark border border-theme-light dark:border-theme-dark shadow-lg rounded-lg max-h-60 overflow-auto z-50 p-2'>
             {searchResults.map((suggest, index) => (
               <li
                 key={index}
                 onClick={() => handleSelectCity(suggest)}
-                className='p-2 mb-1 rounded-md text-gray-800 transition hover:bg-gray-200 cursor-pointer'
+                className='p-2 mb-1 rounded-md text-text-light dark:text-text-dark transition hover:bg-accent-light/20 dark:hover:bg-accent-dark/20 cursor-pointer'
               >
                 {suggest.name}
-              </li>)
-            )}
-
-          </ul>)}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
-
   )
 }
 
