@@ -67,57 +67,65 @@ const RouteCard = ({ isComunnity = false, isFav = false, ...props }) => {
   }
 
   return (
-    <div
-      className='flex flex-col bg-surface-light dark:bg-surface-dark justify-between rounded-2xl shadow-md p-5 hover:shadow-xl transition-all border border-gray-300 dark:border-gray-600'>
-      <div className='flex justify-between'>
-        <h3 className='text-3xl font-bold text-primary-light dark:text-primary-dark mb-2'>{route.name}</h3>
+    <div className="flex flex-col justify-between rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-surface-dark p-4 shadow-sm hover:shadow-lg transition-all space-y-4">
 
-        {isComunnity &&
-          <button onClick={isFav ? () => unsaveCommunityRoute(route._id) : () => saveComunnityRoute(route._id)}>
-            {isFav ? <FaBookmark size={27} className='text-yellow-400' /> : <span className=''>Guardar</span>}
-          </button>}
+      {/* Header */}
+      <div className="flex justify-between items-start">
+        <h2 className="text-2xl font-bold text-primary-light dark:text-primary-dark leading-snug">{route.name}</h2>
+
+        {isComunnity && (
+          <button
+            onClick={isFav ? () => unsaveCommunityRoute(route._id) : () => saveComunnityRoute(route._id)}
+            className="text-sm text-primary-light dark:text-primary-dark hover:underline"
+          >
+            {isFav ? <FaBookmark size={22} className="text-yellow-400" /> : 'Guardar'}
+          </button>
+        )}
       </div>
 
       {/* Info */}
-      <div className='flex gap-1 text-text-light dark:text-text-dark mb-4 text-sm'>
-        <span>{formatearTiempo(route.time) || ''}</span>
-        <p> - </p>
-        <span>{formatearDistancia(route.distance) || ''}</span>
-        <p> - </p>
-        <span>{calcularDesnivel(route.elevation).desnivelPositivo || ''}</span>
+      <div className="flex flex-wrap gap-2 text-sm text-gray-600 dark:text-gray-400">
+        {formatearTiempo(route.time) && <span>{formatearTiempo(route.time)}</span>}
+        {formatearDistancia(route.distance) && <span>· {formatearDistancia(route.distance)}</span>}
+        {calcularDesnivel(route.elevation).desnivelPositivo && <span>· {calcularDesnivel(route.elevation).desnivelPositivo}</span>}
       </div>
 
-      <div className='flex items-center gap-2'>
+      {/* Etiquetas */}
+      <div className="flex items-center gap-3 flex-wrap">
         <span
-          className={`${route.privacity === 'public' ? 'bg-primary-light' : 'bg-danger-light'} py-0.5 px-2 bg-opacity-70 font-semibold rounded-lg`}
+          className={`text-xs font-medium px-2 py-0.5 rounded-full ${route.privacity === 'public'
+              ? 'bg-green-100 text-green-700'
+              : 'bg-red-100 text-red-700'
+            }`}
         >
           {route.privacity === 'public' ? 'Pública' : 'Privada'}
         </span>
 
         {(isComunnity || isFav) && (
-          <span className='text-sm italic'>
-            por <span className='font-semibold text-black dark:text-white'>{route.owner ? route.owner.nickname : ''}</span>
+          <span className="text-xs italic text-gray-500">
+            por <span className="font-medium text-black dark:text-white">{route.owner?.nickname || ''}</span>
           </span>
         )}
       </div>
 
       {/* Botones */}
-      <div className='flex gap-2 justify-end'>
+      <div className="flex justify-end gap-2">
         <button
           onClick={() => navigate(`/${userNickname}/${route._id}`)}
-          className='bg-button-light dark:bg-button-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition'
+          className="text-sm text-primary-light dark:text-primary-dark font-medium hover:underline"
         >
           Ver Detalles
         </button>
 
-        {!isComunnity &&
+        {!isComunnity && (
           <button
             onClick={() => deleteRoute(route._id)}
-            className='bg-danger-light dark:bg-danger-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl transition'
+            className="text-sm text-red-500 hover:underline flex items-center gap-1"
           >
-            <CiTrash size={25} />
-          </button>}
-
+            <CiTrash size={18} />
+            Eliminar
+          </button>
+        )}
       </div>
     </div>
   )

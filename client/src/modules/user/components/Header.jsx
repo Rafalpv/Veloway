@@ -9,7 +9,7 @@ const Header = () => {
   const { authState, logout } = useAuth()
 
   return (
-    <header className='flex flex-wrap justify-between items-center mb-7 pb-5 gap-4 border-b-2 border-black dark:border-white'>
+    <header className='header flex flex-wrap justify-between items-center mb-7 pb-5 gap-4 border-b-[2px]'>
       <h1 className='text-5xl font-bold text-primary-light dark:text-primary-dark'>
         {authState.user.nickname} 👋
       </h1>
