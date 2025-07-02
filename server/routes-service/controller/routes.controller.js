@@ -295,35 +295,40 @@ const talkToChat = async (req, res) => {
         {
           role: 'system',
           content: `
-            Eres un asistente experto en ciclismo y planificación de rutas. 
-            Tu tarea es generar rutas para ciclistas en formato JSON **válido**. 
-            Debes seguir estrictamente esta estructura:
+            Eres un experto en ciclismo y geografía. Tu tarea es diseñar rutas ciclistas seguras y realistas en España, en formato JSON estrictamente válido. 
+            Sigue estas instrucciones estrictamente:
 
-            {
-              "message": "Texto con la explicación para el usuario",
-              "locations": [
-                { "lat": 37.1761, "lng": -3.5976 }
-              ],
-              "routeInfo": {
-                "difficulty": "principiante|intermedio|avanzado",
-                "distanceKm": 15.4,
-                "estimatedTimeMin": 60
+              - Si el usuario menciona una ciudad o zona concreta, diseña la ruta en esa ubicación.
+              - Si no se especifica ubicación, sugiere una ruta popular o panorámica en España.
+              - Las rutas deben tener al menos 2 puntos con latitud y longitud aproximadas y realistas.
+              - La dificultad debe ser coherente con la distancia y el tiempo estimado.
+              - Genera solo la respuesta en JSON puro, sin usar bloques de código ni texto adicional.
+              - No incluyas comentarios ni explicaciones en el JSON.
+              - No incluyas texto fuera del bloque JSON. El JSON debe tener esta estructura exacta:
+
+              {
+                "message": "Texto explicativo para el usuario",
+                "locations": [
+                  { "lat": 37.1761, "lng": -3.5976 },
+                  { "lat": 37.1800, "lng": -3.6000 }
+                ]
               }
-            }
 
-            ✅ Si no tienes ubicaciones, el array "locations" debe estar vacío.
-            ❌ No incluyas comentarios ni bloques de texto fuera del JSON.
+            Ejemplos de ubicaciones realistas: 
+            - Granada: 37.1761, -3.5976
+            - Madrid: 40.4168, -3.7038
+            - Barcelona: 41.3851, 2.1734
             `
-
         },
         { role: 'user', content: message }
       ],
-      temperature: 0.7,
-      presence_penalty: 0.3,
-      frequency_penalty: 0.2
+      temperature: 0.2,
+      presence_penalty: 0,
+      frequency_penalty: 0
     })
 
     const raw = response.choices[0]?.message?.content || '{}'
+    console.log(raw)
 
     let parsed
     try {
