@@ -69,6 +69,23 @@ app.use('/routes', createProxyMiddleware({
   logger: console
 }))
 
+app.use('/act', createProxyMiddleware({
+  target: process.env.URL_BASE_ACT_SERVICE,
+  changeOrigin: true,
+  timeout: 5000,
+  proxyTimeout: 5000,
+  pathRewrite: { '^/act': '' },
+  on: {
+    proxyReq: (proxyReq, req, res) => {
+      const bodyData = JSON.stringify(req.body)
+      proxyReq.setHeader('Content-Type', 'application/json')
+      proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
+      proxyReq.write(bodyData)
+    }
+  },
+  logger: console
+}))
+
 app.listen(process.env.PORT, () => {
   console.log(`API Gateway corriendo en http://localhost:${process.env.PORT}`)
 })

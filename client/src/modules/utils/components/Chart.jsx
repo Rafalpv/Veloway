@@ -1,40 +1,57 @@
 import { useRef, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler } from 'chart.js'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler
+} from 'chart.js'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler)
 
-const ElevationChart = ({ elevation }) => {
+const ElevationChart = ({ elevation, totalKms }) => {
+  const numPoints = elevation.length
+  const distances = Array.from({ length: numPoints }, (_, i) =>
+    +(i * totalKms / (numPoints - 1)).toFixed(2)
+  )
+
   const chartRef = useRef(null)
 
   const minElevation = Math.min(...elevation)
   const maxElevation = Math.max(...elevation)
-  const yMin = Math.floor(minElevation / 100) * 100
-  const yMax = Math.ceil(maxElevation / 100) * 100
 
-  // Crear degradado al montar el componente
+  // Redondeo para rango y ticks
+  const yMin = Math.floor(minElevation / 50) * 50
+  const yMax = Math.ceil(maxElevation / 50) * 50
+
+  console.log(elevation)
+
   useEffect(() => {
     const chart = chartRef.current
     if (!chart) return
     const ctx = chart.ctx
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400)
-    gradient.addColorStop(0, 'rgba(75, 34, 67, 0.5)')
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 1)')
+    const gradient = ctx.createLinearGradient(0, 0, 0, chart.height)
+    gradient.addColorStop(1, 'rgba(34, 139, 34, 1)') // verde bosque suave arriba
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0.5)') // transparente abajo
     chart.data.datasets[0].backgroundColor = gradient
     chart.update()
   }, [elevation])
 
   const chartData = {
-    labels: elevation.map((_, index) => index),
+    labels: distances || elevation.map((_, i) => i),
     datasets: [
       {
         data: elevation,
         fill: true,
-        backgroundColor: 'rgba(75, 34, 67, 1)', // Será reemplazado por el gradiente
-        borderColor: 'rgba(19, 34, 67, 1)',
+        backgroundColor: 'rgba(34, 139, 34, 1)',
+        borderColor: 'rgba(34, 139, 34, 1)',
         borderWidth: 1.5,
         pointRadius: 0,
-        tension: 0.3
+        tension: 0.4
       }
     ]
   }
@@ -42,43 +59,77 @@ const ElevationChart = ({ elevation }) => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    elements: {
-      point: {
-        radius: 0
+    layout: {
+      padding: {
+        top: 10,
+        bottom: 30,
+        left: 40,
+        right: 20
       }
     },
     scales: {
       x: {
-        display: false
+        display: true,
+        title: {
+          display: true,
+          text: 'Distancia (km)',
+          color: '#555',
+          font: { size: 14, weight: 'bold' }
+        },
+        ticks: {
+          maxRotation: 0,
+          callback: (val, index) => distances ? distances[index].toFixed(1) : val
+        },
+        grid: {
+          display: false
+        }
       },
       y: {
         min: yMin,
         max: yMax,
-        display: true, // <-- ahora se muestra el eje Y
+        display: true,
+        title: {
+          display: true,
+          text: 'Elevación (m)',
+          color: '#555',
+          font: { size: 14, weight: 'bold' }
+        },
         ticks: {
-          stepSize: 100, // ajusta según rango; puedes usar 50 si hay poco espacio
-          callback: (value) => `${value} m`
+          stepSize: 50,
+          callback: value => `${value} m`
         },
         grid: {
-          drawTicks: true,
-          drawOnChartArea: true, // ahora se dibujan las líneas horizontales también
-          color: 'rgba(0, 0, 0, 0.4)'
+          color: 'rgba(0,0,0,0.1)'
         }
       }
-
     },
     plugins: {
       legend: { display: false },
       tooltip: {
+        enabled: true,
+        mode: 'nearest',
+        intersect: false,
         callbacks: {
-          label: (tooltipItem) => `Elevación: ${tooltipItem.raw} m`
-        }
+          label: ctx => {
+            const elevationVal = ctx.parsed.y
+            const distVal = ctx.label
+            return `Elevación: ${elevationVal} m — Distancia: ${distVal} km`
+          }
+        },
+        backgroundColor: 'rgba(34, 139, 34, 0.8)',
+        titleColor: '#fff',
+        bodyColor: '#fff',
+        cornerRadius: 4,
+        padding: 8
       }
+    },
+    elements: {
+      point: { radius: 0 }
     }
   }
 
   return (
-    <div className={'w-full h-full transition-all duration-300 border-2 border-t-black bg-slate-200 '}>
+    <div className='w-full h-full border-2 border-t-black bg-slate-200 pt-2'>
       <Line ref={chartRef} data={chartData} options={chartOptions} />
     </div>
   )

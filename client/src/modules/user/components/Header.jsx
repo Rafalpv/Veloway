@@ -23,6 +23,13 @@ const Header = () => {
         </NavLink>
 
         <NavLink
+          to={'activity'}
+          className='flex items-center gap-2 bg-primary-light dark:bg-primary-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl shadow transition-all'
+        >
+          <TbRouteSquare /> Actividad
+        </NavLink>
+
+        <NavLink
           to='community'
           className='flex items-center gap-2 bg-secondary-light dark:bg-secondary-dark hover:opacity-90 text-white font-semibold px-4 py-2 rounded-xl shadow transition-all'
         >

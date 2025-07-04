@@ -8,7 +8,7 @@ const ElevationAside = () => {
 
   return (
     <div className={`${elevationSiderVisible ? 'h-1/5' : 'hidden'}`}>
-      <ElevationChart elevation={route.elevation}></ElevationChart>
+      <ElevationChart elevation={route.elevation} totalKms={route.distance / 1000}></ElevationChart>
     </div>
   )
 }
