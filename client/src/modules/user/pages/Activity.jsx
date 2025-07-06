@@ -1,18 +1,19 @@
-import { useState, useContext } from 'react'
-
+import { useState, useContext, useEffect } from 'react'
 import { RoutesContext } from '../context/RoutesContext'
+import axiosInstance from '@api/axiosInstance'
+import { useAuth } from '@auth/context/AuthContext'
 
-const ActivityRow = ({ actividad }) => {
+const ActivityRow = ({ activity }) => {
   return (
     <tr
-      key={actividad.id}
+      key={activity.id}
       className='border-b hover:bg-gray-50 transition-colors'
     >
-      <td className='px-4 py-2'>{actividad.nombreRuta}</td>
-      <td className='px-4 py-2'>{actividad.distancia}</td>
-      <td className='px-4 py-2'>{actividad.tiempo}</td>
-      <td className='px-4 py-2'>{actividad.velocidadMedia}</td>
-      <td className='px-4 py-2'>{actividad.fecha}</td>
+      <td className='px-4 py-2'>{activity.nameRoute}</td>
+      <td className='px-4 py-2'>{activity.distancia}</td>
+      <td className='px-4 py-2'>{activity.tiempoMovimiento}</td>
+      <td className='px-4 py-2'>{activity.velocidadMedia}</td>
+      <td className='px-4 py-2'>{activity.fecha}</td>
     </tr>
   )
 }
@@ -20,33 +21,67 @@ const ActivityRow = ({ actividad }) => {
 const ActivityPage = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { routes, favRoutes } = useContext(RoutesContext)
+  const { authState } = useAuth()
+  const [activities, setActivities] = useState([])
+  const [activity, setActivity] = useState({
+    id_ruta: routes[0]?._id || '',
+    nameRoute: routes[0]?.name || '',
+    distancia: '',
+    tiempoMovimiento: '',
+    velocidadMedia: '',
+    potenciaMedia: '',
+    potenciaMaxima: '',
+    fecha: '',
+    desnivelPositivo: '',
+    desnivelNegativo: ''
+  })
 
-  const actividades = [
-    {
-      id: 1,
-      nombreRuta: 'Ruta Sierra Nevada',
-      distancia: '15 km',
-      tiempo: '1h 30m',
-      velocidadMedia: '10 km/h',
-      fecha: '2025-07-02 10:30'
-    },
-    {
-      id: 2,
-      nombreRuta: 'Vía Verde del Aceite',
-      distancia: '20 km',
-      tiempo: '2h 15m',
-      velocidadMedia: '8.9 km/h',
-      fecha: '2025-07-01 15:45'
-    },
-    {
-      id: 3,
-      nombreRuta: 'Ruta Costera',
-      distancia: '12 km',
-      tiempo: '1h 10m',
-      velocidadMedia: '10.3 km/h',
-      fecha: '2025-06-30 09:20'
+  const handleChangeActivity = (e) => {
+    const { name, value } = e.target
+
+    if (name === 'id_ruta') {
+      routes.forEach(route => {
+        if (route._id === value) {
+          setActivity({
+            ...activity,
+            id_ruta: value,
+            nameRoute: route.name
+          })
+        }
+      })
+    } else {
+      setActivity({
+        ...activity,
+        [name]: value
+      })
     }
-  ]
+  }
+
+  const handleSaveActivity = (e) => {
+    e.preventDefault()
+
+    try {
+      axiosInstance.post('/act', {
+        activity,
+        id_user: authState.user.id_user
+      })
+      setShowMenu(false)
+    } catch (error) {
+      console.error('Error al guardar la actividad')
+    }
+  }
+
+  useEffect(() => {
+    const getActivitiesbyId = async () => {
+      try {
+        const response = await axiosInstance.get(`/act/${authState.user.id_user}`)
+        setActivities(response.data)
+      } catch (error) {
+        console.error('Error al obtener las actividades:', error)
+      }
+    }
+    getActivitiesbyId()
+  }, [activities])
 
   return (
     <div className="p-6">
@@ -65,16 +100,14 @@ const ActivityPage = () => {
               <th className="text-left px-4 py-3">Ruta</th>
               <th className="text-left px-4 py-3">Distancia</th>
               <th className="text-left px-4 py-3">Tiempo en movimiento</th>
-              <th className="text-left px-4 py-3">Velocidad Media</th>
-              <th className="text-left px-4 py-3">Fecha</th>
               <th className="text-left px-4 py-3">Desnivel Positivo</th>
-              <th className="text-left px-4 py-3">Desnivel Negativo</th>
+              <th className="text-left px-4 py-3">Fecha</th>
 
             </tr>
           </thead>
           <tbody>
-            {actividades.map((actividad) => (
-              <ActivityRow key={actividad.id} actividad={actividad} />
+            {activities.map((activity) => (
+              <ActivityRow key={activity.id} activity={activity} />
             ))}
           </tbody>
         </table>
@@ -85,14 +118,18 @@ const ActivityPage = () => {
           <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
             <h2 className="text-xl font-bold mb-4">Registrar Actividad</h2>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={handleSaveActivity}>
 
-              <select className="w-full border border-gray-300 rounded-lg px-3 py-2">
+              <select className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                name='id_ruta'
+                value={activity.id_ruta}
+                onChange={handleChangeActivity}
+              >
                 {routes.map((route, index) => (
-                  <option key={index} value={route.name}>{route.name}</option>
+                  <option key={index} value={route._id}>{route.name}</option>
                 ))}
                 {favRoutes.map((route, index) => (
-                  <option key={index} value={route.name}>{route.name}</option>
+                  <option key={index} value={route._id}>{route.name}</option>
                 ))}
 
               </select>
@@ -100,12 +137,14 @@ const ActivityPage = () => {
               <div>
                 <label className="block mb-1 font-medium">Distancia (km)</label>
                 <input
-                  type="number"
-                  step="0.01"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
-                  placeholder="25.6"
+                  type='number'
+                  step='0.1'
+                  className='w-full border border-gray-300 rounded-lg px-3 py-2'
+                  placeholder='25.6'
                   min={0}
-
+                  name='distancia'
+                  value={activity.distancia}
+                  onChange={handleChangeActivity}
                 />
               </div>
 
@@ -116,18 +155,24 @@ const ActivityPage = () => {
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                   placeholder="120"
                   min={0}
-
+                  name='tiempoMovimiento'
+                  value={activity.tiempoMovimiento}
+                  onChange={handleChangeActivity}
                 />
               </div>
 
               <div>
                 <label className="block mb-1 font-medium">Velocidad Media (km/h)</label>
                 <input
-                  type="number"
+                  type='number'
                   step="0.1"
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                   placeholder="18.5"
                   min={0}
+                  name='velocidadMedia'
+                  value={activity.velocidadMedia}
+                  onChange={handleChangeActivity}
+
                 />
               </div>
 
@@ -135,10 +180,13 @@ const ActivityPage = () => {
                 <div>
                   <label className="block mb-1 font-medium">Potencia Media (vatios)</label>
                   <input
-                    type="number"
+                    type='number'
                     className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     placeholder="40"
                     min={0}
+                    name='potenciaMedia'
+                    value={activity.potenciaMedia}
+                    onChange={handleChangeActivity}
 
                   />
                 </div>
@@ -146,11 +194,13 @@ const ActivityPage = () => {
                 <div>
                   <label className="block mb-1 font-medium">Portencia Máxima (vatios)</label>
                   <input
-                    type="number"
+                    type='number'
                     className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     placeholder="150"
                     min={0}
-
+                    name='potenciaMaxima'
+                    value={activity.potenciaMaxima}
+                    onChange={handleChangeActivity}
                   />
                 </div>
 
@@ -161,6 +211,9 @@ const ActivityPage = () => {
                 <input
                   type="date"
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  name='fecha'
+                  value={activity.fecha}
+                  onChange={handleChangeActivity}
                 />
               </div>
 
@@ -172,6 +225,9 @@ const ActivityPage = () => {
                     className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     placeholder="450"
                     min={0}
+                    name='desnivelPositivo'
+                    value={activity.desnivelPositivo}
+                    onChange={handleChangeActivity}
 
                   />
                 </div>
@@ -183,7 +239,9 @@ const ActivityPage = () => {
                     className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     placeholder="430"
                     min={0}
-
+                    name='desnivelNegativo'
+                    value={activity.desnivelNegativo}
+                    onChange={handleChangeActivity}
                   />
                 </div>
 

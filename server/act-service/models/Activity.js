@@ -13,6 +13,14 @@ const Activity = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false
     },
+    id_user: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    nameRoute: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     distancia: {
       type: DataTypes.FLOAT,
       allowNull: false

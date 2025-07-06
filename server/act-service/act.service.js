@@ -3,8 +3,6 @@ import actRoutes from './routes/act.route.js'
 import dotenv from 'dotenv'
 dotenv.config({ path: './act-service/.env' })
 
-console.log(process.env.PORT)
-
 const app = express()
 app.use(express.json({ limit: '10mb' }))
 
