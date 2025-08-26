@@ -54,8 +54,29 @@ const addActivity = async (req, res) => {
   }
 }
 
+// Delete a route
+const deleteActivity = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const deletedActivity = await Activity.destroy({
+      where: { id }
+    })
+
+    if (deletedActivity) {
+      res.status(200).json({ message: 'Actividad eliminada correctamente' })
+    } else {
+      res.status(404).json({ message: 'Actividad no encontrada' })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error al eliminar la actividad' })
+  }
+}
+
 export default {
   getActivities,
   getActivitiesById,
-  addActivity
+  addActivity,
+  deleteActivity
 }

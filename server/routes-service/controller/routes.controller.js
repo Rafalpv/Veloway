@@ -93,7 +93,7 @@ const getElevation = async (req, res) => {
   }
 }
 
-const getRoutes = async (res) => {
+const getRoutes = async (req, res) => {
   try {
     // Obtener todas las rutas de la base de datos
     const routes = await Route.find() // `Route` es el modelo de tus rutas

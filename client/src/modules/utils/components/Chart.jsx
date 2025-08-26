@@ -113,7 +113,7 @@ const ElevationChart = ({ elevation, totalKms }) => {
           label: ctx => {
             const elevationVal = ctx.parsed.y
             const distVal = ctx.label
-            return `Elevación: ${elevationVal} m — Distancia: ${distVal} km`
+            return `Kilómetro ${distVal} - Elevación ${elevationVal.toFixed(2)}m`
           }
         },
         backgroundColor: 'rgba(34, 139, 34, 0.8)',
