@@ -19,7 +19,7 @@ const ChatAside = () => {
     setIsLoading(true)
 
     try {
-      const response = await axiosInstance.post('/routes/chat', {
+      const response = await axiosInstance.post('/routes/talkToChat', {
         message: input
       })
 

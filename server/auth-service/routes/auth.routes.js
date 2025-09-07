@@ -90,6 +90,46 @@ const router = express.Router()
  */
 router.post('/login', validateLoginInput, authController.userLogin)
 
+/**
+ * @swagger
+ * /check-auth:
+ *   get:
+ *     summary: Verifica si el usuario está autenticado
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Usuario autenticado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 auth:
+ *                   type: boolean
+ *                   example: true
+ *                 user:
+ *                   type: object
+ *                   description: Información del usuario autenticado
+ *                   example:
+ *                     id: "64f8a6a3c12b0c456789abcd"
+ *                     email: "usuario@example.com"
+ *                     name: "Juan Pérez"
+ *       401:
+ *         description: Usuario no autenticado o token inválido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 auth:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Token inválido o expirado
+ */
 router.get('/check-auth', verifyToken, (req, res) => {
   res.json({
     auth: true,
@@ -97,6 +137,24 @@ router.get('/check-auth', verifyToken, (req, res) => {
   })
 })
 
+/**
+ * @swagger
+ * /logout:
+ *   get:
+ *     summary: Cierra la sesión del usuario
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Usuario desconectado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User logged out
+ */
 router.get('/logout', (req, res) => {
   res.clearCookie('authToken', { httpOnly: true, path: '/' }).json({ message: 'User logged out' })
 })
