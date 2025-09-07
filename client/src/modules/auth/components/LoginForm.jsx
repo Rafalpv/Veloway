@@ -24,7 +24,7 @@ const LoginForm = ({ handleToggle }) => {
           error: 'Error al iniciar sesión. Por favor, verifica tus credenciales.'
         },
         {
-          position: 'top-right '
+          position: 'top-center'
         }
       )
       // Después de iniciar sesión, obtén la información del usuario
@@ -34,7 +34,7 @@ const LoginForm = ({ handleToggle }) => {
         user: response.data.user
       })
 
-      response.data.user.role === 'admin' ? navigate('/admin') : navigate('/routes')
+      response.data.user.role === 'admin' ? navigate('/admin') : navigate(`/${response.data.user.nickname}`)
     } catch (err) {
       console.error('Error al iniciar sesión:', err)
       console.error('Detalles del error:', err.response?.data || err.message)
@@ -45,9 +45,9 @@ const LoginForm = ({ handleToggle }) => {
     <>
       <p className='absolute top-3 left-3 text-m '>
         ¿Aún no tienes cuenta? &nbsp;
-        <button className='text-gold font-bold underline' onClick={handleToggle}> Registrarse </button>
+        <button className='text-accent-dark font-bold underline' onClick={handleToggle}> Registrarse </button>
       </p>
-      <form onSubmit={handleSubmit} className='flex flex-col items-center h-auto space-y-24 w-[480px]'>
+      <form onSubmit={handleSubmit} className='flex flex-col items-center space-y-28 w-[480px]'>
         <div className='form__group'>
           <input
             className='form__field'
@@ -75,7 +75,7 @@ const LoginForm = ({ handleToggle }) => {
           />
           <label htmlFor='password' className='form__label'>Contraseña</label>
         </div>
-        <button className='text-white font-bold text-xl bg-gold-dark rounded-2xl shadow-boton p-3 w-[70%]' type='submit'>Acceder</button>
+        <button className='text-surface-dark font-bold text-xl bg-accent-dark rounded-2xl shadow-boton p-3 w-[70%]' type='submit'>Acceder</button>
       </form>
     </>
   )

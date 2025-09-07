@@ -6,18 +6,18 @@ const ContentDashboardSecond = ({ length, type }) => (
   <div className='flex items-center'>
     <h4 className='flex items-baseline space-x-2'>
       <span className='text-6xl md:text-7xl font-bold'>{length}</span>
-      <p className="text-4xl md:text-4xl font-semibold">{type}</p>
+      <p className='text-4xl md:text-4xl font-semibold'>{type}</p>
     </h4>
   </div>
 )
 
 const initWidgets = () => [
-  { id: 'Usuarios', color: 'blueButton', mainContent: 'DashboardUsers', mainContainer: false, secondContent: <ContentDashboardSecond length={0} type="Usuarios" /> },
-  { id: 'Rutas', color: 'greenButton', mainContent: 'DashboardRoutes', mainContainer: false, secondContent: <ContentDashboardSecond length={0} type="Rutas" /> },
-  { id: 'Retos', color: 'gold', mainContent: 'DashboardChallenges', mainContainer: false, secondContent: <ContentDashboardSecond length={0} type="Retos" /> }
+  { id: 'Usuarios', color: 'blueButton', mainContent: 'DashboardUsers', mainContainer: false, secondContent: <ContentDashboardSecond length={0} type='Usuarios' /> },
+  { id: 'Rutas', color: 'greenButton', mainContent: 'DashboardRoutes', mainContainer: false, secondContent: <ContentDashboardSecond length={0} type='Rutas' /> },
+  { id: 'Retos', color: 'gold', mainContent: 'DashboardChallenges', mainContainer: false, secondContent: <ContentDashboardSecond length={0} type='Retos' /> }
 ]
 
-function Dashboard() {
+function Dashboard () {
   const swapy = useRef(null)
   const container = useRef(null)
   const { users } = useContext(UsersContext)
@@ -36,7 +36,7 @@ function Dashboard() {
         secondContent: <ContentDashboardSecond
           length={widget.id === 'Usuarios' ? users.length : widget.id === 'Rutas' ? rutas.length : retos.length}
           type={widget.id}
-        />
+                       />
       }))
     )
   }, [users.length, rutas.length, retos.length])
@@ -62,14 +62,14 @@ function Dashboard() {
 
   return (
     <div ref={container} className='flex h-full'>
-      <aside className='flex flex-col mx-6 my-6 justify-between gap-8 w-80' >
+      <aside className='flex flex-col mx-6 my-6 justify-between gap-8 w-80'>
         {widgets.map((slot) => (
           <div key={slot.id} data-swapy-slot={slot.id} className='h-full'>
             <div
               data-swapy-item={slot.id}
               className={`bg-${slot.color} flex items-center justify-center h-full rounded-3xl border-2 border-black shadow-boton`}
             >
-              <div className="text-3xl font-bold">
+              <div className='text-3xl font-bold'>
                 {slot.mainContainer ? slot.mainContent : slot.secondContent}
               </div>
             </div>

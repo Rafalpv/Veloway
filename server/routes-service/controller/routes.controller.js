@@ -1,12 +1,12 @@
 import dotenv from 'dotenv'
 import axios from 'axios'
 import Route from '../models/Route.js'
+import OpenAI from 'openai'
+import mongoose from 'mongoose'
 dotenv.config({ path: './routes-service/.env' })
 
 const calculateRoute = async (req, res) => {
   const { origin, destination, waypoints } = req.query
-
-  console.log('Origin:', origin)
 
   try {
     const response = await axios.get('https://maps.googleapis.com/maps/api/directions/json', {
@@ -120,7 +120,22 @@ const getRoutes = async (req, res) => {
   }
 }
 
-const getRoutesById = async (req, res) => {
+const getCommunityRoutes = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const communityRoutes = await Route.find({
+      'owner.creatorID': { $ne: Number(id) },
+      privacity: 'public'
+    })
+
+    res.status(200).json({ routes: communityRoutes })
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener rutas de la comunidad', error })
+  }
+}
+
+const getRoutesPerUser = async (req, res) => {
   try {
     const { id } = req.params
 
@@ -128,7 +143,7 @@ const getRoutesById = async (req, res) => {
       return res.status(400).json({ message: 'ID de creador no válido' })
     }
 
-    const routes = await Route.find({ creatorID: Number(id) })
+    const routes = await Route.find({ 'owner.creatorID': Number(id) })
 
     return res.status(200).json({
       message: routes.length ? 'Rutas encontradas' : 'No tienes rutas creadas todavía',
@@ -143,9 +158,70 @@ const getRoutesById = async (req, res) => {
   }
 }
 
+const getRoutesById = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    // Validar que el id sea un ObjectId válido
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'ID no válido' })
+    }
+
+    const route = await Route.findById(id)
+
+    if (!route) {
+      return res.status(404).json({ message: 'Ruta no encontrada' })
+    }
+
+    return res.status(200).json({
+      message: 'Ruta encontrada',
+      route
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al obtener la ruta por su ID',
+      error: error.message
+    })
+  }
+}
+
+const getRoutesByIds = async (req, res) => {
+  try {
+    const { ids } = req.body
+
+    // Validar que sea un array no vacío
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ message: 'Se requiere un array de IDs' })
+    }
+
+    // Validar que todos los IDs sean ObjectId válidos
+    const invalidIds = ids.filter(id => !mongoose.Types.ObjectId.isValid(id))
+    if (invalidIds.length > 0) {
+      return res.status(400).json({ message: `IDs no válidos: ${invalidIds.join(', ')}` })
+    }
+
+    // Buscar todas las rutas cuyos IDs estén en el array
+    const routes = await Route.find({ _id: { $in: ids } })
+
+    return res.status(200).json({
+      message: 'Rutas encontradas',
+      routes
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al obtener las rutas por sus IDs',
+      error: error.message
+    })
+  }
+}
+
 const addRoute = async (req, res) => {
   try {
-    const { route, routeName, userId } = req.body
+    const { route, routeName, privacity, owner } = req.body
+
+    console.log(owner)
 
     // Crear una nueva ruta usando la información del objeto `route`
     const newRoute = new Route({
@@ -153,11 +229,12 @@ const addRoute = async (req, res) => {
       markers: route.markers, // Marcadores de la ruta
       distance: route.distance, // Distancia
       time: route.time, // Tiempo
+      privacity: privacity || 'public', // Privacidad, por defecto 'public'
       steps: route.steps, // Pasos de la ruta
       polyline: route.polyline, // Línea codificada de la ruta
       elevation: route.elevation, // Elevación
       isRoundTrip: route.isRoundTrip, // Si la ruta es de ida y vuelta
-      creatorID: userId
+      owner
     })
 
     // Guardar la nueva ruta en la base de datos
@@ -178,11 +255,107 @@ const addRoute = async (req, res) => {
   }
 }
 
+const deleteRoute = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    // Validar que el id sea un ObjectId válido
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'ID no válido' })
+    }
+
+    const deletedRoute = await Route.findByIdAndDelete(id)
+
+    if (!deletedRoute) {
+      return res.status(404).json({ message: 'Ruta no encontrada' })
+    }
+
+    return res.status(200).json({
+      message: 'Ruta eliminada correctamente',
+      route: deletedRoute
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Hubo un error al eliminar la ruta',
+      error: error.message
+    })
+  }
+}
+
+const talkToChat = async (req, res) => {
+  const { message } = req.body
+
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content: `
+            Eres un experto en ciclismo y geografía. Tu tarea es diseñar rutas ciclistas seguras y realistas en España, en formato JSON estrictamente válido. 
+            Sigue estas instrucciones estrictamente:
+
+              - Si el usuario menciona una ciudad o zona concreta, diseña la ruta en esa ubicación.
+              - Si no se especifica ubicación, sugiere una ruta popular o panorámica en España.
+              - Las rutas deben tener al menos 2 puntos con latitud y longitud aproximadas y realistas.
+              - La dificultad debe ser coherente con la distancia y el tiempo estimado.
+              - Genera solo la respuesta en JSON puro, sin usar bloques de código ni texto adicional.
+              - No incluyas comentarios ni explicaciones en el JSON.
+              - No incluyas texto fuera del bloque JSON. El JSON debe tener esta estructura exacta:
+
+              {
+                "message": "Texto explicativo para el usuario",
+                "locations": [
+                  { "lat": 37.1761, "lng": -3.5976 },
+                  { "lat": 37.1800, "lng": -3.6000 }
+                ]
+              }
+
+            Ejemplos de ubicaciones realistas: 
+            - Granada: 37.1761, -3.5976
+            - Madrid: 40.4168, -3.7038
+            - Barcelona: 41.3851, 2.1734
+            `
+        },
+        { role: 'user', content: message }
+      ],
+      temperature: 0.2,
+      presence_penalty: 0,
+      frequency_penalty: 0
+    })
+
+    const raw = response.choices[0]?.message?.content || '{}'
+    console.log(raw)
+
+    let parsed
+    try {
+      parsed = JSON.parse(raw)
+    } catch (err) {
+      console.warn('La respuesta no es JSON válido. Enviando texto crudo.')
+      return res.status(200).json({ reply: raw, locations: [] })
+    }
+
+    const { message: reply, locations } = parsed
+    res.status(200).json({ reply, locations })
+  } catch (error) {
+    console.error('Error en talkToChat:', error)
+    res.status(500).json({ error: error.message })
+  }
+}
+
 export default {
   calculateRoute,
   getLocations,
   getElevation,
   addRoute,
+  deleteRoute,
   getRoutes,
-  getRoutesById
+  getRoutesPerUser,
+  getRoutesById,
+  getRoutesByIds,
+  talkToChat,
+  getCommunityRoutes
 }

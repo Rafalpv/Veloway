@@ -9,7 +9,7 @@ const AdminLayout = () => {
       <main className='flex-1 overflow-auto'>
         <UsersProvider>
           <Outlet />
-          </UsersProvider>
+        </UsersProvider>
       </main>
     </div>
   )

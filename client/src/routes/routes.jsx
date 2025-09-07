@@ -6,6 +6,10 @@ import AdminLayout from '@admin/layout/AdminLayout'
 import CreateRoute from '@user/pages/CreateRoute'
 import UserRoute from '@userRoutes/pages/UserRoutes'
 import ProtectedRoute from './ProtectedRoute'
+import RouteDetails from '../modules/user/pages/RouteDetails'
+import CommunityRoutes from '../modules/user/pages/CommunityRoutes'
+import UserLayout from '../modules/user/layout/UserLayout'
+import ActivityPage from '../modules/user/pages/Activity'
 
 const ProtectedLayout = () => (
   <ProtectedRoute>
@@ -19,18 +23,37 @@ const router = createBrowserRouter([
     element: <Auth />
   },
   {
-    element: <ProtectedLayout />, // Ahora ProtectedRoute envuelve a todo
+    element: <ProtectedLayout />, // Ahora ProtectedLayout envuelve a todo
     children: [
       {
-        path: 'routes',
+        path: '/:nickname',
         children: [
-          {
-            index: true,
-            element: <UserRoute />
-          },
           {
             path: 'create',
             element: <CreateRoute />
+          },
+
+          {
+            path: '',
+            element: <UserLayout />,
+            children: [
+              {
+                index: true,
+                element: <UserRoute />
+              },
+              {
+                path: ':id',
+                element: <RouteDetails />
+              },
+              {
+                path: 'community',
+                element: <CommunityRoutes />
+              },
+              {
+                path: 'activity',
+                element: <ActivityPage />
+              }
+            ]
           }
         ]
       },

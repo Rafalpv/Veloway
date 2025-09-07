@@ -6,7 +6,10 @@ const MapMarkersContext = createContext()
 
 export const MapMarkersProvider = ({ children }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
-  const [position, setPosition] = useState([37.18817, -3.60667])
+  const [ubication, setUbication] = useState({
+    lat: 37.1769, // Granada, España
+    lng: -3.5976
+  })
 
   const [route, setRoute] = useState({
     markers: [],
@@ -17,14 +20,6 @@ export const MapMarkersProvider = ({ children }) => {
     elevation: [],
     isRoundTrip: false
   })
-
-  const handleMapClick = (event) => {
-    const { lat, lng } = event.latlng
-    setRoute((prev) => ({
-      ...prev,
-      markers: [...prev.markers, { markerId: Date.now(), position: [lat, lng] }]
-    }))
-  }
 
   const handleDragEnd = (event) => {
     const { active, over } = event
@@ -62,7 +57,7 @@ export const MapMarkersProvider = ({ children }) => {
     setRoute((prev) => {
       const updatedMarkers = prev.markers.map((marker) =>
         marker.markerId === id
-          ? { ...marker, position: [newPos.lat, newPos.lng] }
+          ? { ...marker, position: { lat: newPos.lat, lng: newPos.lng } }
           : marker
       )
       return {
@@ -72,7 +67,7 @@ export const MapMarkersProvider = ({ children }) => {
     })
   }
 
-  const handleAddSearchPoint = (markerPosition, option) => {
+  const handleAddPoint = (markerPosition, option) => {
     const newMarker = { markerId: Date.now(), position: markerPosition }
 
     const updateByOption = {
@@ -110,15 +105,24 @@ export const MapMarkersProvider = ({ children }) => {
     }))
   }
 
-  // Función para obtener la ruta desde el backend
+  const handleRouteByChat = (routeData) => {
+    setRoute((prev) => ({
+      ...prev,
+      markers: routeData.map((marker, index) => ({
+        markerId: `${Date.now()}-${index}`,
+        position: marker
+      }))
+    }))
+  }
+
   const fetchRoute = async () => {
     if (route.markers.length < 2) return
 
     try {
-      const origin = `${route.markers[0].position[0]},${route.markers[0].position[1]}`
+      const origin = `${route.markers[0].position.lat},${route.markers[0].position.lng}`
       let waypointsArray = route.markers.slice(1, route.markers.length - 1) // Puntos intermedios
 
-      let destination = `${route.markers[route.markers.length - 1].position[0]},${route.markers[route.markers.length - 1].position[1]}`
+      let destination = `${route.markers[route.markers.length - 1].position.lat},${route.markers[route.markers.length - 1].position.lng}`
 
       if (route.isRoundTrip) {
         // Si es ida y vuelta, el último punto se convierte en un waypoint
@@ -127,7 +131,7 @@ export const MapMarkersProvider = ({ children }) => {
       }
 
       const waypointsString = waypointsArray
-        .map(marker => `${marker.position[0]},${marker.position[1]}`)
+        .map(marker => `${marker.position.lat},${marker.position.lng}`)
         .join('|')
 
       const response = await axiosInstance.get('/routes/calculate', {
@@ -137,6 +141,8 @@ export const MapMarkersProvider = ({ children }) => {
       const infoRoute = response.data.routes[0]
       const distance = getTotalKms(infoRoute.legs)
       const time = getTotalTime(infoRoute.legs)
+      const polyline = decode(infoRoute.overview_polyline.points)
+
       fetchElevationsShape()
 
       setRoute((prev) => ({
@@ -144,7 +150,7 @@ export const MapMarkersProvider = ({ children }) => {
         distance,
         time,
         steps: infoRoute.legs,
-        polyline: decode(infoRoute.overview_polyline.points)
+        polyline: convertToLatLngObjects(polyline)
       }))
     } catch (error) {
       console.error('Error al calcular la ruta', error)
@@ -153,13 +159,15 @@ export const MapMarkersProvider = ({ children }) => {
 
   const getTotalKms = (legs) => legs.reduce((total, leg) => total + leg.distance.value, 0)
   const getTotalTime = (legs) => legs.reduce((total, leg) => total + leg.duration.value, 0)
+  const convertToLatLngObjects = coordsArray =>
+    coordsArray.map(([lat, lng]) => ({ lat, lng }))
 
   const fetchElevationsShape = async () => {
     if (route.markers.length < 2) return
 
     try {
       // Solo enviamos un array de arrays con lat y lng
-      const positions = route.markers.map(marker => marker.position)
+      const positions = route.markers.map(marker => Object.values(marker.position))
 
       const response = await axiosInstance.get('/routes/elevation', {
         params: { positions: JSON.stringify(positions) }
@@ -174,28 +182,28 @@ export const MapMarkersProvider = ({ children }) => {
     }
   }
 
-  // Ejecutamos `fetchRoute` cada vez que cambien los marcadores
+  // Ejecutamos `fetchRoute` cada vez que cambien los marcadores¡
   useEffect(() => {
     fetchRoute()
-  }, [route.markers])
+  }, [route.markers, route.isRoundTrip])
 
   return (
     <MapMarkersContext.Provider
       value={{
         route,
         setRoute,
+        totalMarkers: route.markers.length - 1,
         selectedMarker,
         setSelectedMarker,
-        totalMarkers: route.markers.length - 1,
-        handleMapClick,
+        ubication,
+        setUbication,
         handleDragEnd,
         handleDeleteMark,
         handleChangeOrder,
         updateMarkerPosition,
         handleDeleteAll,
-        handleAddSearchPoint,
-        position,
-        setPosition
+        handleAddPoint,
+        handleRouteByChat
       }}
     >
       {children}

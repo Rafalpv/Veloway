@@ -27,12 +27,12 @@ const FilterButtonLevel = ({ showMenu, setShowMenu }) => {
       {showMenu && (
         <div className='absolute left-2 mt-2 bg-gray-200 border rounded shadow-lg p-2 z-99 min-w-48'>
           {levels.map(level => (
-            <label key={level} className="block text-xl py-1">
+            <label key={level} className='block text-xl py-1'>
               <input
                 type='checkbox'
                 checked={selectedLevels.includes(level)}
                 onChange={() => handleCheckboxChange(level)}
-                className="mr-2"
+                className='mr-2'
               />
               {level}
             </label>

@@ -13,7 +13,7 @@ const EditUser = ({ nickname }) => {
       className='items-center px-2 py-2 border-2 border-black shadow-boton rounded-full hover:bg-gold duration-300'
       onClick={handleEditUser}
     >
-      <FaUserEdit className='text-4xl cursor-pointer' size={28}/>
+      <FaUserEdit className='text-4xl cursor-pointer' size={28} />
     </button>
   )
 }

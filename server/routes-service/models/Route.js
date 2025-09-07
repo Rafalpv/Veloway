@@ -7,11 +7,13 @@ const MarkerSchema = new mongoose.Schema({
     unique: true // Si quieres garantizar que no se repitan IDs
   },
   position: {
-    type: [Number],
-    required: true,
-    validate: {
-      validator: arr => arr.length === 2,
-      message: 'Position must be an array of two numbers: [lat, lng]'
+    lat: {
+      type: Number,
+      required: true
+    },
+    lng: {
+      type: Number,
+      required: true
     }
   }
 }, { _id: false })
@@ -69,7 +71,26 @@ const RouteSchema = new mongoose.Schema({
   markers: [MarkerSchema],
   distance: { type: Number, required: true }, // en metros
   time: { type: Number, required: true }, // en segundos
-  polyline: { type: [[Number]], required: true },
+  privacity: {
+    type: String,
+    enum: ['public', 'private'],
+    default: 'public'
+  },
+  polyline: {
+    type: [
+      {
+        lat: {
+          type: Number,
+          required: true
+        },
+        lng: {
+          type: Number,
+          required: true
+        }
+      }
+    ],
+    required: true
+  },
   elevation: {
     type: [Number],
     default: []
@@ -81,7 +102,10 @@ const RouteSchema = new mongoose.Schema({
   steps: [LegSchema],
   traffic_speed_entry: { type: [String], default: [] }, // traffic_speed_entry vacío
   via_waypoint: { type: [String], default: [] }, // via_waypoint vacío
-  creatorID: { type: Number, required: true },
+  owner: {
+    creatorID: { type: Number, required: true },
+    nickname: { type: String, required: true }
+  },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 })

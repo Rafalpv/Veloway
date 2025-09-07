@@ -12,6 +12,7 @@ const verifyToken = (req, res, next) => {
     req.user = {
       id_user: decoded.id_user,
       nickname: decoded.nickname,
+      level: decoded.level,
       role: decoded.role
     }
     next()

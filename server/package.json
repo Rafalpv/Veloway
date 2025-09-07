@@ -10,6 +10,7 @@
     "dev-users": "nodemon ./users-service/users.service.js",
     "dev-auth": "nodemon ./auth-service/auth.service.js",
     "dev-routes": "nodemon ./routes-service/routes.service.js",
+    "dev-act": "nodemon ./act-service/act.service.js",
     "test": "vitest --config vitest.config.js"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "http-proxy-middleware": "^3.0.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
+    "openai": "^4.98.0",
     "pg": "8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",

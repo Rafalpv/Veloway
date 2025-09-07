@@ -18,9 +18,9 @@ export const validateUserCredentials = async (nickname, password) => {
 
 export const setAuthToken = (res, userData) => {
   const token = jwt.sign(
-    { id_user: userData.id_user, nickname: userData.nickname, role: userData.role },
+    { id_user: userData.id_user, nickname: userData.nickname, level: userData.level, role: userData.role },
     process.env.SECRET_JWT,
-    { expiresIn: '15m' }
+    { expiresIn: '1h' }
   )
 
   const cookies = {

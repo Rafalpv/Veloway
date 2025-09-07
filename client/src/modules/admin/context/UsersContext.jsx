@@ -140,7 +140,8 @@ export const UsersProvider = ({ children }) => {
       sortUsers,
       resetFilters,
       deleteUser
-    }}>
+    }}
+    >
       {children}
     </UsersContext.Provider>
   )

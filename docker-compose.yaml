@@ -1,0 +1,42 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: veloway-frontend
+    ports:
+      - "5137:80"
+    depends_on:
+      - gateway
+      - auth
+  gateway :
+      build:
+        context: .
+        dockerfile: server/Dockerfile
+      container_name: veloway-gateway
+      ports:
+        - "3000:3000"
+      env_file:
+        - ./server/.env
+      restart: unless-stopped
+  # usuarios:
+  #   build:
+  #     context: .
+  #     dockerfile: server/users-service/Dockerfile
+  #   container_name: veloway-users
+  #   ports:
+  #     - "4000:4000"
+  #   env_file:
+  #     - ./server/users-service/.env
+  #   restart: unless-stopped
+  auth:
+    build:
+      context: .
+      dockerfile: server/auth-service/Dockerfile
+    container_name: veloway-auth
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/auth-service/.env
+    restart: unless-stopped
+  
