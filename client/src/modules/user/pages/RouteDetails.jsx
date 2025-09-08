@@ -61,7 +61,7 @@ const RouteDetails = () => {
       {/* Elevación */}
       <div className='col-span-2'>
         {Array.isArray(route.elevation) && route.elevation.length > 0 && (
-          <ElevationChart elevation={route.elevation} />
+          <ElevationChart elevation={route.elevation} totalKms={route.distance / 1000}/>
         )}
       </div>
 

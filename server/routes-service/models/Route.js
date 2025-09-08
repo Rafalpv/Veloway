@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const MarkerSchema = new mongoose.Schema({
   markerId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true // Si quieres garantizar que no se repitan IDs
   },
